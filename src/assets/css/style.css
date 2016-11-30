@@ -1,0 +1,524 @@
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  }
+ body,html{
+	height: 100%;
+	background: #f5f5f5;
+ }
+/*findScholar part*/
+#findScholar .searchImg{
+	width: 100%;
+	padding:0.5rem 15% 0.25rem;
+	box-sizing: border-box;
+}
+#findScholar .searchImg img{
+    width: 100%;
+    height: auto;
+
+}
+.searchForm fieldset{
+    border: none;
+}
+.searchForm fieldset legend{
+	display: none;
+}
+.searchFormGroup{
+	height: 1.2rem;
+	padding:0 0.5rem;
+	margin-bottom: 0.1rem;
+}
+.searchFormGroup label{
+	font-size: 0.18rem;
+	margin: 0.1rem 0;
+	display: block;
+}
+.searchFormGroup input{
+	border:1px solid #36d7b6;
+	width: 100%;
+	border-radius: 0.08rem;
+	height: 0.7rem;
+	text-indent: 0.22rem;
+}
+.searchFormSubmit input{
+	width: 40%;
+	height: 0.8rem;
+	background: #36d7b6;
+	border: none;
+	margin:0 auto;
+	border-radius: 0.08rem;
+	color: #fff;
+	margin-left: 30%;
+	margin-top: 0.3rem;
+
+}
+.submitBtn{
+	text-align: center;
+}
+/*scholarResult part*/
+#scholarResult h4{
+  height: .84rem;
+  background: #f6f6f6;
+  font-size: .24rem;
+  line-height: .84rem;
+  font-family: "微软雅黑";
+  font-weight: normal;
+  padding-left: .3rem;
+  color: #000;
+  position: fixed;
+  top:0;
+  width: 100%;
+  z-index: 2;
+}
+#scholarResult .scholarList{
+  margin-top: .84rem;
+  margin-bottom: .93rem;
+}
+.scholarList .scholarItem{
+	width: 100%;
+	height: 2.3rem;
+	border-top:1px solid #ddd;
+	border-bottom:1px solid #ddd;
+	padding-top: .35rem;
+	padding-left: .24rem;
+	box-sizing: border-box;
+	background: #fff;
+	margin-bottom: .3rem;
+	position: relative;
+}
+.scholarList .scholarItem .scholarHead{
+	width: 1.28rem;
+	float: left;
+	margin-right: .37rem;
+
+}
+.scholarList .scholarItem .scholarHead img{
+	width: 100%;
+}
+.scholarList .scholarItem .scholarInfos{
+    width: 60%;
+     float: left;
+     margin-top: -0.1rem;
+}
+.scholarList .scholarItem .scholarInfos .scholarTitle{
+     height: .4rem;
+
+}
+
+.scholarList .scholarItem .scholarName{
+	font-size: .29rem;
+	color: #000;
+	font-weight: bold;
+	float: left;
+	margin-top: 0.05rem;
+}
+
+.scholarList .scholarItem .scholarStatus,.detailTopBox .scholarBrief .scholarTitle .scholarStatus{
+	float: left;
+	color: #fff;
+	background: #9c9c9c;
+	display: block;
+	width: .82rem;
+	height: .36rem;
+	line-height: .36rem;
+	text-align: center;
+	border-radius: .08rem;
+	font-size: .16rem;
+	margin-left: .4rem;
+  margin-top: 0.05rem;
+
+}
+.scholarList .scholarItem .scholarPosition{
+	margin-top: 0.1rem;
+}
+.scholarList .scholarItem .scholarPosition,.scholarList .scholarItem .scholarCited,.scholarList .scholarItem .scholarDir{
+	font-size: .22rem;
+	color: #000;
+	line-height: .44rem;
+}
+
+.moreBtn {
+    position: absolute;
+    right:.32em;
+    top:.82rem;
+    font-size: 0.34rem;
+}
+
+/*recommend part*/
+#recommend{
+	width: 100%;
+	height: 100%;
+	padding:0.2rem 0.3rem 0;
+	box-sizing: border-box;
+ 	background: #f6f6fa;
+ 	margin-bottom: 0.95rem;
+
+}
+#recommend .comTip{
+	height: 1.12rem;
+	color: #000;
+	line-height: .56rem;
+	font-family: "微软雅黑";
+	float: left;
+}
+.recommendBtn{
+	display: inline-block;
+	width: 1rem;
+	height: 0.62rem;
+	background: #ffb656;
+	color: #fff;
+ 	border-radius:0.05rem;
+ 	margin-top: 0.2rem;
+ 	float: right;
+ 	margin-right: 0.2rem;
+ 	text-align: center;
+ 	line-height: .62rem;
+}
+.recommendList .recommendItem{
+	margin-top: .4rem;
+}
+.recommendList .recommendItem h3{
+	width: 100%;
+	height: 0.59rem;
+	background: #36d7b6;
+	color: #fff;
+	font-size: .26rem;
+	line-height: .59rem;
+	border-radius: 0.1rem 0.1rem 0 0;
+	padding-left: 0.11rem;
+	box-sizing: border-box;
+
+}
+.recommendList .recommendItem .rem-more{
+	color: #fff;
+	font-weight: normal;
+	float: right;
+	margin-right: 0.1rem;
+}
+
+.recommendList .recommendItem .rem-content .rem-author{
+	padding-top: 0.1rem;
+}
+.recommendList .recommendItem .rem-content .rem-style{
+	color: #000;
+	padding: 0 0.11rem;
+	background: #fff;
+	line-height: .4rem;
+	font-size: .18rem;
+}
+.recommendList .recommendItem .rem-intro{
+	padding: 0 0.11rem;
+	font-size: .27rem;
+    font-family: "微软雅黑";
+	color: #9c9ca1;
+	background: #fff;
+	line-height: .38rem;
+	height: 1.2rem;
+	overflow: hidden;
+	border-radius: 0 0 0.1rem 0.1rem;
+}
+.recommendList .recommendItem .rem-intro span{
+	color: #000;
+}
+/*scholarDetail part*/
+#scholarDetail .detailTopBox{
+   height: 2.6rem;
+   background: #fff;
+   padding:0.4rem 0.28rem 0 0.28rem;
+   box-sizing: border-box;
+}
+#scholarDetail .detailTopBox .scholarHead{
+   width: 1.24rem;
+  margin-right: .28rem;
+   float: left;
+}
+#scholarDetail .detailTopBox .scholarBrief{
+   float: left;
+     position: relative;
+}
+#scholarDetail .detailTopBox .scholarBrief .attention{
+   float: left;
+  position: absolute;
+  top:0;
+  right: -0.1rem;
+  width: .94rem;
+  height: .4rem;
+  background: #fff;
+  border:1px solid #86e7d3;
+  border-radius: 0.05rem;
+  font-size: 0.16rem;
+  text-align: center;
+  color: #86e7d3;
+  padding-bottom: 0.03rem;
+
+}
+#scholarDetail .detailTopBox .scholarBrief .attention span{
+  margin-top: 0.01rem;
+  display: inline-block;
+}
+#scholarDetail .detailTopBox .scholarBrief .scholarUniverse{
+	font-size: .2rem;
+	height: .55rem;
+	line-height: .55rem;
+}
+#scholarDetail .detailTopBox .scholarBrief .scholarMarjor,#scholarDetail .detailTopBox .scholarBrief .scholarField{
+	font-size: .22rem;
+	color:#ababab;
+	line-height: .48rem
+}
+#scholarDetail .detailTopBox .scholarBrief .scholarMarjor span,#scholarDetail .detailTopBox .scholarBrief .scholarField span{
+	font-size: .22rem;
+	color:#000;
+	line-height: .48rem
+}
+#scholarDetail .detailTopBox .scholarHead img{
+	  margin-bottom: .15rem;
+   width: 100%;
+}
+#scholarDetail .detailTopBox .scholarHead .IApprove{
+	width:1.35rem;
+	height: .42rem;
+	border:1px solid #a1ecdd;
+	border-radius: 0.07rem;
+	color: #5eddc1;
+	font-size: .18rem;
+	line-height: .42rem;
+	text-align: center;
+
+}
+#scholarDetail .detailTopBox .scholarHead .IApprove span{
+	color: #ffc320;
+	font-size: .18rem;
+	margin: 0 0.03rem;
+}
+.detailTopBox .scholarBrief .scholarTitle .scholarName{
+	font-size: .28rem;
+	color: #000;
+	float: left;
+	margin-top: 0.01rem;
+	font-weight: bold;
+}
+#scholarDetail .numBox{
+	width: 100%;
+	height: 1.04rem;
+	background: #eee;
+	padding-top: .12rem;
+	box-sizing: border-box;
+	border-bottom: 1px solid #ddddde;
+}
+#scholarDetail .numBox ul li{
+	width:24.5%;
+	height: .78rem;
+	float: left;
+	border-right: 1px solid #f8f8f8;
+	text-align: center;
+
+}
+#scholarDetail .numBox ul li span{
+	font-size: .28rem;
+	font-weight: bold;
+	color: #000;
+	line-height: .44rem;
+
+}
+#scholarDetail .numBox ul li p{
+	font-size: .18rem;
+	color: #949494;
+
+}
+#scholarDetail .numBox ul .HN{
+	border-right: none;
+}
+#scholarDetail .tabBox .tabTop{
+    margin-top:.32rem;
+    height: .82rem;
+    background: #fff;
+    box-shadow: 0 0.07rem 0.1rem #e4e4e8;
+}
+#scholarDetail .tabBox .tabTop li{
+    height: 100%;
+    width: 23.3333%;
+    float: left;
+    text-align: center;
+
+    box-sizing: border-box;
+    margin:0 5%;
+}
+#scholarDetail .tabBox .tabTop li.active{
+    border-bottom: 0.04rem solid #ffc320;
+}
+#scholarDetail .tabBox .tabTop li span{
+     font-size: .36rem;
+     color: #f7b55e;
+     line-height: .82rem;
+}
+#scholarDetail .tabBox .tabTop li .tabTitle{
+     color: #000;
+     font-size: .24rem;
+     margin-left: .1rem;
+}
+#scholarDetail .tabBox .tabContent{
+	padding: 0.2rem .3rem 0;
+	box-sizing: border-box;
+}
+#scholarDetail .tabBox .tabContent .contentTop{
+    width: 100%;
+    height: .92rem;
+}
+#scholarDetail .tabBox .tabContent .contentTop {
+    width: 100%;
+    height: .92rem;
+}
+#scholarDetail .tabBox .tabContent .contentTop .citedNum{
+   color:#9c9c9c;
+   font-size: .2rem;
+   float: right;
+   height: .68rem;
+   line-height: .68rem;
+}
+#scholarDetail .tabBox .tabContent .contentTop .allFruits{
+	float: left;
+	width: 1.66rem;
+	height: .54rem;
+	border:1px solid #a8a8a8;
+	border-radius: 0.05rem;
+	font-size: .24rem;
+	color: #000;
+	line-height: .54rem;
+	text-align: center;
+}
+#scholarDetail .tabBox .tabContent .contentMain .contentItem{
+   padding-top: .17rem;
+   box-sizing: border-box;
+   background: #fff;
+}
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon{
+	  margin: 0 0.15rem;
+}
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon .coreCon{
+   font-size: .24rem;
+   color: #000;
+   line-height: .4rem;
+
+}
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon .eachCitedNum{
+   font-size: .18rem;
+   color: #949499;
+   line-height: .4rem;
+}
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon .authorItem{
+   font-size: .22rem;
+   color: #949499;
+   line-height: .4rem;
+   margin-bottom: 0.1rem;
+}
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns{
+  height: .6rem;
+  background: #fff;
+  border-top: 1px solid #ddd;
+}
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li{
+  width: 18.7%;
+  float: left;
+  font-size: .25rem;
+  line-height: .6rem;
+  padding: 0 3%;
+  border-right: 1px solid #ddd;
+}
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li:nth-of-type(4){
+ border-right: none;
+}
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li span{
+	float: left;
+	font-size: .4rem;
+}
+/*loginReg part*/
+#login h1{
+  width: 100%;
+  height: .78rem;
+  background: #424951;
+  font-size: .26rem;
+  color: #fff;
+  text-align: center;
+  line-height: .78rem;
+  font-family: "宋体";
+}
+#login .regBox{
+  padding: .68rem .29rem 0 ;
+  box-sizing: border-box;
+}
+#login .regBox input{
+  width: 100%;
+}
+#login .regBox p{
+  height: .87rem;
+  position: relative;
+}
+#login .regBox p span{
+  position: absolute;
+  display: block;
+  height: .87rem;
+  line-height: .87rem;
+  text-align: center;
+  color: #000;
+  margin-left: .28rem;
+  font-size: .26rem;
+  margin-top: 0.03rem;
+}
+#login .regBox p input{
+  height: .87rem;
+  text-indent: 1.33rem;
+  color: #bbb;
+  border: 1px solid #e7e7e7;
+}
+#login .regBox p .userTel{
+  border-radius: 0.1rem 0.1rem 0 0 ;
+}
+#login .regBox p .userPsw{
+  border-radius:0  0  0.1rem 0.1rem;
+}
+#login .regBox .regTip{
+  font-size: .24rem;
+  color: #b8b8b8;
+  margin: 1.11rem 0 .35rem 0;
+  float: right;
+  display: block;
+}
+#login .regBox .next{
+  height: .9rem;
+  background: #36d7b6;
+  color: #fff;
+  line-height: .9rem;
+  border: none;
+  border-radius: 0.1rem;
+}
+/*footer part*/
+footer{
+	width: 100%;
+	height: 0.93rem;
+	position: fixed;
+	bottom: 0;
+	background: #f7f7f7;
+  z-index: 2;
+}
+footer li{
+	width: 25%;
+    float:left;
+    margin-top: 0.09rem;
+    text-align: center;
+}
+footer li .iconfont{
+	font-size: 0.38rem;
+}
+footer li span{
+	color: #989898;
+}
+footer li span.active{
+	color: #36d7b6;
+}
+footer li .nav-title{
+	display: block;
+	font-size: .25rem;
+}
