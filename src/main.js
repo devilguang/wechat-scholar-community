@@ -14,6 +14,7 @@ import recommend from './components/recommend.vue'
 import login from './components/login.vue'
 import scholarResult from './components/scholarResult.vue'
 import scholarDetail from './components/scholarDetail.vue'
+import bookDetail from './components/bookDetail.vue'
 
 // 创建一个路由器实例
 // 并且配置路由规则
@@ -26,8 +27,22 @@ var router = new VueRouter({
       component: findScholar
     },
     {
+      path: '/findScholar/scholarResult',
+      component: scholarResult
+    },
+    {
+      name: 'detail',
+      path: '/findScholar/scholarResult/scholarDetail/:userID',
+      component: scholarDetail
+    },
+    {
       path: '/findBook',
       component: findBook
+    },
+    {
+      name: 'bookDetail',
+      path: '/findBook/bookDetail/:bookID',
+      component: bookDetail
     },
     {
       path: '/recommend',
@@ -36,14 +51,6 @@ var router = new VueRouter({
     {
       path: '/login',
       component: login
-    },
-    {
-      path: '/findScholar/scholarResult',
-      component: scholarResult
-    },
-    {
-      path: '/findScholar/scholarResult/scholarDetail',
-      component: scholarDetail
     }
   ]
 })

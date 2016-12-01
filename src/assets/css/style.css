@@ -4,7 +4,6 @@
   -moz-osx-font-smoothing: grayscale;
   }
  body,html{
-	height: 100%;
 	background: #f5f5f5;
  }
 /*findScholar part*/
@@ -433,6 +432,273 @@
 #scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li span{
 	float: left;
 	font-size: .4rem;
+}
+/*findBook part*/
+#findBook .searchTop,#bookDetail .searchTop{
+  width: 100%;
+  background: #36d7b6;
+  height: 1.03rem;
+  position: fixed;
+  top:0;
+  padding: .22rem .29rem;
+  box-sizing: border-box;
+}
+#findBook .searchTop input,#bookDetail .searchTop input{
+  width:85%;
+  height: 100%;
+  border: none;
+  border-radius:0.06rem;
+  text-indent: 0.15rem;
+}
+#findBook .searchTop .selectBtn,#bookDetail .searchTop .selectBtn{
+  float: right;
+  background: #fff;
+  height: .56rem;
+  width: .56rem;
+  border-radius: 0.06rem;
+}
+#findBook .searchTop .selectBtn span,#bookDetail .searchTop .selectBtn span{
+   text-align: center;
+   line-height: .56rem;
+   display: block;
+   width: .56rem;
+   font-size: .35rem;
+}
+#findBook .searchTop .icon-searchBtn,#bookDetail .searchTop .icon-searchBtn{
+  color: #36d7b6;
+  position: absolute;
+  top:36%;
+  right: 21%;
+}
+#findBook .searchTop .icon-select,#bookDetail .searchTop .icon-select{
+  color: #36d7b6;
+}
+#findBook .findTip{
+  padding: .19rem .29rem;
+  width: 100%;
+  margin-top: 1.03rem;
+  background: #f5f5f9;
+  box-sizing: border-box;
+  border-bottom: 1px solid #e8e8ea;
+}
+#findBook .findTip .findLogo{
+  width: .82rem;
+  height: .82rem;
+  background: #bbb;
+  border-radius: 50%;
+  float: left;
+  margin-right: 0.2rem;
+}
+#findBook .findTip p{
+  float: left;
+  width: 80%;
+  font-size: .24rem;
+  line-height: .4rem;
+  margin-top: .05rem;
+}
+#findBook .findTip span{
+  color: #fff;
+  font-size: .7rem;
+  text-align: center;
+  display: block;
+  line-height: .82rem;
+}
+#findBook .bookList{
+  margin-bottom: 0.9rem;
+}
+#findBook .bookList ul{
+  width: 100%;
+}
+#findBook .bookList ul .bookListItem{
+  width: 100%;
+  padding: .36rem .29rem 0 ;
+  box-sizing: border-box;
+  background: #fff;
+  border-bottom: 1px solid #e2e2e3;
+    margin-bottom: .35rem;
+}
+#findBook .bookList ul .bookListItem .bookTitle{
+  font-size: .28rem;
+  color: #000;
+}
+#findBook .bookList ul .bookListItem .bookBrief{
+ height: .49rem;
+ line-height: .49rem;
+ font-size: .22rem;
+}
+#findBook .bookList ul .bookListItem .bookBrief span{
+color: #a4a4a4;
+}
+#findBook .bookList ul .bookListItem .bookBrief .author{
+color: #ffb656;
+}
+#findBook .bookList ul .bookListItem .abstract{
+  line-height: .38rem;
+ font-size: .18rem;
+ color: #323232;
+}
+#findBook .bookList ul .bookListItem .userBtns{
+  height: .76rem;
+  border-top: 1px solid #e2e2e3;
+  margin-top: 0.08rem;
+}
+#findBook .bookList ul .bookListItem .userBtns li{
+  float: left;
+  width: 24.6%;
+  line-height: .73rem;
+  font-size:.25rem;
+  text-align: center;
+  color: #9c9c9c;
+  margin-bottom: 0.01rem;
+  border-right:0.01rem solid #e2e2e2;
+
+}
+#findBook .bookList ul .bookListItem .userBtns li:nth-of-type(4){
+  border: none;
+}
+#findBook .bookList ul .bookListItem .userBtns li.active{
+  color: #36d7b6;
+}
+/*bookDetail part*/
+#bookDetail{
+  margin-bottom: 0.91rem;
+}
+#bookDetail .bookContent{
+  width: 100%;
+  margin-top: 1.03rem;
+  padding: .38rem .29rem 0.15rem;
+  box-sizing: border-box;
+}
+#bookDetail .bookContent .bookTitle{
+font-size: .3rem;
+color: #000;
+}
+#bookDetail .bookContent .bookOrigin{
+  color: #ffb656;
+  font-size: .18rem;
+  line-height: .4rem;
+  margin-top: 0.06rem;
+}
+#bookDetail .bookContent .bookBrief{
+  color: #b1b1b1;
+  line-height: .4rem;
+  font-size: .18rem;
+}
+#bookDetail .bookContent .abstract{
+  margin-top: .1rem;
+  color: #000;
+  font-size: .22rem;
+  line-height: .39rem;
+}
+
+#bookDetail .bookContent .publicOrg,#bookDetail .bookContent .keyword,#bookDetail .bookContent .cited{
+  color: #000;
+  font-size: .22rem;
+  line-height: .42rem;
+}
+#bookDetail .bookContent .publicOrg span:nth-of-type(1),#bookDetail .bookContent .keyword span:nth-of-type(1),#bookDetail .bookContent span:nth-of-type(1){
+  font-weight: bold;
+  margin-right: 0.2rem;
+}
+#bookDetail .userBtns{
+  height: .73rem;
+  border-top: 0.01rem solid #ebebeb;
+  border-bottom: 0.01rem solid #ebebeb;
+}
+#bookDetail .userBtns li{
+  width: 24.5%;
+  float: left;
+  font-size: .26rem;
+  text-align: center;
+  border-right: 0.01rem solid #ebebeb;
+  line-height: .73rem;
+  padding-left: 0.3rem;
+  box-sizing: border-box;
+}
+#bookDetail .userBtns li.active{
+  color: #36d7b6;
+}
+#bookDetail .userBtns li span:nth-of-type(1){
+  font-size: 0.4rem;
+  float: left;
+}
+#bookDetail .userBtns li span:nth-of-type(2){
+  font-size: 0.22rem;
+  float: left;
+}
+#bookDetail .userBtns li:nth-of-type(4){
+  border: none;
+}
+#bookDetail .originBox{
+  padding: 0 .25rem;
+  box-sizing: border-box;
+}
+#bookDetail .originBox h3{
+  font-size: .28rem;
+  font-weight: normal;
+  color: #000;
+  line-height: .65rem;
+}
+#bookDetail .originBox ul li{
+  font-size: .18rem;
+  color: #000;
+  line-height: .48rem;
+}
+#bookDetail .originBox ul li span:nth-of-type(1){
+  color: #ffb656;
+  margin-right:0.1rem;
+  display: block;
+  float: left;
+}
+#bookDetail .originBox ul li span:nth-of-type(2){
+ line-height: 0.48rem;
+ display: block;
+ float: left;
+}
+#bookDetail .literature{
+  width: 100%;
+  padding: .2rem .28rem;
+  box-sizing: border-box;
+}
+#bookDetail .literature .tabBox{
+  height: .48rem;
+
+}
+#bookDetail .literature .tabBox p{
+  height: .48rem;
+  width: 33%;
+  background: #bdbdbd;
+  float: left;
+  text-align: center;
+  color: #fff;
+  line-height: .48rem;
+}
+#bookDetail .literature .tabBox p.active{
+ background: #36d7b6;
+}
+#bookDetail .literature .tabBox p:nth-of-type(1){
+ border-radius: 0.1rem 0 0 0.1rem;
+}
+#bookDetail .literature .tabBox p:nth-of-type(2){
+  border-left:  0.01rem solid #cdcdcd;
+  border-right:  0.01rem solid #cdcdcd;
+}
+#bookDetail .literature .tabBox p:nth-of-type(3){
+ border-radius:0 0.1rem  0.1rem 0;
+}
+#bookDetail .literature .literatureCon ul li{
+    border-bottom:0.01rem solid #ccc;
+}
+#bookDetail .literature .literatureCon ul li .literTitle{
+    font-size: .28rem;
+    color: #323232;
+    line-height: .7rem;
+}
+#bookDetail .literature .literatureCon ul li .literAuthor{
+    font-size: .2rem;
+    line-height: .35rem;
+    color: #b2b2b2;
+    margin-bottom: 0.18rem;
 }
 /*loginReg part*/
 #login h1{
