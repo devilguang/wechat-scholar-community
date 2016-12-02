@@ -3,7 +3,8 @@
   <h4>为您检索的结果如下：</h4>
   <ul class="scholarList">
     <li class="scholarItem" v-for="item in items">
-      <router-link :to="{ name: 'detail', params: { userID: item.userID }}">
+      <router-link :to="{ path: 'scholarResult/scholarDetail', query: { ID: item.userID }}">
+      <!-- <router-link :to="{ name: 'detail', params: { userID: item.userID }}"> -->
         <div class="scholarHead"><img src="../assets/img/img-scholar_1.png" > </div>
          <div class="scholarInfos">
            <div class="scholarTitle">

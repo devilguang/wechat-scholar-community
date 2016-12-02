@@ -673,7 +673,7 @@ color: #000;
   color: #fff;
   line-height: .48rem;
 }
-#bookDetail .literature .tabBox p.active{
+#bookDetail .literature .tabBox p:hover{
  background: #36d7b6;
 }
 #bookDetail .literature .tabBox p:nth-of-type(1){
@@ -701,7 +701,7 @@ color: #000;
     margin-bottom: 0.18rem;
 }
 /*loginReg part*/
-#login h1{
+#personalCenter h1{
   width: 100%;
   height: .78rem;
   background: #424951;
@@ -711,18 +711,18 @@ color: #000;
   line-height: .78rem;
   font-family: "宋体";
 }
-#login .regBox{
+#personalCenter .regBox{
   padding: .68rem .29rem 0 ;
   box-sizing: border-box;
 }
-#login .regBox input{
+#personalCenter .regBox input{
   width: 100%;
 }
-#login .regBox p{
+#personalCenter .regBox p{
   height: .87rem;
   position: relative;
 }
-#login .regBox p span{
+#personalCenter .regBox p span{
   position: absolute;
   display: block;
   height: .87rem;
@@ -733,26 +733,26 @@ color: #000;
   font-size: .26rem;
   margin-top: 0.03rem;
 }
-#login .regBox p input{
+#personalCenter .regBox p input{
   height: .87rem;
   text-indent: 1.33rem;
   color: #bbbbbb;
   border: 1px solid #e7e7e7;
 }
-#login .regBox p .userTel{
+#personalCenter .regBox p .userTel{
   border-radius: 0.1rem 0.1rem 0 0 ;
 }
-#login .regBox p .userPsw{
+#personalCenter .regBox p .userPsw{
   border-radius:0  0  0.1rem 0.1rem;
 }
-#login .regBox .regTip{
+#personalCenter .regBox .regTip{
   font-size: .24rem;
   color: #b8b8b8;
   margin: 1.11rem 0 .35rem 0;
   float: right;
   display: block;
 }
-#login .regBox .next{
+#personalCenter .regBox .next{
   height: .9rem;
   background: #36d7b6;
   color: #fff;

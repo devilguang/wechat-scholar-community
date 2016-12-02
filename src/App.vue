@@ -19,9 +19,9 @@
        <span class="nav-title">定制推荐</span>
        </router-link>
        </li> <li>
-       <router-link to="/login">
+       <router-link to="/personalCenter">
        <span class="iconfont icon-person"></span>
-       <span class="nav-title">注册登录</span>
+       <span class="nav-title">个人中心</span>
        </router-link>
        </li>
     </ul>
@@ -29,6 +29,7 @@
   <router-view class="view"></router-view>
   </div>
 </template>
+
 <style scroped src='./assets/css/base.css'></style>
 <style scroped src='./assets/css/style.css'></style>
 <!-- <script type="text/javascript" src='./js/index.js'></script>

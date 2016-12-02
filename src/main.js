@@ -4,14 +4,14 @@ import VueRouter from 'vue-router'
 
 // 开启debug模式
 Vue.config.debug = true
-
+// 调用VueRouter
 Vue.use(VueRouter)
 
 // 定义组件, 也可以像教程之前教的方法从别的文件引入
 import findScholar from './components/findScholar.vue'
 import findBook from './components/findBook.vue'
 import recommend from './components/recommend.vue'
-import login from './components/login.vue'
+import personalCenter from './components/personalCenter.vue'
 import scholarResult from './components/scholarResult.vue'
 import scholarDetail from './components/scholarDetail.vue'
 import bookDetail from './components/bookDetail.vue'
@@ -23,6 +23,10 @@ var router = new VueRouter({
   base: __dirname,
   routes: [
     {
+      path: '/',
+      component: findScholar
+    },
+    {
       path: '/findScholar',
       component: findScholar
     },
@@ -32,7 +36,7 @@ var router = new VueRouter({
     },
     {
       name: 'detail',
-      path: '/findScholar/scholarResult/scholarDetail/:userID',
+      path: '/findScholar/scholarResult/scholarDetail',
       component: scholarDetail
     },
     {
@@ -49,8 +53,8 @@ var router = new VueRouter({
       component: recommend
     },
     {
-      path: '/login',
-      component: login
+      path: '/personalCenter',
+      component: personalCenter
     }
   ]
 })

@@ -1,6 +1,6 @@
 [
   {
-   "userID":"1234",
+   "userID":"1",
    "imgUrl":"http://imgqn5.fruitday.com/images/product_pic/13448/1/1-270x270-13448-9AHTXWAT.jpg",
    "userName":"习近平",
    "userStatus":"未认证",
@@ -28,5 +28,63 @@
        "authorItem":"习近平：《资源节约与环保》"
      }
    ]
-  }
+ }, {
+    "userID":"2",
+    "imgUrl":"http://imgqn5.fruitday.com/images/product_pic/13448/1/1-270x270-13448-9AHTXWAT.jpg",
+    "userName":"习近平",
+    "userStatus":"未认证",
+    "userPosition":"中共浙江省委书记",
+    "userCitedNum":"171",
+    "userDir":"中共党史 中共党史 中共党史",
+    "userField":"中国政治外交相关",
+    "outcomNum":"123",
+    "citedNum":"456",
+    "follower":"513",
+    "HNum":"92",
+    "citedTotalNum":"1657",
+    "contentMain":[
+      {
+        "coreCon":"坚持正确方向创新方法手段 提高新闻舆论传播力引导力",
+        "eachCitedNum":"3",
+        "authorItem":"习近平：《资源节约与环保》"
+      }, {
+        "coreCon":"坚持正确方向创新方法手段 提高新闻舆论传播力引导力",
+        "eachCitedNum":"4",
+        "authorItem":"习近平：《资源节约与环保》"
+      }, {
+        "coreCon":"坚持正确方向创新方法手段 提高新闻舆论传播力引导力",
+        "eachCitedNum":"5",
+        "authorItem":"习近平：《资源节约与环保》"
+      }
+    ]
+  }, {
+     "userID":"3",
+     "imgUrl":"http://imgqn5.fruitday.com/images/product_pic/13448/1/1-270x270-13448-9AHTXWAT.jpg",
+     "userName":"习近平",
+     "userStatus":"未认证",
+     "userPosition":"中共浙江省委书记",
+     "userCitedNum":"171",
+     "userDir":"中共党史 中共党史 中共党史",
+     "userField":"中国政治外交相关",
+     "outcomNum":"123",
+     "citedNum":"456",
+     "follower":"513",
+     "HNum":"92",
+     "citedTotalNum":"1657",
+     "contentMain":[
+       {
+         "coreCon":"坚持正确方向创新方法手段 提高新闻舆论传播力引导力",
+         "eachCitedNum":"3",
+         "authorItem":"习近平：《资源节约与环保》"
+       }, {
+         "coreCon":"坚持正确方向创新方法手段 提高新闻舆论传播力引导力",
+         "eachCitedNum":"4",
+         "authorItem":"习近平：《资源节约与环保》"
+       }, {
+         "coreCon":"坚持正确方向创新方法手段 提高新闻舆论传播力引导力",
+         "eachCitedNum":"5",
+         "authorItem":"习近平：《资源节约与环保》"
+       }
+     ]
+    }
 ]

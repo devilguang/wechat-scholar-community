@@ -17,7 +17,7 @@
       <p class="cited"><span>被引量</span><span>123</span></p>
    </article>
    <ul class="userBtns clrfix">
-      <li class="active"><span class="iconfont icon-remark"></span><span>评论</span></li>
+      <li class=""><span class="iconfont icon-remark"></span><span>评论</span></li>
       <li><span class="iconfont icon-recommendBtn"></span><span>推荐</span></li>
       <li><span class="iconfont icon-share"></span><span>分享</span></li>
       <li><span class="iconfont icon-collect"></span><span>收藏</span></li>
