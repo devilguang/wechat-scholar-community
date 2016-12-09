@@ -69,8 +69,10 @@ export default {
     // 先获取假数据
     axios.get('/static/mock-data/scholarDetail.json')
     .then((response) => {
-      console.log(response)
-      this.infos = response.data
+      var userID = document.location.href
+      userID = userID.substring(userID.indexOf('/'), userID.length)
+      console.log('userID = ' + userID)
+    //  this.infos = response.data[userID + 1]
     })
     .then((error) => console.log(error))
   }

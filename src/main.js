@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
-
 // 开启debug模式
 Vue.config.debug = true
 // 调用VueRouter
@@ -15,6 +14,13 @@ import personalCenter from './components/personalCenter.vue'
 import scholarResult from './components/scholarResult.vue'
 import scholarDetail from './components/scholarDetail.vue'
 import bookDetail from './components/bookDetail.vue'
+import codeInput from './components/codeInput.vue'
+import setName from './components/setName.vue'
+import chooseField from './components/chooseField.vue'
+import scholarCircle from './components/myCenter/scholarCircle.vue'
+import myApply from './components/myCenter/myApply.vue'
+import myInfo from './components/myCenter/myInfo.vue'
+import editMyself from './components/myCenter/editMyself.vue'
 
 // 创建一个路由器实例
 // 并且配置路由规则
@@ -36,7 +42,7 @@ var router = new VueRouter({
     },
     {
       name: 'detail',
-      path: '/findScholar/scholarResult/scholarDetail',
+      path: '/findScholar/scholarResult/scholarDetail/:userID',
       component: scholarDetail
     },
     {
@@ -55,6 +61,34 @@ var router = new VueRouter({
     {
       path: '/personalCenter',
       component: personalCenter
+    },
+    {
+      path: '/codeInput',
+      component: codeInput
+    },
+    {
+      path: '/setName',
+      component: setName
+    },
+    {
+      path: '/chooseField',
+      component: chooseField
+    },
+    {
+      path: '/myCenter/scholarCircle',
+      component: scholarCircle
+    },
+    {
+      path: '/myCenter/myApply',
+      component: myApply
+    },
+    {
+      path: '/myCenter/myInfo',
+      component: myInfo
+    },
+    {
+      path: '/myCenter/editMyself',
+      component: editMyself
     }
   ]
 })
@@ -64,5 +98,4 @@ const app = new Vue({
   router: router,
   render: h => h(App)
 }).$mount('#app')
-
 console.log(app)

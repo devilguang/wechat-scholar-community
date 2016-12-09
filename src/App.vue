@@ -8,7 +8,7 @@
        <span class="nav-title active">找人</span >
        </router-link>
        </li>
-        <li>
+      <li>
        <router-link to="/findBook">
       <span class="iconfont icon-findB"></span>
        <span class="nav-title">找文献</span>
@@ -29,8 +29,9 @@
   <router-view class="view"></router-view>
   </div>
 </template>
-
+<script>
+</script>
 <style scroped src='./assets/css/base.css'></style>
 <style scroped src='./assets/css/style.css'></style>
-<!-- <script type="text/javascript" src='./js/index.js'></script>
-<script type="text/javascript" src='./js/jquery-1.9.1.min.js'></script> -->
+<!-- <script type="text/javascript" src='./js/index.js'></script>-->
+<script type="text/javascript" src='./assets/js/jquery-1.9.1.min.js'></script>

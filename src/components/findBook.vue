@@ -9,7 +9,7 @@
     </article>
     <article class="findTip clrfix">
       <div class="findLogo">
-        <span class="iconfont icon-bookTip"></span>
+        <span class="iconfont icon-flower"></span>
       </div>
       <p>找到与balbala相关的文献共201条找到与balbala相</p>
     </article>

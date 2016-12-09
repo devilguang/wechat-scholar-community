@@ -1,5 +1,5 @@
 <template>
- <div id="findScholar" style="height:100%;background:#fff">
+ <div id="findScholar" style="height:100vh;background:#fff">
        <div class="searchImg"><img src="../assets/img/img-search_bg.jpg"></div>
 		<form class="searchForm">
 			<fieldset>
