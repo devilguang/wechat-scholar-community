@@ -1,91 +1,106 @@
 <template lang="html">
-  <div id="dynamic">
-    <ul>
-      <li class="clrfix">
-        <div class="tipLeft">
-           <span class="iconfont icon-flower"></span>
-        </div>
-        <div class="tipRight">
-          <p><span class="sb1">莫言</span>关注了<span class="me">我</span></p>
-          <h3 class="time">1天前</h3>
-          <button class="attentionHe"><span class="iconfont icon-attentionBtn"></span>关注他</button>
-        </div>
-      </li>
-      <li class="clrfix">
-        <div class="tipLeft">
-           <span class="iconfont icon-flower"></span>
-        </div>
-        <div class="tipRight">
-          <p><span class="sb1">莫言</span>评论了我的文章<span class="me">《发现物理学》</span></p>
-          <h3 class="time">1天前</h3>
-        </div>
-      </li>
-    </ul>
+  <div id="dynamic"  style="height:100vh;background:#fff">
+    <header>
+      <ul class="clrfix">
+        <li>
+          <router-link to="/myCenter/myInfo">
+            <span class="">我的</span>
+          </router-link>
+        </li>
+        <li>
+         <router-link to="/myCenter/dynamic">
+         <span class="active">动态</span>
+         <p></p>
+         </router-link>
+         </li>
+        <li>
+         <router-link to="/myCenter/myApply">
+        <span class="">推荐</span>
+         </router-link>
+         </li>
+          <li>
+         <router-link to="/myCenter/talk">
+         <span class="">唠嗑</span>
+         </router-link>
+         </li>
+      </ul>
+    </header>
+    <article class="dynamicContent">
+      <section class="tabBox">
+        <p @click='tabToggle(tab01Text)' v-bind:class="{active:isChecked}">我的关注</p>
+        <p @click='tabToggle(tab02Text)'>我的动态</p>
+      </section>
+        <!-- 选项卡部分页面在component体现 -->
+      <component :is='currentView' keep-alive></component>
+        <!-- 如果把切换出去的组件保留在内存中，可以保留它的状态或避免重新渲染。为此可以添加一个 keep-alive 指令参数 -->
+
+    </article>
   </div>
 </template>
-
 <script>
+import myAttention from './myAttention.vue'
+import myDynamic from './myDynamic.vue'
 export default {
+  data () {
+    return {
+      tab01Text: 'myAttention',
+      tab02Text: 'myDynamic',
+      currentView: 'myAttention',
+      isChecked: true
+    }
+  },
+  components: {
+    myAttention: myAttention,
+    myDynamic: myDynamic
+  },
+  methods: {
+    tabToggle: function (tabText) {
+      this.currentView = tabText
+      this.isChecked = false
+      console.log(this.isChecked)
+    }
+  }
 }
 </script>
-
-<style lang="css">
-#dynamic ul li{
-   height:1.08rem;
-   border-bottom: 1px solid #e4e4e4;
-   padding: .19rem 0;
-   box-sizing: border-box;
+<style media="screen">
+#dynamic .dynamicContent{
+  margin-top: 0.75rem;
 }
-#dynamic ul li .tipLeft{
+#dynamic .dynamicContent{
+  width: 100%;
+  margin-top: 1.1rem;
+  border-top: 1px solid #e4e4e5;
+  padding: .27rem .29rem 0;
+  box-sizing: border-box;
+}
+#dynamic .dynamicContent .tabBox{
+  height: .68rem;
+}
+#dynamic .dynamicContent .tabBox p{
+  width: 49.5%;
   float: left;
-  width: .62rem;
-  height: 100%;
-}
-#dynamic ul li .tipLeft span{
-  display: block;
-  width: .62rem;
-  height: .62rem;
-  border-radius: 50%;
-  background: #bbb;
-  color: #fff;
-  font-size: .4rem;
-  line-height: .62rem;
   text-align: center;
+  line-height: .68rem;
+  background: #bdbdbd;
+  color: #fff;
+  font-size: .26rem;
+  margin-left: 0.01rem;
 }
-#dynamic ul li .tipRight{
-  margin-left: .81rem;
-  font-size: .24rem;
-  color: #000;
-  position: relative;
-}
-#dynamic ul li .tipRight sb1,#dynamic ul li .tipRight me{
-  color: #ff6363;
-}
-#dynamic ul li .tipRight .time{
-  color: #b2b2b2;
-  font-weight: normal;
-  font-size: .16rem;
-  line-height: .45rem;
-}
-#dynamic ul li .tipRight .attentionHe{
-  position: absolute;
-  right: 0.1rem;
-  top: 0;
-  background: none;
-  border: none;
-  width: 1.18rem;
-  height: .42rem;
-  border: 1px solid #ffbb61;
-  border-radius: 0.21rem;
-  float: right;
-  color:#ffbb61;
-  font-size: .18rem;
-  line-height: .42rem;
-}
-#dynamic ul li .tipRight .attentionHe .icon-attentionBtn{
-  color: #9c9c9c;
-  font-size: .24rem;
-}
+#dynamic .dynamicContent .tabBox p:hover{
+  background: #36d7b6;
 
+}
+#dynamic .dynamicContent .tabBox p.active{
+  background: #36d7b6;
 
+}
+#dynamic .dynamicContent .tabBox p:nth-of-type(1){
+  border-radius: 0.08rem 0 0 0.08rem;
+}
+#dynamic .dynamicContent .tabBox .firstShow:link{
+  background: #36d7b6;
+}
+#dynamic .dynamicContent .tabBox p:nth-of-type(2){
+  border-radius:0  0.08rem  0.08rem 0;
+}
 </style>

@@ -2,26 +2,28 @@
 <div id="app">
   <footer>
     <ul class="clrfix">
-      <li>
+      <li @click="navTab(nav01Text)" :class="{active: activeName == nav01Text || activeFirst}">
        <router-link to="/findScholar">
-       <span class="iconfont icon-findS active"></span>
-       <span class="nav-title active">找人</span >
+       <span class="iconfont icon-findS "></span>
+       <span class="nav-title " >找人</span >
        </router-link>
        </li>
-      <li>
+      <li @click="navTab(nav02Text)" :class="{active: activeName == nav02Text}">
        <router-link to="/findBook">
-      <span class="iconfont icon-findB"></span>
+      <span class="iconfont icon-findB" ></span>
        <span class="nav-title">找文献</span>
        </router-link>
-       </li> <li>
+       </li>
+        <li @click="navTab(nav03Text)" :class="{active: activeName == nav03Text}">
        <router-link to="/recommend">
-     <span class="iconfont icon-recommend"></span>
-       <span class="nav-title">定制推荐</span>
+     <span class="iconfont icon-recommend" ></span>
+       <span class="nav-title" >定制推荐</span>
        </router-link>
-       </li> <li>
-       <router-link to="/personalCenter">
-       <span class="iconfont icon-person"></span>
-       <span class="nav-title">个人中心</span>
+       </li>
+       <li @click="navTab(nav04Text)" :class="{active: activeName == nav04Text}">
+       <router-link to="/myCenter/myInfo">
+       <span class="iconfont icon-person" ></span>
+       <span class="nav-title" >个人中心</span>
        </router-link>
        </li>
     </ul>
@@ -30,8 +32,45 @@
   </div>
 </template>
 <script>
+export default {
+  data: function () {
+    return {
+      nav01Text: 'nav01',
+      nav02Text: 'nav02',
+      nav03Text: 'nav03',
+      nav04Text: 'nav04',
+      currentView: 'nav01',
+      activeName: 'nav01Text',
+      activeFirst: true,
+      navItems: [
+        {
+          navName: '找人',
+          isChecked: false
+        }, {
+          navName: '找文献',
+          isChecked: false
+        }, {
+          navName: '定制推荐',
+          isChecked: false
+        }, {
+          navName: '个人中心',
+          isChecked: false
+        }
+      ]
+    }
+  },
+  methods: {
+    navTab: function (navText) {
+      this.currentView = navText
+      console.log(navText)
+      this.activeFirst = false
+      this.activeName = navText
+      // this.isChecked = !this.isChecked
+      // console.log(this.navItems[1])
+    }
+  }
+}
 </script>
 <style scroped src='./assets/css/base.css'></style>
 <style scroped src='./assets/css/style.css'></style>
 <!-- <script type="text/javascript" src='./js/index.js'></script>-->
-<script type="text/javascript" src='./assets/js/jquery-1.9.1.min.js'></script>

@@ -1,0 +1,203 @@
+<template lang="html">
+  <div id="management">
+    <header>
+      <ul class="clrfix">
+        <li>
+          <router-link to="/myCenter/myInfo">
+            <span class="active">我的</span>
+            <p></p>
+          </router-link>
+        </li>
+        <li>
+         <router-link to="/myCenter/dynamic">
+         <span class="">动态</span>
+         </router-link>
+         </li>
+        <li>
+         <router-link to="/myCenter/myApply">
+        <span class="">推荐</span>
+         </router-link>
+         </li>
+          <li>
+         <router-link to="/myCenter/talk">
+         <span class="">唠嗑</span>
+         </router-link>
+         </li>
+      </ul>
+    </header>
+    <article class="managementCon">
+      <p class="magTit">成果管理</p>
+      <div class="magBtns">
+        <div class="allSelBox">
+          <input type="checkbox" name="" value="" @click="checkedAll" v-model="checked"><span>全选</span>
+        </div>
+        <h3 class="del" @click="deleteBtn">删除</h3>
+        <button type="button" name="button" class="submitFruit" @click="publish()">提交成果</button>
+      </div>
+      <ul class="fruitList">
+        <li class="fruitItem" v-for="checkb in checkboxData">
+          <div class="selBox">
+            <input type="checkbox" name="" value="" v-model='checkboxModel' :value='checkb.id'>
+          </div>
+          <p class="fruitTit">{{checkb.fruitTit}}</p>
+          <div class="foot">
+            <span>莫言 —— </span><span> 出版物—— 2001</span>
+          </div>
+        </li>
+      </ul>
+    </article>
+  </div>
+</template>
+<script>
+export default {
+  methods: {
+    // s删除部分有些bug
+    deleteBtn: function (index) {
+      // console.log(this.checkboxModel)
+      var _this = this
+      this.checkboxModel.forEach(function (index) {
+        console.log(888 + index)
+        _this.checkboxData.splice(index - 1, 1)
+        console.log(_this.checkboxData)
+        // _this.checkboxData[index].push('')
+      })
+    },
+    checkedAll: function () {
+      var _this = this
+      console.log(_this.checkboxModel)
+      if (this.checked) { // 实现反选
+        _this.checkboxModel = []
+      } else { // 实现全选
+        _this.checkboxModel = []
+        _this.checkboxData.forEach(function (item) {
+          _this.checkboxModel.push(item.id)
+        })
+      }
+    },
+    publish: function () {
+      window.location.href = 'management/publishFruit'
+    }
+  },
+  watch: { // 深度 watcher
+    'checkboxModel': {
+      handler: function (val, oldVal) {
+        if (this.checkboxModel.length === this.checkboxData.length) {
+          this.checked = true
+        } else {
+          this.checked = false
+        }
+      },
+      deep: true
+    }
+  },
+  data () {
+    return {
+      checkboxData: [{
+        id: '1',
+        fruitTit: '1语言教育与文化教育的并行名称语言教育与文化教育的并行名称语言教育与文化教育的并行名称'
+      }, {
+        id: '2',
+        fruitTit: '2语言教育与文化教育的并行名称语言教育与文化教育的并行名称语言教育与文化教育的并行名称'
+      }, {
+        id: '3',
+        fruitTit: '3语言教育与文化教育的并行名称语言教育与文化教育的并行名称语言教育与文化教育的并行名称'
+      }, {
+        id: '4',
+        fruitTit: '4语言教育与文化教育的并行名称语言教育与文化教育的并行名称语言教育与文化教育的并行名称'
+      }],
+      checkboxModel: [],
+      checked: ''
+    }
+  }
+}
+</script>
+<style media="screen">
+#management .managementCon{
+  margin-top: .75rem;
+  margin-bottom: .9rem;
+  padding: 0.1rem 0.29rem 0 ;
+  box-sizing: border-box;
+}
+#management .managementCon .magTit{
+  height: 0.6rem;
+  line-height: .6rem;
+  font-size: 0.24rem;
+  color: #000;
+  border-bottom: 1px solid #e1e1e1;
+}
+#management .managementCon .magBtns{
+  height: 0.9rem;
+
+}
+#management .managementCon .magBtns .allSelBox{
+  height: 100%;
+  float: left;
+}
+#management .managementCon .magBtns .allSelBox input{
+  width: .28rem;
+  border-radius: 0.08rem;
+  line-height: .89rem;
+  display: block;
+  float: left;
+  height: 0.8rem;
+  margin-right: 0.1rem;
+}
+#management .managementCon .magBtns .allSelBox span{
+  font-size: .26rem;
+  line-height: .8rem;
+  display: block;
+  float: left;
+}
+#management .managementCon .magBtns .del,#management .managementCon .magBtns .submitFruit{
+   width: .88rem;
+  height: 0.4rem;
+border-radius: 0.1rem;
+  background: #36d7b6;
+  float: left;
+  font-size: .24rem;
+  font-weight: normal;
+  color: #fff;
+  line-height: .4rem;
+  text-align: center;
+  margin-top: 0.18rem;
+  margin-left: 0.2rem;
+}
+#management .managementCon .magBtns .submitFruit{
+  width: 1.2rem;
+  border: none;
+  float: right;
+}
+#management .managementCon .fruitList .fruitItem{
+    height: 1.03rem;
+    border-bottom: 1px solid #e1e1e1;
+    margin-bottom: 0.15rem;
+}
+#management .managementCon .fruitList .fruitItem .selBox{
+    float: left;
+    height: 100%;
+    margin-right: 0.1rem;
+    margin-top: 0.05rem
+}
+#management .managementCon .fruitList .fruitItem .selBox input{
+    width: .28rem;
+    display: block;
+}
+#management .managementCon .fruitList .fruitItem .fruitTit{
+  font-size: .28rem;
+  color: #000;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    padding-right: 0.2rem;
+    box-sizing: border-box;
+}
+#management .managementCon .fruitList .fruitItem .foot{
+  height: .6rem;
+}
+#management .managementCon .fruitList .fruitItem .foot span{
+  font-size: .2rem;
+  line-height: .6rem;
+  height: .6rem;
+
+}
+</style>

@@ -3,22 +3,24 @@
     <header>
       <ul class="clrfix">
         <li>
-         <router-link to="/myCenter/scholarCircle">
-         <span class="iconfont icon-scholarCircle"></span>
+          <router-link to="/myCenter/myInfo">
+            <span class="">我的</span>
+          </router-link>
+        </li>
+        <li>
+         <router-link to="/myCenter/dynamic">
+         <span class="">动态</span>
          </router-link>
          </li>
         <li>
          <router-link to="/myCenter/myApply">
-        <span class="iconfont icon-myApply active"></span>
+        <span class="active">推荐</span>
         <p></p>
          </router-link>
-         </li> <li>
-         <router-link to="/myCenter/myInfo">
-       <span class="iconfont icon-myInfo"></span>
-         </router-link>
-         </li> <li>
-         <router-link to="/myCenter/editMyself">
-         <span class="iconfont icon-editMyself"></span>
+         </li>
+          <li>
+         <router-link to="/myCenter/talk">
+         <span class="">唠嗑</span>
          </router-link>
          </li>
       </ul>

@@ -75,11 +75,11 @@
 }
 .scholarList .scholarItem{
 	width: 100%;
-	height: 2.3rem;
 	border-top:1px solid #ddd;
 	border-bottom:1px solid #ddd;
-	padding-top: .35rem;
+	padding-top: .28rem;
 	padding-left: .24rem;
+  padding-bottom: 0.4em;
 	box-sizing: border-box;
 	background: #fff;
 	margin-bottom: .3rem;
@@ -109,7 +109,7 @@
 	color: #000;
 	font-weight: bold;
 	float: left;
-	margin-top: 0.05rem;
+	margin-top: 0.1rem;
 }
 
 .scholarList .scholarItem .scholarStatus,.detailTopBox .scholarBrief .scholarTitle .scholarStatus{
@@ -123,9 +123,12 @@
 	text-align: center;
 	border-radius: .08rem;
 	font-size: .16rem;
-	margin-left: .4rem;
-  margin-top: 0.05rem;
+	margin-left: .28rem;
+  margin-top: 0.1rem;
 
+}
+.detailTopBox .scholarBrief .scholarTitle .scholarStatus{
+  margin-top: 0;
 }
 .scholarList .scholarItem .scholarPosition{
 	margin-top: 0.1rem;
@@ -134,6 +137,13 @@
 	font-size: .22rem;
 	color: #000;
 	line-height: .44rem;
+}
+.scholarList .scholarItem .scholarDir{
+  color: #888;
+}
+.scholarList .scholarItem .scholarDir span{
+  color: #000;
+  font-size: .22rem;
 }
 
 .moreBtn {
@@ -163,7 +173,7 @@
 .recommendBtn{
 	display: inline-block;
 	width: 1rem;
-	height: 0.62rem;
+	height: 0.55rem;
 	background: #ffb656;
 	color: #fff;
  	border-radius:0.05rem;
@@ -171,7 +181,8 @@
  	float: right;
  	margin-right: 0.2rem;
  	text-align: center;
- 	line-height: .62rem;
+ 	line-height: .55rem;
+  font-size: 0.26rem;
 }
 .recommendList .recommendItem{
 	margin-top: .4rem;
@@ -234,6 +245,7 @@
 #scholarDetail .detailTopBox .scholarBrief{
    float: left;
      position: relative;
+     width: 70%;
 }
 #scholarDetail .detailTopBox .scholarBrief .attention{
    float: left;
@@ -257,8 +269,9 @@
 }
 #scholarDetail .detailTopBox .scholarBrief .scholarUniverse{
 	font-size: .2rem;
-	height: .55rem;
-	line-height: .55rem;
+	height: .45rem;
+  margin-top: 0.08rem;
+	line-height: .45rem;
 }
 #scholarDetail .detailTopBox .scholarBrief .scholarMarjor,#scholarDetail .detailTopBox .scholarBrief .scholarField{
 	font-size: .22rem;
@@ -283,6 +296,8 @@
 	font-size: .18rem;
 	line-height: .42rem;
 	text-align: center;
+  margin-left: -0.08rem;
+    margin-top: -0.1rem;
 
 }
 #scholarDetail .detailTopBox .scholarHead .IApprove span{
@@ -346,6 +361,7 @@
 #scholarDetail .tabBox .tabTop li.active{
     border-bottom: 0.04rem solid #ffc320;
 }
+
 #scholarDetail .tabBox .tabTop li span{
      font-size: .36rem;
      color: #f7b55e;
@@ -423,6 +439,10 @@
   line-height: .6rem;
   padding: 0 3%;
   border-right: 1px solid #ddd;
+}
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li.active{
+color: #36d7b6;
+
 }
 
 #scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li:nth-of-type(4){
@@ -550,6 +570,19 @@ color: #ffb656;
   color: #9c9c9c;
   margin-bottom: 0.01rem;
   border-right:0.01rem solid #e2e2e2;
+  box-sizing: border-box;
+  padding-left: 0.2rem;
+}
+#findBook .bookList ul .bookListItem .userBtns li .iconfont{
+  font-size: .38rem;
+  display: block;
+  float: left;
+}
+#findBook .bookList ul .bookListItem .userBtns li .word{
+  font-size: .22rem;
+  line-height: .73rem;
+  display: block;
+  float: left;
 
 }
 #findBook .bookList ul .bookListItem .userBtns li:nth-of-type(4){
@@ -878,173 +911,8 @@ height: .73rem;
  font-size: .26rem;
 }
 /*myInfo part*/
-#myInfo .myInfoContent{
+#myInfo{
   width: 100%;
-  margin-top: 1.1rem;
-  border-top: 1px solid #e4e4e5;
-  padding: .27rem .29rem 0;
-  box-sizing: border-box;
-}
-#myInfo .myInfoContent .tabBox{
-  height: .68rem;
-}
-#myInfo .myInfoContent .tabBox p{
-  width: 49.5%;
-  float: left;
-  text-align: center;
-  line-height: .68rem;
-  background: #bdbdbd;
-  color: #fff;
-  font-size: .26rem;
-  margin-left: 0.01rem;
-}
-#myInfo .myInfoContent .tabBox p:hover{
-  background: #36d7b6;
-
-}
-#myInfo .myInfoContent .tabBox p.active{
-  background: #36d7b6;
-
-}
-#myInfo .myInfoContent .tabBox p:nth-of-type(1){
-  border-radius: 0.08rem 0 0 0.08rem;
-}
-#myInfo .myInfoContent .tabBox .firstShow:link{
-  background: #36d7b6;
-}
-#myInfo .myInfoContent .tabBox p:nth-of-type(2){
-  border-radius:0  0.08rem  0.08rem 0;
-}
-/*editMyself part*/
-#editMyself .editContent{
-  margin-top: 1.1rem;
-}
- #editMyself .editContent .imgBox{
-   width: 100%;
-   height: 1.79rem;
-
- }
- #editMyself .editContent .imgBox .default-bg{
-   width: 100%;
- }
- #editMyself .editContent .wordBox{
-   height: 2.22rem;
-   background: #fff;
-   position: relative;
-   padding-top: .7rem;
-   box-sizing: border-box;
- }
- #editMyself .editContent .wordBox .default-head-box{
-   position: absolute;
-   left: 50%;
-   margin-left: -.68rem;
-   width: 1.36rem;
-   height: 1.36rem;
-   top: -.68rem;
-   color: #36d7b6;
-   background: #fff;
-   border-radius: 50%;
-   box-sizing: border-box;
- }
- #editMyself .editContent .wordBox .default-head-box .default-head{
-   width: 1.26rem;
-   border-radius: 50%;
-   margin-top: 0.05rem;
-   margin-left: 0.05rem;
- }
- #editMyself .editContent .wordBox .myName{
-   text-align: center;
-   color: #36d7b6;
-   font-size: .3rem;
-   line-height: .4rem;
- }
-#editMyself .editContent .wordBox .status{
-    background: #ffb656;
-    width: .9rem;
-    height: .26rem;
-    border-radius: .3rem;
-    color: #fff;
-    line-height: .26rem;
-    text-align: center;
-    font-weight: nomal;
-    font-size: .16rem;
-    position: relative;
-    left: 50%;
-    margin-top: .06rem;
-    margin-left: -.45rem;
-}
-#editMyself .editContent .wordBox .about{
-  color: #9c9c9c;
-  font-size: .19rem;
-  text-align: center;
-  margin-top: 0.12rem;
-}
-#editMyself .editContent .essayBox{
-  padding: 0.23rem .29rem 0 ;
-  box-sizing: border-box;
-}
-#editMyself .editContent .essayBox .lineBox{
-  border-left: 1px solid #fad4a3;
-}
-#editMyself .editContent .essayBox .lineBox .top{
-  position: relative;
-}
-#editMyself .editContent .essayBox .lineBox .top .bigdot{
-  background: #ffb656;
-  width: .22rem;
-  height: .22rem;
-  border-radius: 50%;
-  display: block;
-  position: absolute;
-  left: -0.11rem;
-}
-#editMyself .editContent .essayBox .lineBox .top h2{
- font-size: .26rem;
- color: #000;
- font-weight: normal;
- margin-left: 0.2rem;
-}
-#editMyself .editContent .essayBox .lineBox .main ul li{
- margin-top: .36rem;
- margin-left: 0.33rem;
-}
-#editMyself .editContent .essayBox .lineBox .main ul li .time{
- font-size: .18rem;
- color: #b0b0b1;
- line-height: .38rem;
-}
-#editMyself .editContent .essayBox .lineBox .main ul li .contentBox{
- background: #fff;
- padding: 0.15rem;
- box-sizing: border-box;
- position: relative;
-}
-#editMyself .editContent .essayBox .lineBox .main ul li .contentBox p{
-  font-size: .22rem;
-  color: #000;
-  line-height: .34rem;
-}
-#editMyself .editContent .essayBox .lineBox .main ul li .contentBox .triangle{
-    position: absolute;
-    left: -0.18rem;
-    top: 50%;
-    margin-top: -0.19rem;
-    width:0;
-    height:0;
-    border-bottom: 0.19rem solid transparent;
-    border-top:0.19rem solid transparent;
-    border-right:.19rem solid #fff;
-}
-#editMyself .editContent .essayBox .lineBox .main ul li .contentBox .smalldot{
-    position: absolute;
-    left: -0.4rem;
-    top: 50%;
-    margin-top: -0.065rem;
-    display: block;
-    border-radius: 50%;
-    background: #ffb656;
-    width: .13rem;
-    height: .13rem;
 }
 
 /*footer and header part*/
@@ -1088,8 +956,8 @@ header li:nth-of-type(4){
 footer li .iconfont{
 	font-size: 0.38rem;
 }
-header li .iconfont{
-  font-size: .44rem;
+header li span{
+  font-size: .3rem;
   display: block;
   height: 0.58rem;
   color: #9c9c9c;
@@ -1097,8 +965,10 @@ header li .iconfont{
 footer li span{
 	color: #989898;
 }
-footer li span.active,header li span.active{
+footer li.active span{
 	color: #36d7b6;
+}
+footer li span.active,header li span.active{
 }
 footer li .nav-title,header li .nav-title{
 	display: block;

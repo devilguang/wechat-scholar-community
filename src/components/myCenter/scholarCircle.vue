@@ -2,6 +2,11 @@
   <div id="scholarCircle" style="height:100vh;background:#fff">
     <header>
       <ul class="clrfix">
+        <li>
+          <router-link to="/myCenter/myInfo">
+            <span class="iconfont icon-myInfo"></span>
+          </router-link>
+        </li> 
         <li @click="next" class="abc" id="test">
          <router-link to="/myCenter/scholarCircle">
          <span class="iconfont icon-scholarCircle active"></span>
@@ -12,11 +17,8 @@
          <router-link to="/myCenter/myApply">
         <span class="iconfont icon-myApply"></span>
          </router-link>
-         </li> <li>
-         <router-link to="/myCenter/myInfo">
-       <span class="iconfont icon-myInfo"></span>
-         </router-link>
-         </li> <li>
+         </li>
+         <li>
          <router-link to="/myCenter/editMyself">
          <span class="iconfont icon-editMyself"></span>
          </router-link>

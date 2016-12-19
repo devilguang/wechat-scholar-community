@@ -2,79 +2,109 @@
  <div id="scholarDetail">
      <!-- 详情头部 -->
      <article class="detailTopBox">
-        <div class="scholarHead"><img src="../assets/img/img-scholar_1.png" ><div class="IApprove"><span class="iconfont icon-iapprove"></span>我要认证</div> </div>
+        <div class="scholarHead">
+          <!-- <img v-bind:src="infos.imgUrl" > -->
+          <img src="../assets/img/img-scholar_1.png" >
+          <div class="IApprove" @click="approve()"><span class="iconfont icon-iapprove"></span>我要认证</div>
+        </div>
          <div class="scholarBrief">
-               <button class="attention"><span class="iconfont icon-plus"></span>关注</button>
                <div class="scholarTitle clrfix">
-                  <span class="scholarName">{{infos.userName}}</span>
+                  <span class="scholarName">{{infos.scholarName}}</span>
                   <span class="scholarStatus">未认证</span>
                </div>
-               <p class="scholarUniverse">武汉大学</p>
-               <p class="scholarMarjor">专业方向：<span>经济学类 自动化类 轻工类</span></p>
-               <p class="scholarField">研究领域：<span>人体解剖和组织胚胎学</span></p>
-        </div>
+               <p class="scholarUniverse">{{infos.organName}}{{$route.params.userID}}</p>
+               <p class="scholarMarjor">专业方向：<span>{{infos.research}}</span></p>
+               <button class="attention" id="attentionBtn" @click="attention()"><span class="iconfont icon-plus"></span>关注</button>
+          </div>
      </article>
      <!-- 详情数字部分 -->
      <article class="numBox">
-        <ul class="clrfix">
-          <li class="outcomN"><span>123</span><p>成果数</p></li>
-          <li class="citedN"><span>106</span><p>被引数</p></li>
-          <li class="followerN"><span>63</span><p>跟随着</p></li>
-          <li class="HN"><span>72</span><p>H指数</p></li>
+        <ul class="clrfix" >
+          <li class="outcomN"><span>{{infos.achCount}}</span><p>成果数</p></li>
+          <li class="citedN"><span>{{infos.cite}}</span><p>被引数</p></li>
+          <li class="followerN"><span>{{infos.g}}</span><p>跟随着</p></li>
+          <li class="HN"><span>{{infos.h}}</span><p>H指数</p></li>
         </ul>
      </article>
      <!-- 详情页选项卡部分 -->
      <article class="tabBox">
-        <ul class="tabTop clrfix">
-           <li class="active"><span class="iconfont icon-research"></span><span class="tabTitle">科研成果</span></li>
-           <li><span class="iconfont icon-cooperate"></span><span class="tabTitle">合作者</span></li>
-           <li><span class="iconfont icon-institution"></span><span class="tabTitle">合作机构</span></li>
+        <ul class="tabTop clrfix" id="zxq"  >
+           <li  @click='tabToggle(tab01Text)' :class="{active: activeName == tab01Text || activeFirst}"><span class="iconfont icon-research"></span><span class="tabTitle">科研成果</span></li>
+           <li  @click='tabToggle(tab02Text)' :class="{active: activeName == tab02Text}"><span class="iconfont icon-cooperate"></span><span class="tabTitle">合作者</span></li>
+           <li  @click="tabToggle(tab03Text)" :class="{active: activeName == tab03Text}"><span class="iconfont icon-institution"></span><span class="tabTitle">合作机构</span></li>
        </ul>
-        </section>
-        <section class="tabContent">
-            <div class="contentTop">
-                <!-- 复选下拉框没写 占位 -->
-                <div class="allFruits">全部成果</div>
-                <p class="citedNum">被引次数：<span>3121</span></p>
-            </div>
-            <ul class="contentMain">
-              <li class="contentItem">
-                <div class="wordsCon">
-                     <p class="coreCon">坚持正确方向创新方法手段 提高新闻舆论传播力引导力</p>
-                     <p class="eachCitedNum">被引用次数：3</p>
-                     <p class="authorItem">习近平：《资源节约与环保》</p>
-                </div>
-                <ul class="userBtns clrfix">
-                   <li><span class="iconfont icon-remark"></span>评论</li>
-                   <li><span class="iconfont icon-recommendBtn"></span>推荐</li>
-                   <li><span class="iconfont icon-share"></span>分享</li>
-                   <li><span class="iconfont icon-collect"></span>收藏</li>
-                </ul>
-              </li>
-            </ul>
-        </section>
+       <!-- 选项卡部分页面在component体现 -->
+      <component :is='currentView' keep-alive></component>
+
      </article>
 </div>
 </template>
 <script>
-import axios from 'axios'
+// import axios from 'axios'
+import sDtab01 from './sDtab01'
+import sDtab02 from './sDtab02'
+import sDtab03 from './sDtab03'
 export default {
   name: 'scholarDetail',
   data () {
     return {
+      tab01Text: 'sDtab01',
+      tab02Text: 'sDtab02',
+      tab03Text: 'sDtab03',
+      currentView: 'sDtab01',
+      activeName: 'tab01Text',
+      activeFirst: true,
       infos: []
     }
   },
+  components: {
+    sDtab01: sDtab01,
+    sDtab02: sDtab02,
+    sDtab03: sDtab03
+  },
+  methods: {
+    // 选项卡切换
+    tabToggle: function (tabText) {
+      this.currentView = tabText
+      console.log(tabText)
+      this.activeFirst = false
+      this.activeName = tabText
+    },
+    // 加关注
+    attention: function () {
+      var attentionBtn = document.getElementById('attentionBtn')
+      if (attentionBtn.innerHTML === '已关注') {
+        attentionBtn.innerHTML = '+关注'
+      } else {
+        window.alert('已关注')
+        attentionBtn.innerHTML = '已关注'
+      }
+    },
+    // 我要认证跳页面
+    approve: function () {
+      window.location.href = '../../../myCenter/Iwillconfirm'
+    }
+  },
   mounted () {
+    var scDetail = JSON.parse(window.sessionStorage.getItem('scDetail'))
+    console.log(scDetail)
+    this.infos = scDetail.data
     // 先获取假数据
-    axios.get('/static/mock-data/scholarDetail.json')
-    .then((response) => {
-      var userID = document.location.href
-      userID = userID.substring(userID.indexOf('/'), userID.length)
-      console.log('userID = ' + userID)
-    //  this.infos = response.data[userID + 1]
-    })
-    .then((error) => console.log(error))
+    // axios.get('/static/mock-data/scholarDetail.json')
+    // .then((response) => {
+    //   var userID = document.location.href
+    //   var arr = userID.split('/')
+    //   userID = arr[arr.length - 1]
+    //   for (var scholarInfo in response.data) {
+    //     console.log(response.data[scholarInfo])
+    //     if (response.data[scholarInfo].userID === userID) {
+    //       this.infos = response.data[scholarInfo]
+    //       console.log(this.infos)
+    //     }
+    //   }
+    // })
+    // .then((error) => console.log(error))
   }
 }
+
 </script>

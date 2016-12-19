@@ -2,7 +2,9 @@
  <div id="recommend">
    <section class="clrfix">
    <p class="comTip">我们还不知道您的兴趣领域<br/>实时精准获取专属学术资讯</p>
-   <a class="recommendBtn" href="http://www.baidu.com">定制</a>
+   <router-link to="/chooseField">
+     <span class="recommendBtn">定制</span>
+   </router-link>
    </section>
    <ul class="recommendList">
      <li class="recommendItem" v-for="recommendItem in recommendList" >
@@ -25,6 +27,8 @@ export default {
     return {
       recommendList: []
     }
+  },
+  methods: {
   },
   mounted () {
     // 先获取假数据

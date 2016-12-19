@@ -20,12 +20,12 @@
           <p class="bookTitle">{{bookListItem.bookName}}</p>
           <p class="bookBrief"><span class="author">{{bookListItem.author}}</span><span> —— 《{{bookListItem.journalName}}》 —— </span><span>{{bookListItem.journalNum}}(刊号)</span></p>
           <p class="abstract"><span>摘要:</span><span>{{bookListItem.abstract}}</span></p>
-        </router-link>
+          </router-link>
           <ul class="userBtns clrfix">
-             <li class="active"><span class="iconfont icon-remark"></span>评论</li>
-             <li><span class="iconfont icon-recommendBtn"></span>推荐</li>
-             <li><span class="iconfont icon-share"></span>分享</li>
-             <li><span class="iconfont icon-collect"></span>收藏</li>
+             <li class="clrfix"><span class="iconfont icon-remark" v-on:click="test(bookList[index])"></span><span class="word">评论</span></li>
+             <li><span class="iconfont icon-recommendBtn"></span><span class="word">推荐</span></li>
+             <li class="clrfix"><span class="iconfont icon-share"></span><span class="word">分享</span></li>
+             <li ><span class="iconfont icon-collect"></span><span class="word">收藏</span></li>
           </ul>
         </li>
       </ul>
@@ -45,9 +45,16 @@
 import axios from 'axios'
 export default {
   name: 'bookList',
-  data () {
+  data: function () {
     return {
+      zxq: 'singledog',
       bookList: []
+    }
+  },
+  methods: {
+    // 推荐和收藏高亮
+    test: function (index) {
+      console.log(index)
     }
   },
   mounted () {

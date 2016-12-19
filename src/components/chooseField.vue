@@ -4,7 +4,9 @@
      <ul class="subjectList clrfix">
        <li @click="changeColor(subjectItem)" v-for="subjectItem in subjectItems" v-bind:class="{active:subjectItem.isChecked}">{{subjectItem.subjectName}}</li>
      </ul>
-     <input type="button" name="" value="下一步" class="next" @click="next" >
+     <router-link to="/chooseField/chooseFieldDetail">
+       <input type="button" name="" value="下一步" class="next">
+     </router-link>
   </div>
 </template>
 <script>
@@ -61,13 +63,12 @@ export default {
     },
     next: function () {
       console.log(123)
-      window.location.href = 'myCenter/scholarCircle'
+      window.location.href = 'chooseField/chooseFieldDetail'
     }
   }
 }
 </script>
 <style media="screen">
-
   #chooseField h1{
     width: 100%;
     height: .78rem;
@@ -94,7 +95,7 @@ export default {
     font-size: .24rem;
     float: left;
     padding: 0 .46rem;
-    margin-right: .38rem;
+    margin-right: .3rem;
     margin-bottom: .34rem;
   }
   #chooseField .subjectList li.active{

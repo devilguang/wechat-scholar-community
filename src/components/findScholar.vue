@@ -6,18 +6,50 @@
 				<legend>学者查询</legend>
 				<div class="searchFormGroup">
 					<label>姓名（必填）</label>
-					<input type="text"/>
+					<input type="text" v-model="scholarName" :value="scholarName" placeholder="请输入学者姓名"/>
 				</div>
 				<div class="searchFormGroup">
 					<label>机构</label>
-					<input type="text" />
+					<input type="text" v-model="insName" :value="insName" placeholder="请填写尽量详细化"/>
 				</div>
-				<div class="searchFormSubmit">
-					<a href="../findScholar/scholarResult"><input class="submitBtn" value="开始查询"></a>
-				</div>
+        <!-- <router-link to="/findScholar/scholarResult"> -->
+          <div class="searchFormSubmit" @click="search">
+            <a ><input class="submitBtn" value="开始查询"></a>
+          </div>
+        <!-- </router-link> -->
 			</fieldset>
 		</form>
 </div>
 </template>
 <script>
+import axios from 'axios'
+import qs from 'querystring'
+export default {
+  data () {
+    return {
+      scholarName: '',
+      insName: ''
+    }
+  },
+  methods: {
+    search: function () {
+      console.log(123)
+      var that = this
+      console.log(this.scholarName)
+      axios.post('http://localhost/query/gatherScholarItem', qs.stringify({
+        scholar: that.scholarName,
+        organ: that.insName
+      }))
+      .then((response) => {
+        console.log(response)
+        window.sessionStorage.setItem('data', JSON.stringify(response))
+        window.open('/findScholar/scholarResult', '_self')
+      })
+      .then((error) => console.log(error))
+    }
+  },
+  mounted () {
+    // 先获取假数据
+  }
+}
 </script>

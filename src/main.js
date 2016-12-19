@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
+import axios from 'axios'
+
 // 开启debug模式
 Vue.config.debug = true
 // 调用VueRouter
@@ -17,11 +19,17 @@ import bookDetail from './components/bookDetail.vue'
 import codeInput from './components/codeInput.vue'
 import setName from './components/setName.vue'
 import chooseField from './components/chooseField.vue'
+import chooseFieldDetail from './components/chooseFieldDetail.vue'
 import scholarCircle from './components/myCenter/scholarCircle.vue'
-import myApply from './components/myCenter/myApply.vue'
+import dynamic from './components/myCenter/dynamic.vue'
 import myInfo from './components/myCenter/myInfo.vue'
 import editMyself from './components/myCenter/editMyself.vue'
-
+import myApply from './components/myCenter/myApply.vue'
+import talk from './components/myCenter/talk.vue'
+import management from './components/myCenter/management.vue'
+import editMe from './components/myCenter/editMe.vue'
+import Iwillconfirm from './components/myCenter/Iwillconfirm.vue'
+import publishFruit from './components/myCenter/publishFruit.vue'
 // 创建一个路由器实例
 // 并且配置路由规则
 var router = new VueRouter({
@@ -42,7 +50,7 @@ var router = new VueRouter({
     },
     {
       name: 'detail',
-      path: '/findScholar/scholarResult/scholarDetail/:userID',
+      path: '/findScholar/scholarResult/scholarDetail/:link',
       component: scholarDetail
     },
     {
@@ -75,6 +83,10 @@ var router = new VueRouter({
       component: chooseField
     },
     {
+      path: '/chooseField/chooseFieldDetail',
+      component: chooseFieldDetail
+    },
+    {
       path: '/myCenter/scholarCircle',
       component: scholarCircle
     },
@@ -89,9 +101,35 @@ var router = new VueRouter({
     {
       path: '/myCenter/editMyself',
       component: editMyself
+    },
+    {
+      path: '/myCenter/dynamic',
+      component: dynamic
+    },
+    {
+      path: '/myCenter/talk',
+      component: talk
+    },
+    {
+      path: '/myCenter/management',
+      component: management
+    },
+    {
+      path: '/myCenter/editMe',
+      component: editMe
+    },
+    {
+      path: '/myCenter/Iwillconfirm',
+      component: Iwillconfirm
+    },
+    {
+      path: '/myCenter/management/publishFruit',
+      component: publishFruit
     }
   ]
 })
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+
 // 现在我们可以启动应用了！
 // 路由器会创建一个 App 实例，并且挂载到选择符 #app 匹配的元素上。
 const app = new Vue({
