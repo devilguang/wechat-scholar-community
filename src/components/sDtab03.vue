@@ -3,28 +3,19 @@ sD<template lang="html">
      <ul>
        <li class="instituteItem" v-for="instituteItem in instituteItems">
          <span class="iconfont icon-house"></span>
-         <span class="insPlace">{{instituteItem.place}}({{instituteItem.number}})</span>
+         <span class="insPlace">{{instituteItem.organName}}({{instituteItem.achCount}})</span>
        </li>
      </ul>
   </section>
 </template>
 
 <script>
-import axios from 'axios'
 export default {
-  data () {
-    return {
-      instituteItems: []
-    }
-  },
-  mounted () {
-    // 先获取假数据
-    axios.get('/static/mock-data/institute.json')
-    .then((response) => {
-      this.instituteItems = response.data
-      console.log(response)
-    })
-    .then((error) => console.log(error))
+  props: [
+    'instituteItems'
+  ],
+  ready () {
+    console.log(this.instituteItems)
   }
 }
 </script>

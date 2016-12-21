@@ -1,12 +1,6 @@
 <template>
   <div id="bookDetail" style="height:100%;background:#fff">
-    <article class="searchTop">
-      <input type="text" name="" value="" placehoder="请输入搜索内容">
-      <span class="searchBtn iconfont icon-searchBtn"></span>
-      <div class="selectBtn">
-        <span class="iconfont icon-select"></span>
-      </div>
-    </article>
+  
     <article class="bookContent">
       <p class="bookTitle">{{infos.bookTitle}}{{$route.params.bookID}}</p>
       <p class="bookOrigin"><span class="iconfont icon-link"></span><span>来源 — — </span><span>{{infos.bookOrg}}</span></p>

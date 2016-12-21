@@ -1,11 +1,10 @@
 <template>
  <div id="scholarDetail">
      <!-- 详情头部 -->
-     <article class="detailTopBox">
+     <article class="detailTopBox clrfix">
         <div class="scholarHead">
           <!-- <img v-bind:src="infos.imgUrl" > -->
           <img src="../assets/img/img-scholar_1.png" >
-          <div class="IApprove" @click="approve()"><span class="iconfont icon-iapprove"></span>我要认证</div>
         </div>
          <div class="scholarBrief">
                <div class="scholarTitle clrfix">
@@ -14,7 +13,10 @@
                </div>
                <p class="scholarUniverse">{{infos.organName}}{{$route.params.userID}}</p>
                <p class="scholarMarjor">专业方向：<span>{{infos.research}}</span></p>
-               <button class="attention" id="attentionBtn" @click="attention()"><span class="iconfont icon-plus"></span>关注</button>
+               <button class="attention" id="attentionBtn" @click="attention()">+关注</button>
+               <router-link to="/myCenter/Iwillconfirm">
+                 <div class="IApprove"><span class="iconfont icon-iapprove"></span>我要认证</div>
+               </router-link>
           </div>
      </article>
      <!-- 详情数字部分 -->
@@ -34,16 +36,17 @@
            <li  @click="tabToggle(tab03Text)" :class="{active: activeName == tab03Text}"><span class="iconfont icon-institution"></span><span class="tabTitle">合作机构</span></li>
        </ul>
        <!-- 选项卡部分页面在component体现 -->
-      <component :is='currentView' keep-alive></component>
+      <component :is='currentView' keep-alive  :infos="infos" :partnerItems="partnerItems" :instituteItems="instituteItems" :detailItems="detailItems" ></component>
 
      </article>
 </div>
 </template>
 <script>
-// import axios from 'axios'
 import sDtab01 from './sDtab01'
 import sDtab02 from './sDtab02'
 import sDtab03 from './sDtab03'
+import axios from 'axios'
+import qs from 'querystring'
 export default {
   name: 'scholarDetail',
   data () {
@@ -54,7 +57,10 @@ export default {
       currentView: 'sDtab01',
       activeName: 'tab01Text',
       activeFirst: true,
-      infos: []
+      infos: [],
+      detailItems: [],
+      partnerItems: [],
+      instituteItems: []
     }
   },
   components: {
@@ -79,31 +85,22 @@ export default {
         window.alert('已关注')
         attentionBtn.innerHTML = '已关注'
       }
-    },
-    // 我要认证跳页面
-    approve: function () {
-      window.location.href = '../../../myCenter/Iwillconfirm'
     }
   },
   mounted () {
-    var scDetail = JSON.parse(window.sessionStorage.getItem('scDetail'))
-    console.log(scDetail)
-    this.infos = scDetail.data
-    // 先获取假数据
-    // axios.get('/static/mock-data/scholarDetail.json')
-    // .then((response) => {
-    //   var userID = document.location.href
-    //   var arr = userID.split('/')
-    //   userID = arr[arr.length - 1]
-    //   for (var scholarInfo in response.data) {
-    //     console.log(response.data[scholarInfo])
-    //     if (response.data[scholarInfo].userID === userID) {
-    //       this.infos = response.data[scholarInfo]
-    //       console.log(this.infos)
-    //     }
-    //   }
-    // })
-    // .then((error) => console.log(error))
+    // var scDetail = JSON.parse(window.sessionStorage.getItem('scDetail'))
+    // console.log(scDetail)
+
+    console.log(this.$route.params.link)
+
+    axios.post('http://localhost/query/gatherScholarDetail', qs.stringify({link: this.$route.params.link})).then((response) => {
+      console.log(response.data)
+      this.infos = response.data
+      this.detailItems = response.data.cnkiDetailLists
+      this.partnerItems = response.data.cnkiAuthorsList
+      this.instituteItems = response.data.cnkiOrgansList
+      console.log(this.partnerItems)
+    }).then((error) => console.log(error))
   }
 }
 

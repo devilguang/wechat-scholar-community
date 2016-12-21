@@ -1,33 +1,25 @@
-sD<template lang="html">
- <section class="tabContent" id="sDtab02">
+<template lang="html">
+ <section class="tabContent" id="sDtab02" >
      <ul>
        <li class="partnerItem" v-for="partnerItem in partnerItems">
           <div class="top clrfix">
-              <img :src="partnerItem.imgUrl" alt="">
-              <span class="name">{{partnerItem.name}}</span>
+              <img src="../assets/img/img-scholar_1.png">
+              <span class="name">{{partnerItem.author}}</span>
           </div>
-          <p>机构:{{partnerItem.ins}}</p>
+          <p>机构:&nbsp{{partnerItem.organName}}</p>
        </li>
      </ul>
   </section>
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
-  data () {
-    return {
-      partnerItems: []
-    }
-  },
-  mounted () {
-    // 先获取假数据
-    axios.get('/static/mock-data/partner.json')
-    .then((response) => {
-      this.partnerItems = response.data
-      console.log(response)
-    })
-    .then((error) => console.log(error))
+  props: [
+    'partnerItems'
+  ],
+  ready () {
+    console.log(this.partnerItems)
   }
 }
 </script>
@@ -61,7 +53,7 @@ export default {
  height: .56rem;
  display: block;
  float: left;
- margin-left: 0.1rem;
+ margin-left: 0.15rem;
 }
 #sDtab02 ul .partnerItem p{
  color:#8f8f94;

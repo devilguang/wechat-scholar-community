@@ -2,7 +2,7 @@
  <div id="scholarResult">
   <h4>为您检索的结果如下：</h4>
   <ul class="scholarList">
-    <li class="scholarItem clrfix" v-for="item in items" @click="toDetail(item.link)">
+    <li class="scholarItem clrfix" v-for="item in items">
       <!-- <router-link :to="{ path: 'scholarResult/scholarDetail', query: { ID: item.userID }}"> -->
       <router-link :to="{ name: 'detail', params: { link: item.link }}">
         <div class="scholarHead"><img src="../assets/img/img-scholar_1.png" > </div>
@@ -22,8 +22,8 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
-import qs from 'querystring'
+// import axios from 'axios'
+// import qs from 'querystring'
 export default {
   name: 'scholarDetail',
   data () {
@@ -33,20 +33,24 @@ export default {
   },
   methods: {
     // 点击进学者详情页
-    toDetail: function (linkUrl) {
-      console.log(linkUrl)
-      axios.post('http://localhost/query/gatherScholarDetail', qs.stringify({
-        link: linkUrl
-      }))
-      .then((response) => {
-        window.sessionStorage.setItem('scDetail', JSON.stringify(response))
-      })
-      .then((error) => console.log(error))
-    }
+    // toDetail: function (linkUrl) {
+    //   // console.log(linkUrl)
+    //   axios.post('http://localhost/query/gatherScholarDetail', qs.stringify({
+    //     link: linkUrl
+    //   }))
+    //   .then((response) => {
+    //     window.sessionStorage.setItem('scDetail', JSON.stringify(response))
+    //     // console.log(response)
+    //     // var arr = window.location.href.split('/')
+    //   //  window.location.href = window.location.href + '/scholarDetail/' + linkUrl
+    //     // window.open('/findScholar/scholarResult/scholarDetail/' + linkUrl, '_self')
+    //   })
+    //   .then((error) => console.log(error))
+    // }
   },
   mounted () {
     var scResult = JSON.parse(window.sessionStorage.getItem('data'))
-    console.log(scResult)
+    // console.log(scResult)
     this.items = scResult.data
     // 先获取假数据
     //   axios.get('/static/mock-data/scholarResult.json')

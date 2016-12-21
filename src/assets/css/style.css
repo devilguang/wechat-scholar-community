@@ -73,7 +73,7 @@
   margin-top: .84rem;
   margin-bottom: .93rem;
 }
-.scholarList .scholarItem{
+.scholarList .scholarItem,.attentionBox .scholarItem{
 	width: 100%;
 	border-top:1px solid #ddd;
 	border-bottom:1px solid #ddd;
@@ -85,34 +85,38 @@
 	margin-bottom: .3rem;
 	position: relative;
 }
-.scholarList .scholarItem .scholarHead{
+
+.scholarList .scholarItem .scholarHead,.attentionBox .scholarItem .scholarHead{
 	width: 1.28rem;
 	float: left;
 	margin-right: .37rem;
 
 }
-.scholarList .scholarItem .scholarHead img{
+.scholarList .scholarItem .scholarHead img,.attentionBox .scholarItem .scholarHead img{
 	width: 100%;
 }
-.scholarList .scholarItem .scholarInfos{
+.scholarList .scholarItem .scholarInfos,.attentionBox .scholarItem .scholarInfos{
     width: 60%;
      float: left;
      margin-top: -0.1rem;
 }
-.scholarList .scholarItem .scholarInfos .scholarTitle{
+.scholarList .scholarItem .scholarInfos .scholarTitle,.attentionBox .scholarItem .scholarInfos .scholarTitle{
      height: .4rem;
 
 }
 
-.scholarList .scholarItem .scholarName{
+.scholarList .scholarItem .scholarName,.attentionBox .scholarItem .scholarName{
 	font-size: .29rem;
 	color: #000;
 	font-weight: bold;
 	float: left;
 	margin-top: 0.1rem;
 }
+.attentionBox .scholarItem .scholarName{
+  margin-top: 0.14rem;
+}
 
-.scholarList .scholarItem .scholarStatus,.detailTopBox .scholarBrief .scholarTitle .scholarStatus{
+.scholarList .scholarItem .scholarStatus,.attentionBox .scholarItem .scholarStatus,.detailTopBox .scholarBrief .scholarTitle .scholarStatus{
 	float: left;
 	color: #fff;
 	background: #9c9c9c;
@@ -130,18 +134,19 @@
 .detailTopBox .scholarBrief .scholarTitle .scholarStatus{
   margin-top: 0;
 }
-.scholarList .scholarItem .scholarPosition{
+.scholarList .scholarItem .scholarPosition,.attentionBox .scholarItem .scholarPosition{
 	margin-top: 0.1rem;
 }
-.scholarList .scholarItem .scholarPosition,.scholarList .scholarItem .scholarCited,.scholarList .scholarItem .scholarDir{
+.scholarList .scholarItem .scholarPosition,.attentionBox .scholarItem .scholarPosition,.scholarList .scholarItem .scholarCited,.attentionBox .scholarItem .scholarCited,.scholarList .scholarItem .scholarDir,.attentionBox
+ .scholarItem .scholarDir{
 	font-size: .22rem;
 	color: #000;
 	line-height: .44rem;
 }
-.scholarList .scholarItem .scholarDir{
+.scholarList .scholarItem .scholarDir,.attentionBox .scholarItem .scholarDir{
   color: #888;
 }
-.scholarList .scholarItem .scholarDir span{
+.scholarList .scholarItem .scholarDir span,.attentionBox .scholarItem .scholarDir span{
   color: #000;
   font-size: .22rem;
 }
@@ -232,9 +237,9 @@
 }
 /*scholarDetail part*/
 #scholarDetail .detailTopBox{
-   height: 2.6rem;
+
    background: #fff;
-   padding:0.4rem 0.28rem 0 0.28rem;
+   padding:0.4rem 0.28rem 0.25rem 0.28rem;
    box-sizing: border-box;
 }
 #scholarDetail .detailTopBox .scholarHead{
@@ -250,7 +255,7 @@
 #scholarDetail .detailTopBox .scholarBrief .attention{
    float: left;
   position: absolute;
-  top:0;
+  top:-0.05rem;
   right: -0.1rem;
   width: .94rem;
   height: .4rem;
@@ -269,9 +274,9 @@
 }
 #scholarDetail .detailTopBox .scholarBrief .scholarUniverse{
 	font-size: .2rem;
-	height: .45rem;
+	height: .54rem;
   margin-top: 0.08rem;
-	line-height: .45rem;
+	line-height: .54rem;
 }
 #scholarDetail .detailTopBox .scholarBrief .scholarMarjor,#scholarDetail .detailTopBox .scholarBrief .scholarField{
 	font-size: .22rem;
@@ -287,20 +292,23 @@
 	  margin-bottom: .15rem;
    width: 100%;
 }
-#scholarDetail .detailTopBox .scholarHead .IApprove{
+#scholarDetail .detailTopBox .scholarBrief .IApprove{
 	width:1.35rem;
-	height: .42rem;
+	height: .4rem;
 	border:1px solid #a1ecdd;
 	border-radius: 0.07rem;
 	color: #5eddc1;
-	font-size: .18rem;
-	line-height: .42rem;
+	font-size: .16rem;
+	line-height: .4rem;
 	text-align: center;
   margin-left: -0.08rem;
     margin-top: -0.1rem;
+    position: absolute;
+    right:  -0.3rem;
+    top:0.58rem;
 
 }
-#scholarDetail .detailTopBox .scholarHead .IApprove span{
+#scholarDetail .detailTopBox .scholarBrief .IApprove span{
 	color: #ffc320;
 	font-size: .18rem;
 	margin: 0 0.03rem;
@@ -375,10 +383,11 @@
 #scholarDetail .tabBox .tabContent{
 	padding: 0.2rem .3rem 0;
 	box-sizing: border-box;
+  margin-bottom: 0.95rem;
 }
 #scholarDetail .tabBox .tabContent .contentTop{
     width: 100%;
-    height: .92rem;
+    height: .82rem;
 }
 #scholarDetail .tabBox .tabContent .contentTop {
     width: 100%;
@@ -401,11 +410,13 @@
 	color: #000;
 	line-height: .54rem;
 	text-align: center;
+  margin-top: 0.04rem;
 }
 #scholarDetail .tabBox .tabContent .contentMain .contentItem{
    padding-top: .17rem;
    box-sizing: border-box;
    background: #fff;
+   margin-bottom:0.3rem;
 }
 #scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon{
 	  margin: 0 0.15rem;
@@ -452,8 +463,8 @@ color: #36d7b6;
 	float: left;
 	font-size: .4rem;
 }
-/*findBook part*/
-#findBook .searchTop,#bookDetail .searchTop{
+/*bookResult part*/
+#bookResult .searchTop{
   width: 100%;
   background: #36d7b6;
   height: 1.03rem;
@@ -462,37 +473,38 @@ color: #36d7b6;
   padding: .22rem .29rem;
   box-sizing: border-box;
 }
-#findBook .searchTop input,#bookDetail .searchTop input{
-  width:85%;
+#bookResult .searchTop input{
+  width:100%;
   height: 100%;
   border: none;
   border-radius:0.06rem;
   text-indent: 0.15rem;
 }
-#findBook .searchTop .selectBtn,#bookDetail .searchTop .selectBtn{
+#bookResult .searchTop .selectBtn{
   float: right;
   background: #fff;
   height: .56rem;
   width: .56rem;
   border-radius: 0.06rem;
 }
-#findBook .searchTop .selectBtn span,#bookDetail .searchTop .selectBtn span{
+#bookResult .searchTop .selectBtn span{
    text-align: center;
    line-height: .56rem;
    display: block;
    width: .56rem;
    font-size: .35rem;
 }
-#findBook .searchTop .icon-searchBtn,#bookDetail .searchTop .icon-searchBtn{
+#bookResult .searchTop .icon-searchBtn{
   color: #36d7b6;
   position: absolute;
-  top:36%;
-  right: 21%;
+  top:30%;
+  right: .42rem;
+  font-size: .4rem;
 }
-#findBook .searchTop .icon-select,#bookDetail .searchTop .icon-select{
+#bookResult .searchTop .icon-select{
   color: #36d7b6;
 }
-#findBook .findTip{
+#bookResult .findTip{
   padding: .19rem .29rem;
   width: 100%;
   margin-top: 1.03rem;
@@ -500,7 +512,7 @@ color: #36d7b6;
   box-sizing: border-box;
   border-bottom: 1px solid #e8e8ea;
 }
-#findBook .findTip .findLogo{
+#bookResult .findTip .findLogo{
   width: .82rem;
   height: .82rem;
   background: #bbb;
@@ -508,27 +520,39 @@ color: #36d7b6;
   float: left;
   margin-right: 0.2rem;
 }
-#findBook .findTip p{
+#bookResult .findTip p{
   float: left;
-  width: 80%;
+margin-right: .4rem;
   font-size: .24rem;
-  line-height: .4rem;
+  line-height: .58rem;
   margin-top: .05rem;
 }
-#findBook .findTip span{
+#bookResult .findTip span{
   color: #fff;
   font-size: .7rem;
   text-align: center;
   display: block;
   line-height: .82rem;
 }
-#findBook .bookList{
+#bookResult .findTip button{
+  border:none;
+  color:#fff;text-align: center;
+  background: #ffb656 !important;
+  margin-top: .12rem;
+  padding: 0 0.2rem;
+  border-radius: 0.06rem;
+  height: .4rem;
+  font-size: .26rem;
+  line-height: .4rem;
+
+}
+#bookResult .bookList{
   margin-bottom: 0.9rem;
 }
-#findBook .bookList ul{
+#bookResult .bookList ul{
   width: 100%;
 }
-#findBook .bookList ul .bookListItem{
+#bookResult .bookList ul .bookListItem{
   width: 100%;
   padding: .36rem .29rem 0 ;
   box-sizing: border-box;
@@ -536,32 +560,37 @@ color: #36d7b6;
   border-bottom: 1px solid #e2e2e3;
     margin-bottom: .35rem;
 }
-#findBook .bookList ul .bookListItem .bookTitle{
+#bookResult .bookList ul .bookListItem .bookTitle{
   font-size: .28rem;
   color: #000;
+  font-family: "微软雅黑";
 }
-#findBook .bookList ul .bookListItem .bookBrief{
+#bookResult .bookList ul .bookListItem .bookBrief{
  height: .49rem;
  line-height: .49rem;
  font-size: .22rem;
+ text-overflow:ellipsis;
+  white-space:nowrap;
+   overflow:hidden;
+
 }
-#findBook .bookList ul .bookListItem .bookBrief span{
+#bookResult .bookList ul .bookListItem .bookBrief span{
 color: #a4a4a4;
 }
-#findBook .bookList ul .bookListItem .bookBrief .author{
+#bookResult .bookList ul .bookListItem .bookBrief .author{
 color: #ffb656;
 }
-#findBook .bookList ul .bookListItem .abstract{
+#bookResult .bookList ul .bookListItem .abstract{
   line-height: .38rem;
  font-size: .18rem;
  color: #323232;
 }
-#findBook .bookList ul .bookListItem .userBtns{
+#bookResult .bookList ul .bookListItem .userBtns{
   height: .76rem;
   border-top: 1px solid #e2e2e3;
   margin-top: 0.08rem;
 }
-#findBook .bookList ul .bookListItem .userBtns li{
+#bookResult .bookList ul .bookListItem .userBtns li{
   float: left;
   width: 24.6%;
   line-height: .73rem;
@@ -573,22 +602,22 @@ color: #ffb656;
   box-sizing: border-box;
   padding-left: 0.2rem;
 }
-#findBook .bookList ul .bookListItem .userBtns li .iconfont{
+#bookResult .bookList ul .bookListItem .userBtns li .iconfont{
   font-size: .38rem;
   display: block;
   float: left;
 }
-#findBook .bookList ul .bookListItem .userBtns li .word{
+#bookResult .bookList ul .bookListItem .userBtns li .word{
   font-size: .22rem;
   line-height: .73rem;
   display: block;
   float: left;
 
 }
-#findBook .bookList ul .bookListItem .userBtns li:nth-of-type(4){
+#bookResult .bookList ul .bookListItem .userBtns li:nth-of-type(4){
   border: none;
 }
-#findBook .bookList ul .bookListItem .userBtns li.active{
+#bookResult .bookList ul .bookListItem .userBtns li.active{
   color: #36d7b6;
 }
 /*bookDetail part*/
@@ -597,7 +626,6 @@ color: #ffb656;
 }
 #bookDetail .bookContent{
   width: 100%;
-  margin-top: 1.03rem;
   padding: .38rem .29rem 0.15rem;
   box-sizing: border-box;
 }
@@ -800,7 +828,7 @@ color: #000;
 }
 /*myCenter part*/
 /*scholarCircle part*/
-#scholarCircle .circleContent,#myApply .applyContent,#myInfo .myInfoContent,#editMyself .editContent{
+#scholarCircle .circleContent,#myApply .applyContent,#editMyself .editContent{
   margin-top: .75rem;
 }
 #scholarCircle .circleContent .circleLists{

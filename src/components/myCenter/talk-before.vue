@@ -1,6 +1,30 @@
 <template lang="html">
   <div id="talk"  style="height:100vh;background:#fff">
-  
+    <header>
+      <ul class="clrfix">
+        <li>
+          <router-link to="/myCenter/myInfo">
+            <span class="">我的</span>
+          </router-link>
+        </li>
+        <li>
+         <router-link to="/myCenter/dynamic">
+         <span class="">动态</span>
+         </router-link>
+         </li>
+        <li>
+         <router-link to="/myCenter/myApply">
+        <span class="">推荐</span>
+         </router-link>
+         </li>
+          <li>
+         <router-link to="/myCenter/talk">
+         <span class="active">唠嗑</span>
+         <p></p>
+         </router-link>
+         </li>
+      </ul>
+    </header>
     <article class="talkContent">
       <ul class="talkLists">
         <li class="talkList">

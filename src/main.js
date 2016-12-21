@@ -8,28 +8,39 @@ Vue.config.debug = true
 // 调用VueRouter
 Vue.use(VueRouter)
 
+// const FETCH_DATA_PREFIX_URL = 'http://localhost/'
+
 // 定义组件, 也可以像教程之前教的方法从别的文件引入
 import findScholar from './components/findScholar.vue'
 import findBook from './components/findBook.vue'
 import recommend from './components/recommend.vue'
 import personalCenter from './components/personalCenter.vue'
+
 import scholarResult from './components/scholarResult.vue'
+import bookResult from './components/bookResult.vue'
 import scholarDetail from './components/scholarDetail.vue'
 import bookDetail from './components/bookDetail.vue'
+
 import codeInput from './components/codeInput.vue'
 import setName from './components/setName.vue'
 import chooseField from './components/chooseField.vue'
 import chooseFieldDetail from './components/chooseFieldDetail.vue'
 import scholarCircle from './components/myCenter/scholarCircle.vue'
 import dynamic from './components/myCenter/dynamic.vue'
-import myInfo from './components/myCenter/myInfo.vue'
 import editMyself from './components/myCenter/editMyself.vue'
 import myApply from './components/myCenter/myApply.vue'
 import talk from './components/myCenter/talk.vue'
 import management from './components/myCenter/management.vue'
 import editMe from './components/myCenter/editMe.vue'
 import Iwillconfirm from './components/myCenter/Iwillconfirm.vue'
+
+import myInfo from './components/myCenter/myInfo.vue'
+import hasNotConfirm from './components/myCenter/hasNotConfirm.vue'
+import hasConfirm from './components/myCenter/hasConfirm.vue'
 import publishFruit from './components/myCenter/publishFruit.vue'
+import publishTip from './components/myCenter/publishTip.vue'
+import collect from './components/myCenter/collect.vue'
+import attention from './components/myCenter/attention.vue'
 // 创建一个路由器实例
 // 并且配置路由规则
 var router = new VueRouter({
@@ -58,8 +69,12 @@ var router = new VueRouter({
       component: findBook
     },
     {
+      path: '/findBook/bookResult',
+      component: bookResult
+    },
+    {
       name: 'bookDetail',
-      path: '/findBook/bookDetail/:bookID',
+      path: '/findBook/bookResult/bookDetail/:bookID',
       component: bookDetail
     },
     {
@@ -99,6 +114,14 @@ var router = new VueRouter({
       component: myInfo
     },
     {
+      path: '/myCenter/hasNotConfirm',
+      component: hasNotConfirm
+    },
+    {
+      path: '/myCenter/hasConfirm',
+      component: hasConfirm
+    },
+    {
       path: '/myCenter/editMyself',
       component: editMyself
     },
@@ -115,16 +138,28 @@ var router = new VueRouter({
       component: management
     },
     {
+      path: '/myCenter/management/publishTip',
+      component: publishTip
+    },
+    {
+      path: '/myCenter/management/publishFruit',
+      component: publishFruit
+    },
+    {
+      path: '/myCenter/collect',
+      component: collect
+    },
+    {
+      path: '/myCenter/attention',
+      component: attention
+    },
+    {
       path: '/myCenter/editMe',
       component: editMe
     },
     {
       path: '/myCenter/Iwillconfirm',
       component: Iwillconfirm
-    },
-    {
-      path: '/myCenter/management/publishFruit',
-      component: publishFruit
     }
   ]
 })

@@ -43,7 +43,9 @@ export default {
       .then((response) => {
         console.log(response)
         window.sessionStorage.setItem('data', JSON.stringify(response))
-        window.open('/findScholar/scholarResult', '_self')
+        this.$router.push({
+          path: '/findScholar/scholarResult'
+        })
       })
       .then((error) => console.log(error))
     }

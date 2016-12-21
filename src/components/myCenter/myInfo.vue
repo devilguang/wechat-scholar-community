@@ -1,9 +1,9 @@
 <template lang="html">
   <div id="myInfo"  style="height:100vh;background:#f5f5f9">
-    <header>
+    <!-- <header>
       <ul class="clrfix">
         <li>
-          <router-link to="/myCenter/myInfo">
+        <router-link to="/myCenter/center">
             <span class="active">我的</span>
             <p></p>
           </router-link>
@@ -24,7 +24,7 @@
          </router-link>
          </li>
       </ul>
-    </header>
+    </header> -->
     <article class="myInfoContent">
          <section class="myConfirm">
             <div class="left">
@@ -47,14 +47,45 @@
                 </router-link>
             </div>
          </section>
+         <!-- 详情数字部分 -->
+         <section class="numBox">
+            <ul class="clrfix" >
+              <li class="outcomN"><span>2016</span><p>成果数</p></li>
+              <li class="citedN"><span>12</span><p>被引数</p></li>
+              <li class="followerN"><span>21</span><p>跟随着</p></li>
+              <li class="HN"><span>11</span><p>H指数</p></li>
+            </ul>
+         </section>
+         <section class="centerListBox">
+           <ul class="centerLists">
+             <li class="centerItem" @click="toMyFruit">
+               <span>icon</span><span>我的成果</span><span class="iconfont icon-more"></span>
+            </li>
+             <li class="centerItem" @click="toCollect">
+               <span>icon</span><span>我的收藏</span><span class="iconfont icon-more"></span>
+             </li>
+             <li class="centerItem" @click="toAttention">
+               <span>icon</span><span>我的关注</span><span class="iconfont icon-more"></span>
+             </li>
+
+             <li class="centerItem" @click="toDynamic">
+                 <span>icon</span>
+               <span>动态</span><span class="iconfont icon-more"></span>
+             </router-link>
+             </li>
+             <li class="centerItem" @click="toTalk">
+               <span>icon</span><span>唠嗑</span><span class="iconfont icon-more"></span>
+             </li>
+           </ul>
+         </section>
          <!-- 未认证时 -->
-         <section class="notConfirm" hidden>
+         <!-- <section class="notConfirm" hidden>
                   <img src="../../assets/img/img-waiting_2.png" alt="">
                   <p class="notConfirmTip">您还未认领自己的学术作品，试着搜索 您的姓名找到自己的成果吧</p>
                   <button type="button" name="button" class="scholarSearchBtn">学者搜索</button>
-         </section>
+         </section> -->
          <!-- 认证过后的列表页 -->
-         <section class="hasConfirm">
+         <!-- <section class="hasConfirm">
             <div class="top">
               <span class="tit">成果列表</span>
               <router-link to="/myCenter/management">
@@ -77,13 +108,55 @@
               </li>
 
             </ul>
-         </section>
+         </section> -->
     </article>
   </div>
 </template>
 <script>
+// import Vue from 'vue'
+// import VueRouter from 'vue-router'
+// Vue.use(VueRouter)
 export default{
+  data () {
+    return {
+    // 控制是否认证切换页面
+      isComfirm: false
+    }
+  },
   methods: {
+    toMyFruit: function () {
+      console.log(this.isComfirm)
+      if (this.isComfirm) {
+        this.$router.push({
+          path: '/myCenter/hasNotConfirm'
+        })
+        console.log(this.$route)
+      } else {
+        this.$router.push({
+          path: '/myCenter/hasConfirm'
+        })
+      }
+    },
+    toCollect: function () {
+      this.$router.push({
+        path: '/myCenter/collect'
+      })
+    },
+    toAttention: function () {
+      this.$router.push({
+        path: '/myCenter/attention'
+      })
+    },
+    toDynamic: function () {
+      this.$router.push({
+        path: '/myCenter/dynamic'
+      })
+    },
+    toTalk: function () {
+      this.$router.push({
+        path: '/myCenter/talk'
+      })
+    }
   }
 }
 </script>
@@ -261,5 +334,44 @@ export default{
 #myInfo .hasConfirm .contentMain .contentItem .userBtns li span{
 	float: left;
 	font-size: .4rem;
+}
+#myInfo .numBox{
+	width: 100%;
+	height: 1.04rem;
+	background: #eee;
+	padding-top: .12rem;
+	box-sizing: border-box;
+	border-bottom: 1px solid #ddddde;
+}
+#myInfo .numBox ul li{
+	width:24.5%;
+	height: .78rem;
+	float: left;
+	border-right: 1px solid #f8f8f8;
+	text-align: center;
+
+}
+#myInfo .numBox ul li span{
+	font-size: .28rem;
+	font-weight: bold;
+	color: #000;
+	line-height: .44rem;
+
+}
+#myInfo .numBox ul li p{
+	font-size: .18rem;
+	color: #949494;
+
+}
+#myInfo .numBox ul .HN{
+	border-right: none;
+}
+#myInfo .centerListBox{
+	margin-top: 0.3rem;
+}
+#myInfo .centerListBox .centerLists .centerItem{
+	height:.8rem;
+  background: #fff;
+  margin-bottom: 0.2rem;
 }
 </style>

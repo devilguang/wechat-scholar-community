@@ -1,38 +1,13 @@
 <template lang="html">
   <div id="management">
-    <header>
-      <ul class="clrfix">
-        <li>
-          <router-link to="/myCenter/myInfo">
-            <span class="active">我的</span>
-            <p></p>
-          </router-link>
-        </li>
-        <li>
-         <router-link to="/myCenter/dynamic">
-         <span class="">动态</span>
-         </router-link>
-         </li>
-        <li>
-         <router-link to="/myCenter/myApply">
-        <span class="">推荐</span>
-         </router-link>
-         </li>
-          <li>
-         <router-link to="/myCenter/talk">
-         <span class="">唠嗑</span>
-         </router-link>
-         </li>
-      </ul>
-    </header>
+    
     <article class="managementCon">
-      <p class="magTit">成果管理</p>
       <div class="magBtns">
         <div class="allSelBox">
           <input type="checkbox" name="" value="" @click="checkedAll" v-model="checked"><span>全选</span>
         </div>
         <h3 class="del" @click="deleteBtn">删除</h3>
-        <button type="button" name="button" class="submitFruit" @click="publish()">提交成果</button>
+        <button type="button" name="button" class="submitFruit" @click="add()">添加</button>
       </div>
       <ul class="fruitList">
         <li class="fruitItem" v-for="checkb in checkboxData">
@@ -51,6 +26,9 @@
 <script>
 export default {
   methods: {
+    back: function () {
+      this.$router.go(-1)
+    },
     // s删除部分有些bug
     deleteBtn: function (index) {
       // console.log(this.checkboxModel)
@@ -74,8 +52,10 @@ export default {
         })
       }
     },
-    publish: function () {
-      window.location.href = 'management/publishFruit'
+    add: function () {
+      this.$router.push({
+        path: 'management/publishFruit'
+      })
     }
   },
   watch: { // 深度 watcher
@@ -112,19 +92,14 @@ export default {
 }
 </script>
 <style media="screen">
+
 #management .managementCon{
-  margin-top: .75rem;
+  margin-top: .05rem;
   margin-bottom: .9rem;
   padding: 0.1rem 0.29rem 0 ;
   box-sizing: border-box;
 }
-#management .managementCon .magTit{
-  height: 0.6rem;
-  line-height: .6rem;
-  font-size: 0.24rem;
-  color: #000;
-  border-bottom: 1px solid #e1e1e1;
-}
+
 #management .managementCon .magBtns{
   height: 0.9rem;
 
@@ -157,13 +132,14 @@ border-radius: 0.1rem;
   font-size: .24rem;
   font-weight: normal;
   color: #fff;
+  font-family: "微软雅黑";
   line-height: .4rem;
   text-align: center;
   margin-top: 0.18rem;
   margin-left: 0.2rem;
 }
 #management .managementCon .magBtns .submitFruit{
-  width: 1.2rem;
+
   border: none;
   float: right;
 }
@@ -176,7 +152,7 @@ border-radius: 0.1rem;
     float: left;
     height: 100%;
     margin-right: 0.1rem;
-    margin-top: 0.05rem
+    margin-top: 0.07rem
 }
 #management .managementCon .fruitList .fruitItem .selBox input{
     width: .28rem;
@@ -190,6 +166,7 @@ border-radius: 0.1rem;
     white-space: nowrap;
     padding-right: 0.2rem;
     box-sizing: border-box;
+    font-family: "微软雅黑";
 }
 #management .managementCon .fruitList .fruitItem .foot{
   height: .6rem;

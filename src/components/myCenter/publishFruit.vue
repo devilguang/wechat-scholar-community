@@ -1,54 +1,29 @@
 <template>
   <div id="publishFruit">
-    <header>
-      <ul class="clrfix">
-        <li>
-          <router-link to="/myCenter/myInfo">
-            <span class="active">我的</span>
-            <p></p>
-          </router-link>
-        </li>
-        <li>
-         <router-link to="/myCenter/dynamic">
-         <span class="">动态</span>
-         </router-link>
-         </li>
-        <li>
-         <router-link to="/myCenter/myApply">
-        <span class="">推荐</span>
-         </router-link>
-         </li>
-          <li>
-         <router-link to="/myCenter/talk">
-         <span class="">唠嗑</span>
-         </router-link>
-         </li>
-      </ul>
-    </header>
     <article class="fruitIntro">
       <ul>
         <li>
           <span class="iconfont icon-write"></span>
-          <p>字段一：</p>
+          <p>文献标题：</p>
           <input type="text" name="" value="" placeholder="单行输入">
         </li>
         <li>
           <span class="iconfont icon-write"></span>
-          <p>字段二：</p>
+          <p>作者：</p>
           <input type="text" name="" value="" placeholder="单行输入">
         </li>
         <li>
           <span class="iconfont icon-write"></span>
-          <p>字段三：</p>
+          <p>出版源：</p>
             <input type="text" name="" value="" placeholder="单行输入">
         </li>
         <li>
             <span class="iconfont icon-write"></span>
-            <p>字段四：</p>
+            <p>发布时间：</p>
             <input type="text" name="" value="" placeholder="单行输入">
           </li>
       </ul>
-      <button type="button" name="button" class="confirmPunish">确认提交</button>
+      <button type="button" name="button" class="confirmPunish" @click="publishTip">确认提交</button>
 
     </article>
 
@@ -56,10 +31,20 @@
   </div>
 </template>
 <script>
+export default {
+  methods: {
+    publishTip: function () {
+      this.$router.push({
+        path: '/myCenter/management/publishTip'
+      })
+    }
+  }
+}
 </script>
 <style>
+
 #publishFruit .fruitIntro{
-  margin-top: .75rem;
+  margin-top: 30%;
   padding: .34rem .29rem 0;
 }
 #publishFruit .fruitIntro ul{

@@ -1,27 +1,40 @@
 <template>
-  <div id="findBook">
+  <div id="findBook" style="height:100vh;background:#fff">
+        <div class="searchImg"><img src="../assets/img/img-search_bg.jpg"></div>
+ 		<form class="searchForm">
+ 			<fieldset>
+ 				<legend>学者查询</legend>
+ 				<div class="searchFormGroup">
+ 					<label>文献名称</label>
+ 					<input type="text" v-model="bookName" :value="bookName" placeholder="请输入文献名称"/>
+ 				</div>
+         <div class="searchFormSubmit" @click="searchBook">
+           <a ><input class="submitBtn" value="搜索"></a>
+         </div>
+
+ 			</fieldset>
+ 		</form>
+ </div>
+  <!-- <div id="findBook">
     <article class="searchTop">
-      <input type="text" name="" value="" placehoder="请输入搜索内容">
-      <span class="searchBtn iconfont icon-searchBtn"></span>
-      <div class="selectBtn">
-        <span class="iconfont icon-select"></span>
-      </div>
+      <input type="text" name="" value="" placehoder="请输入搜索内容" :value="bookName" v-model="bookName">
+      <span class="searchBtn iconfont icon-searchBtn" @click="searchBook"></span>
     </article>
     <article class="findTip clrfix">
       <div class="findLogo">
-        <span class="iconfont icon-flower"></span>
+        <span class="iconfont icon-flower" ></span>
       </div>
-      <p>找到与balbala相关的文献共201条找到与balbala相</p>
+      <p>找到与"{{bookName}}"相关的文献共{{num}}条</p>
     </article>
     <article class="bookList">
       <ul class="clrfix">
-        <li class="bookListItem" v-for="bookListItem in bookList">
-          <router-link :to="{ name: 'bookDetail', params: { bookID: bookListItem.bookID }}">
-          <p class="bookTitle">{{bookListItem.bookName}}</p>
-          <p class="bookBrief"><span class="author">{{bookListItem.author}}</span><span> —— 《{{bookListItem.journalName}}》 —— </span><span>{{bookListItem.journalNum}}(刊号)</span></p>
-          <p class="abstract"><span>摘要:</span><span>{{bookListItem.abstract}}</span></p>
-          </router-link>
-          <ul class="userBtns clrfix">
+        <li class="bookListItem" v-for="bookListItem in bookList"> -->
+          <!-- <router-link :to="{ name: 'bookDetail', params: { bookID: bookListItem.bookID }}"> -->
+          <!-- <p class="bookTitle">{{bookListItem.title}}</p>
+          <p class="bookBrief"><span class="author">{{bookListItem.docAuthors}}</span><span> —{{bookListItem.qikanName}}— </span><span>{{bookListItem.ym}}(刊号)</span></p>
+          <p class="abstract"><span>摘要:</span><span>{{bookListItem.ab}}</span></p> -->
+          <!-- </router-link> -->
+          <!-- <ul class="userBtns clrfix">
              <li class="clrfix"><span class="iconfont icon-remark" v-on:click="test(bookList[index])"></span><span class="word">评论</span></li>
              <li><span class="iconfont icon-recommendBtn"></span><span class="word">推荐</span></li>
              <li class="clrfix"><span class="iconfont icon-share"></span><span class="word">分享</span></li>
@@ -30,43 +43,93 @@
         </li>
       </ul>
     </article>
-    <!-- <article class="searchContent">
-      <p class="bookTitle">空间钢结构的应用与发展</p>
-      <p class="bookOrigin"><span class="iconfont icon-link"></span><span>来源</span><span>维普</span></p>
-      <p class="bookBrief"><span>莫言</span><span>《期刊名》</span><span>2002(刊号)</span></p>
-      <p class="abstract"><span>摘要</span><span>三十功名尘与土，八千里路云和月。莫等闲白了少年头，空故今日之责任，不在他人而全在我少年。少年智则国智少年富则国富少年强则国强，少年独立则国独立少年自由泽国自由少年进步则国进步少年胜于欧洲则国胜于欧洲</span></p>
-      <p class="publicOrg"><span> 出版源</span><span>同济大学医学与管理学院，2009</span></p>
-      <p class="keyWord"><span>关键词</span><span>小说家讲坛，作家，文学创作</span></p>
-      <p class="cited"><span>被引量</span><span>123</span></p>
-   </article> -->
-  </div>
+
+  </div> -->
 </template>
 <script>
 import axios from 'axios'
+import qs from 'querystring'
 export default {
-  name: 'bookList',
-  data: function () {
+  data () {
     return {
-      zxq: 'singledog',
-      bookList: []
+      bookName: '',
+      bookList: [],
+      num: ''
     }
   },
   methods: {
-    // 推荐和收藏高亮
-    test: function (index) {
-      console.log(index)
+    searchBook: function () {
+      var that = this
+      axios.post('http://localhost/query/gatherAchs', qs.stringify({
+        p: '1',
+        title: that.bookName
+      }))
+      .then((response) => {
+        console.log(response)
+        this.bookList = response.data
+        this.num = this.bookList.length
+        window.sessionStorage.setItem('data', JSON.stringify(response))
+        this.$router.push({
+          path: '/findBook/bookResult'
+        })
+      })
+      .then((error) => console.log(error))
     }
   },
   mounted () {
-    // 先获取假数据
-    axios.get('/static/mock-data/bookList.json')
-    .then((response) => {
-      console.log(response)
-      this.bookList = response.data
-    })
-    .then((error) => console.log(error))
   }
 }
+
 </script>
 <style>
+#findBook .searchImg{
+	width: 100%;
+	padding:0.5rem 15% 0.25rem;
+	box-sizing: border-box;
+}
+#findBook .searchImg img{
+    width: 100%;
+    height: auto;
+}
+#findBook .searchForm fieldset{
+    border: none;
+}
+#findBook .searchForm fieldset legend{
+	display: none;
+}
+#findBook .searchFormGroup{
+	height: 1.2rem;
+	padding:0 0.5rem;
+	margin-bottom: 0.1rem;
+}
+#findBook .searchFormGroup label{
+	font-size: 0.18rem;
+	margin: 0.2rem 0;
+	display: block;
+}
+#findBook .searchFormGroup input{
+	border:1px solid #36d7b6;
+	width: 100%;
+	border-radius: 0.08rem;
+	height: 0.7rem;
+	text-indent: 0.22rem;
+}
+#findBook .searchFormSubmit{
+ padding: 0 0.5rem;
+ box-sizing: border-box;
+
+}
+ #findBook .searchFormSubmit input{
+	width: 100%;
+	height: 0.8rem;
+	background: #36d7b6;
+	border: none;
+	margin:0 auto;
+	border-radius: 0.08rem;
+	color: #ffffff;
+	margin-top: 0.3rem;
+}
+#findBook .submitBtn{
+	text-align: center;
+}
 </style>
