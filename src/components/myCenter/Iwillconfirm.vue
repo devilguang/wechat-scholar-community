@@ -1,30 +1,5 @@
 <template>
   <div id="Iwillconfirm">
-    <header>
-      <ul class="clrfix">
-        <li>
-          <router-link to="/myCenter/myInfo">
-            <span class="active">我的</span>
-            <p></p>
-          </router-link>
-        </li>
-        <li>
-         <router-link to="/myCenter/dynamic">
-         <span class="">动态</span>
-         </router-link>
-         </li>
-        <li>
-         <router-link to="/myCenter/myApply">
-        <span class="">推荐</span>
-         </router-link>
-         </li>
-          <li>
-         <router-link to="/myCenter/talk">
-         <span class="">唠嗑</span>
-         </router-link>
-         </li>
-      </ul>
-    </header>
     <article class="toConfirmContent">
         <p class="confirmTip">请提供您所在的机构邮箱，我们将发送验证邮件</p>
         <div class="confirmBox">
@@ -47,9 +22,7 @@
 <script>
 </script>
 <style>
-#Iwillconfirm .toConfirmContent{
-  margin-top: 0.75rem;
-}
+
 #Iwillconfirm .toConfirmContent .confirmTip{
   height: .59rem;
   background: #e9e9e9;

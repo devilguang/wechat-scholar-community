@@ -6,7 +6,7 @@
           <p class="citedNum">被引次数：<span>{{infos.cite}}</span></p>
       </div>
       <ul class="contentMain">
-        <li class="contentItem" v-for="detailItem in detailItems" >
+        <li class="contentItem" v-for="(detailItem,index) in detailItems" >
           <div class="wordsCon">
                <p class="coreCon">{{detailItem.title}}</p>
                <p class="eachCitedNum">被引用次数：{{detailItem.cites}}</p>
@@ -14,9 +14,9 @@
           </div>
           <ul class="userBtns clrfix">
              <li><span class="iconfont icon-remark"></span>评论</li>
-             <li :class="active2" @click="remLight(index)"><span class="iconfont icon-recommendBtn"></span>推荐</li>
+             <li  @click="recommend(detailItem,index)" :class="{active:detailItem.recommendActive}"><span class="iconfont icon-recommendBtn"></span>推荐</li>
              <li><span class="iconfont icon-share"></span>分享</li>
-             <li :class="active4" @click="colLight()"><span class="iconfont icon-collect"></span>收藏</li>
+             <li  @click="collect(detailItem,index)" :class="{active:detailItem.collectActive}"><span class="iconfont icon-collect"></span>收藏</li>
           </ul>
         </li>
       </ul>
@@ -25,6 +25,7 @@
 
 <script>
 // import axios from 'axios'
+import Vue from 'vue'
 export default {
   props: [
     'detailItems',
@@ -32,26 +33,26 @@ export default {
   ],
   data () {
     return {
-      active2: {
-        'active': false
-      },
-      active4: {
-        'active': false
-      },
-      index: {
-      }
+
     }
   },
   methods: {
     // 推荐和收藏高亮
-    remLight: function (index) {
-      console.log(222)
-    //  console.log(this.active2.active)
-      this.active2.active = !this.active2.active
+    recommend: function (item, index) {
+      // set设置数据相应 增加data里面的 一个recommendActive 属性 可以控制高亮
+      if ((typeof item.recommendActive) === 'undefined') {
+        Vue.set(this.detailItems[index], 'recommendActive', true)
+      } else {
+        item.recommendActive = !item.recommendActive
+      }
+      console.log(this.detailItems[index].recommendActive)
     },
-    colLight: function () {
-    //  console.log(this.active4.active)
-      this.active4.active = !this.active4.active
+    collect: function (item, index) {
+      if ((typeof item.collectActive) === 'undefined') {
+        Vue.set(this.detailItems[index], 'collectActive', true)
+      } else {
+        item.collectActive = !item.collectActive
+      }
     }
   },
   mounted () {

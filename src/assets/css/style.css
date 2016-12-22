@@ -453,7 +453,6 @@
 }
 #scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li.active{
 color: #36d7b6;
-
 }
 
 #scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li:nth-of-type(4){
@@ -472,6 +471,7 @@ color: #36d7b6;
   top:0;
   padding: .22rem .29rem;
   box-sizing: border-box;
+  z-index: 5;
 }
 #bookResult .searchTop input{
   width:100%;
@@ -525,7 +525,7 @@ color: #36d7b6;
 margin-right: .4rem;
   font-size: .24rem;
   line-height: .58rem;
-  margin-top: .05rem;
+  margin-top: .12rem;
 }
 #bookResult .findTip span{
   color: #fff;
@@ -534,17 +534,61 @@ margin-right: .4rem;
   display: block;
   line-height: .82rem;
 }
-#bookResult .findTip button{
-  border:none;
-  color:#fff;text-align: center;
-  background: #ffb656 !important;
-  margin-top: .12rem;
-  padding: 0 0.2rem;
-  border-radius: 0.06rem;
-  height: .4rem;
+#bookResult .findTip .choose{
+  color:#ffb656;
+  width: .82rem;
+  float: right;
   font-size: .26rem;
-  line-height: .4rem;
 
+}
+#bookResult .findTip .choose span{
+  color:#ffb656;
+  font-size: .22rem;
+  display: block;
+  float: left;
+  }
+#bookResult .chooseBox{
+  position: absolute;
+  top:2.25rem;
+  background: #f5f5f9;
+  width: 100%;
+  padding: .15rem .5rem  0.2rem .29rem;
+  box-sizing: border-box;
+}
+  #bookResult .chooseBox .selectBox span{
+   font-size: .26rem;
+   color: #000;
+   width: 2.2rem;
+   display: block;
+   line-height: .58rem;
+   float: left;
+}
+#bookResult .chooseBox .sortBox span{
+  font-size: .26rem;
+  color: #000;
+  margin-right: 0.38rem;
+  line-height: .58rem;
+  float: left;
+}
+#bookResult .chooseBox .selectBox span.active,#bookResult .chooseBox .sortBox span.active{
+  color: #ffc320;
+}
+#bookResult .chooseBox .selectBox{
+  border-bottom: 1px solid #e8e8ea;
+
+}
+#bookResult .chooseBox .sortBox{
+padding-top: 0.1rem;
+}
+#bookResult .chooseBox .sortBox p,#bookResult .chooseBox .selectBox p{
+  line-height: .58rem;
+ height: 1.2rem;
+   float: left;
+   font-size: .26rem;
+   margin-right: .42rem;
+}
+#bookResult .chooseBox .sortBox p{
+ height: .58rem;
 }
 #bookResult .bookList{
   margin-bottom: 0.9rem;
@@ -602,6 +646,7 @@ color: #ffb656;
   box-sizing: border-box;
   padding-left: 0.2rem;
 }
+
 #bookResult .bookList ul .bookListItem .userBtns li .iconfont{
   font-size: .38rem;
   display: block;

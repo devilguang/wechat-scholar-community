@@ -45,8 +45,8 @@
 import sDtab01 from './sDtab01'
 import sDtab02 from './sDtab02'
 import sDtab03 from './sDtab03'
-import axios from 'axios'
-import qs from 'querystring'
+// import axios from 'axios'
+// import qs from 'querystring'
 export default {
   name: 'scholarDetail',
   data () {
@@ -88,19 +88,22 @@ export default {
     }
   },
   mounted () {
-    // var scDetail = JSON.parse(window.sessionStorage.getItem('scDetail'))
-    // console.log(scDetail)
+    var scDetail = JSON.parse(window.sessionStorage.getItem('scDetail'))
+    console.log(scDetail)
+    this.infos = scDetail.data
+    this.detailItems = scDetail.data.cnkiDetailLists
+    this.partnerItems = scDetail.data.cnkiAuthorsList
+    this.instituteItems = scDetail.data.cnkiOrgansList
 
-    console.log(this.$route.params.link)
-
-    axios.post('http://localhost/query/gatherScholarDetail', qs.stringify({link: this.$route.params.link})).then((response) => {
-      console.log(response.data)
-      this.infos = response.data
-      this.detailItems = response.data.cnkiDetailLists
-      this.partnerItems = response.data.cnkiAuthorsList
-      this.instituteItems = response.data.cnkiOrgansList
-      console.log(this.partnerItems)
-    }).then((error) => console.log(error))
+    // console.log(this.$route.params.link)
+    // axios.post('http://localhost/query/gatherScholarDetail', qs.stringify({link: this.$route.params.link})).then((response) => {
+    //   console.log(response.data)
+    //   this.infos = response.data
+    //   this.detailItems = response.data.cnkiDetailLists
+    //   this.partnerItems = response.data.cnkiAuthorsList
+    //   this.instituteItems = response.data.cnkiOrgansList
+    //   console.log(this.partnerItems)
+    // }).then((error) => console.log(error))
   }
 }
 
