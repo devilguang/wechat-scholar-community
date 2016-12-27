@@ -5,6 +5,7 @@
   }
  body,html{
 	background: #f5f5f5;
+  font-family: "微软雅黑";
  }
 /*findScholar part*/
 #findScholar .searchImg{
@@ -16,6 +17,9 @@
     width: 100%;
     height: auto;
 }
+.searchForm{
+  padding: 0 0.5rem;
+}
 .searchForm fieldset{
     border: none;
 }
@@ -24,7 +28,7 @@
 }
 .searchFormGroup{
 	height: 1.2rem;
-	padding:0 0.5rem;
+
 	margin-bottom: 0.1rem;
 }
 .searchFormGroup label{
@@ -39,21 +43,20 @@
 	height: 0.7rem;
 	text-indent: 0.22rem;
 }
-.searchFormSubmit input{
-	width: 40%;
+.searchFormSubmit{
+	width: 100%;
 	height: 0.8rem;
 	background: #36d7b6;
 	border: none;
-	margin:0 auto;
 	border-radius: 0.08rem;
 	color: #ffffff;
-	margin-left: 30%;
-	margin-top: 0.3rem;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: .8rem;
+  font-size: .28rem;
+  margin-top: 0.19rem;
+}
 
-}
-.submitBtn{
-	text-align: center;
-}
 /*scholarResult part*/
 #scholarResult h4{
   height: .84rem;
@@ -235,100 +238,110 @@
 .recommendList .recommendItem .rem-intro span{
 	color: #000;
 }
-/*scholarDetail part*/
-#scholarDetail .detailTopBox{
+/*scholarDetail part && myInfo头部*/
+#scholarDetail .detailTopBox,#myInfo .detailTopBox{
+  height: 3.94rem;
+  color: #f5f5f9;
+  position: relative;
+}
+#scholarDetail .detailTopBox .scholarHeader,#myInfo .detailTopBox .scholarHeader{
+  height: 3.35rem;
+  background:#36d7b6;
+  padding: .19rem .29rem 0 ;
+  box-sizing: border-box;
+}
+#scholarDetail .detailTopBox .scholarHeader .headerTop,#myInfo .detailTopBox .scholarHeader .headerTop{
+  position: relative;
+  height: 1.24rem;
+  padding:0 10%;
+}
+#scholarDetail .detailTopBox .scholarHeader .headerTop .topLeft,#myInfo .detailTopBox .scholarHeader .headerTop .topLeft{
+width: 33.33%;
+float: left;
+margin-top: .45rem;
+}
+#scholarDetail .detailTopBox .scholarHeader .headerTop .scholarStatus,#scholarDetail .detailTopBox .scholarHeader .headerTop .topRight .attention,#myInfo .detailTopBox .scholarHeader .headerTop .scholarStatus,#myInfo .detailTopBox .scholarHeader .headerTop .topRight .attention{
+float: right;
+width: .93rem;
+height: .34rem;
+border-radius: .17rem;
+background: #fff;
+color: #f7b55e;
+font-size: .18rem;
+text-align: center;
+line-height: .34rem;
+font-family: "微软雅黑"
+}
+#scholarDetail .detailTopBox .scholarHeader .headerTop .topMiddle,#myInfo .detailTopBox .scholarHeader .headerTop .topMiddle{
+width: 33.33%;
+float: left;
+height: 1.24rem;
+}
+#scholarDetail .detailTopBox .scholarHeader .headerTop .topMiddle .imgBox,#myInfo .detailTopBox .scholarHeader .headerTop .topMiddle .imgBox{
+width: 1.24rem;
+height: 1.24rem;
+position: absolute;
+left: 50%;
+margin-left: -.62rem;
+background: #fff;
+border-radius: 50%;
 
-   background: #fff;
-   padding:0.4rem 0.28rem 0.25rem 0.28rem;
-   box-sizing: border-box;
 }
-#scholarDetail .detailTopBox .scholarHead{
-   width: 1.24rem;
-  margin-right: .28rem;
-   float: left;
+#scholarDetail .detailTopBox .scholarHeader .headerTop .imgBox img,#myInfo .detailTopBox .scholarHeader .headerTop .imgBox img{
+  width: 1.1rem;
+  height: 1.1rem;
+  display: block;
+  margin: .08rem 0.07rem 0 0.07rem;
+  border-radius: 50%;
 }
-#scholarDetail .detailTopBox .scholarBrief{
-   float: left;
-     position: relative;
-     width: 70%;
+#scholarDetail .detailTopBox .scholarHeader .headerTop .topRight,#myInfo .detailTopBox .scholarHeader .headerTop .topRight{
+width: 33.33%;
+float: left;
+margin-top: .45rem;
 }
-#scholarDetail .detailTopBox .scholarBrief .attention{
-   float: left;
-  position: absolute;
-  top:-0.05rem;
-  right: -0.1rem;
-  width: .94rem;
-  height: .4rem;
-  background: #fff;
-  border:1px solid #86e7d3;
-  border-radius: 0.05rem;
-  font-size: 0.16rem;
+#scholarDetail .detailTopBox .scholarHeader .headerTop .topRight .attention,#myInfo .detailTopBox .scholarHeader .headerTop .topRight .attention{
+float: left;
+}
+
+#scholarDetail .detailTopBox .scholarHeader .headerTop .attention,#myInfo .detailTopBox .scholarHeader .headerTop .attention{
+  float: left;
+}
+#scholarDetail .detailTopBox .scholarHeader .scholarAbout,#myInfo .detailTopBox .scholarHeader .scholarAbout{
+  box-sizing: border-box;
   text-align: center;
-  color: #86e7d3;
-  padding-bottom: 0.03rem;
+  height: .75rem;
+  line-height: .75rem;
+}
 
+#scholarDetail .detailTopBox .scholarHeader .scholarAbout .scholarUniverse,#myInfo .detailTopBox .scholarHeader .scholarAbout .scholarUniverse{
+ display: inline-block;
+height: .32rem;
+  line-height: .32rem;
+  padding: 0 .09rem;
+  background: #2ead93;
+  border-radius: 0.05rem;
+  font-size: .22rem;
+  margin-left: 0.16rem
 }
-#scholarDetail .detailTopBox .scholarBrief .attention span{
-  margin-top: 0.01rem;
-  display: inline-block;
+#scholarDetail .detailTopBox .scholarHeader .scholarMarjor,#myInfo .detailTopBox .scholarHeader .scholarMarjor{
+ text-align: center;
+ font-size: .23rem;
+ margin-bottom: .1rem
 }
-#scholarDetail .detailTopBox .scholarBrief .scholarUniverse{
-	font-size: .2rem;
-	height: .54rem;
-  margin-top: 0.08rem;
-	line-height: .54rem;
-}
-#scholarDetail .detailTopBox .scholarBrief .scholarMarjor,#scholarDetail .detailTopBox .scholarBrief .scholarField{
-	font-size: .22rem;
-	color:#ababab;
-	line-height: .48rem
-}
-#scholarDetail .detailTopBox .scholarBrief .scholarMarjor span,#scholarDetail .detailTopBox .scholarBrief .scholarField span{
-	font-size: .22rem;
-	color:#000;
-	line-height: .48rem
-}
-#scholarDetail .detailTopBox .scholarHead img{
-	  margin-bottom: .15rem;
-   width: 100%;
-}
-#scholarDetail .detailTopBox .scholarBrief .IApprove{
-	width:1.35rem;
-	height: .4rem;
-	border:1px solid #a1ecdd;
-	border-radius: 0.07rem;
-	color: #5eddc1;
-	font-size: .16rem;
-	line-height: .4rem;
-	text-align: center;
-  margin-left: -0.08rem;
-    margin-top: -0.1rem;
-    position: absolute;
-    right:  -0.3rem;
-    top:0.58rem;
-
-}
-#scholarDetail .detailTopBox .scholarBrief .IApprove span{
-	color: #ffc320;
-	font-size: .18rem;
-	margin: 0 0.03rem;
-}
-.detailTopBox .scholarBrief .scholarTitle .scholarName{
-	font-size: .28rem;
-	color: #000;
-	float: left;
-	margin-top: 0.01rem;
-	font-weight: bold;
-}
-#scholarDetail .numBox{
-	width: 100%;
+#scholarDetail .numBox,#myInfo .numBox{
+  position: absolute;
+  top: 2.6rem;
+	width: 90%;
+  margin-left: 5%;
+  border-radius: .1rem;
 	height: 1.04rem;
-	background: #eee;
+	background: #fff;
 	padding-top: .12rem;
 	box-sizing: border-box;
 	border-bottom: 1px solid #ddddde;
+  box-shadow: 0 0.02rem 0.1rem #ddd;
 }
-#scholarDetail .numBox ul li{
+#scholarDetail .numBox ul li,#myInfo .numBox ul li{
 	width:24.5%;
 	height: .78rem;
 	float: left;
@@ -336,23 +349,22 @@
 	text-align: center;
 
 }
-#scholarDetail .numBox ul li span{
+#scholarDetail .numBox ul li span,#myInfo .numBox ul li span{
 	font-size: .28rem;
 	font-weight: bold;
 	color: #000;
 	line-height: .44rem;
 
 }
-#scholarDetail .numBox ul li p{
+#scholarDetail .numBox ul li p,#myInfo .numBox ul li p{
 	font-size: .18rem;
 	color: #949494;
 
 }
-#scholarDetail .numBox ul .HN{
+#scholarDetail .numBox ul .HN,#myInfo .numBox ul .HN{
 	border-right: none;
 }
 #scholarDetail .tabBox .tabTop{
-    margin-top:.32rem;
     height: .82rem;
     background: #fff;
     box-shadow: 0 0.07rem 0.1rem #e4e4e8;
@@ -984,9 +996,6 @@ height: .73rem;
  font-size: .26rem;
 }
 /*myInfo part*/
-#myInfo{
-  width: 100%;
-}
 
 /*footer and header part*/
 footer,header{

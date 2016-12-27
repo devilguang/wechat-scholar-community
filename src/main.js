@@ -46,6 +46,8 @@ import attention from './components/myCenter/attention.vue'
 var router = new VueRouter({
   mode: 'history',
   base: __dirname,
+  history: false,
+  hashbang: true,
   routes: [
     {
       path: '/',
@@ -163,8 +165,8 @@ var router = new VueRouter({
     }
   ]
 })
+// ajax传data编码问题
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-
 // 现在我们可以启动应用了！
 // 路由器会创建一个 App 实例，并且挂载到选择符 #app 匹配的元素上。
 const app = new Vue({

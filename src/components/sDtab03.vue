@@ -1,9 +1,9 @@
 sD<template lang="html">
  <section class="tabContent" id="sDtab03">
      <ul>
-       <li class="instituteItem" v-for="instituteItem in instituteItems">
+       <li class="instituteItem clrfix" v-for="instituteItem in instituteItems">
          <span class="iconfont icon-house"></span>
-         <span class="insPlace">{{instituteItem.organName}}({{instituteItem.achCount}})</span>
+         <p class="insPlace">{{instituteItem.organName}}({{instituteItem.achCount}})</p>
        </li>
      </ul>
   </section>
@@ -27,7 +27,7 @@ export default {
 }
 #sDtab03 ul .instituteItem{
   background: #fff;
-  height: .56rem;
+
   margin: 0.14rem 0 ;
   border-radius: 0.1rem;
 }
@@ -38,12 +38,15 @@ export default {
    margin-left: 0.1rem;
    margin-right: 0.05rem;
    line-height: .56rem;
+   height: 100%;
+   display: block;
+
   }
 #sDtab03 ul .instituteItem .insPlace{
      color: #000;
      font-size: .26rem;
      line-height: .56rem;
-     height: .38rem;
+     width: 88%;
      display: block;
      float: left;
 }

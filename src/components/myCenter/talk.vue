@@ -1,6 +1,9 @@
 <template lang="html">
-  <div id="talk"  style="height:100vh;background:#fff">
-  
+  <div id="talk" >
+    <article class="commitArea">
+       <textarea name="talk" class="writeArea" placeholder="输入内容"></textarea>
+       <button type="button" name="button" class="pubulishBtn">发布</button>
+    </article>
     <article class="talkContent">
       <ul class="talkLists">
         <li class="talkList">
@@ -37,6 +40,7 @@
             </div>
           </section>
         </li>
+      
       </ul>
     </article>
   </div>
@@ -44,8 +48,38 @@
 <script>
 </script>
 <style media="screen">
-#talk .talkContent{
-  margin-top: .75rem;
+#talk{
+  height: 100%;
+  background: #fff;
+}
+#talk .commitArea{
+  height: 1.98rem;
+  padding: .33rem .29rem 0;
+  box-sizing: border-box;
+}
+#talk .commitArea .writeArea{
+width: 100%;
+height: .81rem;
+border: 1px solid #ffb656;
+border-radius: .1rem;
+resize: none;
+font-size: .21rem;
+color: #9c9c9c;
+text-indent: .1rem;
+line-height: .39rem;
+}
+#talk .commitArea .pubulishBtn{
+width: .75rem;
+height: .42rem;
+background: #36d7b6;
+color: #fff;
+line-height: .42rem;
+float: right;
+border: none;
+border-radius: 0.08rem;
+font-size: .22rem;
+text-align: center;
+margin-top: .13rem;
 }
 #talk .talkContent .talkLists{
   width: 100%;

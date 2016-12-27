@@ -1,6 +1,5 @@
 <template>
   <div id="hasNotConfirm">
-    <h1><span class="iconfont icon-back" @click="back"></span>我的成果</h1>
     <section class="notConfirm">
          <img src="../../assets/img/img-waiting_2.png" alt="">
          <p class="notConfirmTip">您还未认领自己的学术作品，试着搜索 您的姓名找到自己的成果吧</p>
@@ -20,25 +19,8 @@ export default {
 }
 </script>
 <style>
-#hasNotConfirm h1{
-  width: 100%;
-  height: .78rem;
-  background: #424951;
-  font-size: .26rem;
-  color: #fff;
-  text-align: center;
-  line-height: .78rem;
-  font-family: "宋体";
-  position: relative;
-}
-#hasNotConfirm h1 span{
-  float: left;
-  position: absolute;
-  left: 0.18rem;
-  font-size: .36rem;
-}
 #hasNotConfirm .notConfirm {
-    padding: 1rem 10% 0;
+    padding: 25% 10% 0;
     box-sizing: border-box;
 }
 #hasNotConfirm .notConfirm img{

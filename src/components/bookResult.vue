@@ -9,7 +9,6 @@
        <span class="iconfont icon-flower" ></span>
      </div>
     <p>找到相关的文献共{{num}}条</p>
-
     <div class="choose" @click="choose">
      <span class="iconfont icon-choose"></span><span>筛选</span>
     </div>

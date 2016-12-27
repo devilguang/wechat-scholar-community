@@ -2,32 +2,37 @@
  <div id="scholarDetail">
      <!-- 详情头部 -->
      <article class="detailTopBox clrfix">
-        <div class="scholarHead">
-          <!-- <img v-bind:src="infos.imgUrl" > -->
-          <img src="../assets/img/img-scholar_1.png" >
-        </div>
-         <div class="scholarBrief">
-               <div class="scholarTitle clrfix">
-                  <span class="scholarName">{{infos.scholarName}}</span>
-                  <span class="scholarStatus">未认证</span>
-               </div>
-               <p class="scholarUniverse">{{infos.organName}}{{$route.params.userID}}</p>
-               <p class="scholarMarjor">专业方向：<span>{{infos.research}}</span></p>
-               <button class="attention" id="attentionBtn" @click="attention()">+关注</button>
-               <router-link to="/myCenter/Iwillconfirm">
-                 <div class="IApprove"><span class="iconfont icon-iapprove"></span>我要认证</div>
-               </router-link>
+       <div class="scholarHeader">
+          <div class="headerTop clrfix">
+            <div class="topLeft">
+              <span class="scholarStatus">未认证</span>
+            </div>
+            <div class="topMiddle">
+              <div class="imgBox">
+                <img src="../assets/img/img-scholar_1.png" >
+              </div>
+            </div>
+            <div class="topRight">
+              <span class="attention" id="attentionBtn" @click="attention()">+关注</span>
+            </div>
           </div>
+
+        <p class="scholarAbout clrfix">{{infos.scholarName}}<span class="scholarUniverse">{{infos.organName}}{{$route.params.userID}}</span></p>
+          <p class="scholarMarjor">研究领域：<span>{{infos.research}}</span></p>
+        </div>
+
+        <!-- 详情数字部分 -->
+        <div class="numBox">
+
+          <ul class="clrfix" >
+            <li class="outcomN"><span>{{infos.achCount}}</span><p>成果数</p></li>
+            <li class="citedN"><span>{{infos.cite}}</span><p>被引数</p></li>
+            <li class="followerN"><span>{{infos.g}}</span><p>跟随着</p></li>
+            <li class="HN"><span>{{infos.h}}</span><p>H指数</p></li>
+          </ul>
+        </div>
      </article>
-     <!-- 详情数字部分 -->
-     <article class="numBox">
-        <ul class="clrfix" >
-          <li class="outcomN"><span>{{infos.achCount}}</span><p>成果数</p></li>
-          <li class="citedN"><span>{{infos.cite}}</span><p>被引数</p></li>
-          <li class="followerN"><span>{{infos.g}}</span><p>跟随着</p></li>
-          <li class="HN"><span>{{infos.h}}</span><p>H指数</p></li>
-        </ul>
-     </article>
+
      <!-- 详情页选项卡部分 -->
      <article class="tabBox">
         <ul class="tabTop clrfix" id="zxq"  >

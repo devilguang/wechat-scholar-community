@@ -1,6 +1,6 @@
 <template>
   <div id="findBook" style="height:100vh;background:#fff">
-        <div class="searchImg"><img src="../assets/img/img-search_bg.jpg"></div>
+        <div class="searchImg"><img src="../assets/img/img-search-bg.png"></div>
  		<form class="searchForm">
  			<fieldset>
  				<legend>学者查询</legend>
@@ -8,9 +8,7 @@
  					<label>文献名称</label>
  					<input type="text" v-model="bookName" :value="bookName" placeholder="请输入文献名称"/>
  				</div>
-         <div class="searchFormSubmit" @click="searchBook">
-           <a ><input class="submitBtn" value="搜索"></a>
-         </div>
+         <p class="searchFormSubmit" @click="searchBook">搜索</p>
 
  			</fieldset>
  		</form>
@@ -99,7 +97,6 @@ export default {
 }
 #findBook .searchFormGroup{
 	height: 1.2rem;
-	padding:0 0.5rem;
 	margin-bottom: 0.1rem;
 }
 #findBook .searchFormGroup label{
@@ -117,19 +114,16 @@ export default {
 #findBook .searchFormSubmit{
  padding: 0 0.5rem;
  box-sizing: border-box;
+ width: 100%;
+ height: 0.8rem;
+ background: #36d7b6;
+ border: none;
+ margin-top: .36rem;
+ border-radius: 0.08rem;
+ color: #ffffff;
+ line-height: .8rem;
+ text-align: center;
+}
 
-}
- #findBook .searchFormSubmit input{
-	width: 100%;
-	height: 0.8rem;
-	background: #36d7b6;
-	border: none;
-	margin:0 auto;
-	border-radius: 0.08rem;
-	color: #ffffff;
-	margin-top: 0.3rem;
-}
-#findBook .submitBtn{
-	text-align: center;
-}
+
 </style>

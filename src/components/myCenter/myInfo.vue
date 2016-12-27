@@ -1,83 +1,83 @@
 <template lang="html">
   <div id="myInfo"  style="height:100vh;background:#f5f5f9">
-    <!-- <header>
-      <ul class="clrfix">
-        <li>
-        <router-link to="/myCenter/center">
-            <span class="active">我的</span>
-            <p></p>
-          </router-link>
-        </li>
-        <li>
-         <router-link to="/myCenter/dynamic">
-         <span class="">动态</span>
-         </router-link>
-         </li>
-        <li>
-         <router-link to="/myCenter/myApply">
-        <span class="">推荐</span>
-         </router-link>
-         </li>
-          <li>
-         <router-link to="/myCenter/talk">
-         <span class="">唠嗑</span>
-         </router-link>
-         </li>
-      </ul>
-    </header> -->
-    <article class="myInfoContent">
-         <section class="myConfirm">
-            <div class="left">
-              <img  class="default-bg" src="../../assets/img/img-scholar_1.png" alt="">
-              <router-link to="/myCenter/Iwillconfirm">
-                <div class="Iapprove" >
-                  <span class="IwillConfirm iconfont icon-iapprove"></span>我要认证
-                </div>
-              </router-link>
-            </div>
-            <div class="right">
-               <div class="title clrfix">
-                 <span class="weixinName">凉风微澜</span>
-                 <span class="status">未认证</span>
+        <router-link to="/myCenter/editMe">
+          <span  class="editMyself iconfont icon-editMe" ></span>
+        </router-link>
+        <article class="detailTopBox clrfix">
+          <div class="scholarHeader">
+             <div class="headerTop clrfix">
+               <div class="topLeft">
+                 <span class="scholarStatus" @click="toMyFruit">未认证</span>
                </div>
-                 <p class="institution">机构：<span>未知</span></p>
-                <p class="direction">研究方向：<span>未知</span></p>
-                <router-link to="/myCenter/editMe">
-                  <a href="javascript:;"  class="editMyself" >>>编辑个人信息</a>
-                </router-link>
-            </div>
-         </section>
-         <!-- 详情数字部分 -->
-         <section class="numBox">
-            <ul class="clrfix" >
-              <li class="outcomN"><span>2016</span><p>成果数</p></li>
-              <li class="citedN"><span>12</span><p>被引数</p></li>
-              <li class="followerN"><span>21</span><p>跟随着</p></li>
-              <li class="HN"><span>11</span><p>H指数</p></li>
-            </ul>
-         </section>
+               <div class="topMiddle">
+                 <div class="imgBox">
+                   <img src="../../assets/img/img-scholar_1.png" >
+                 </div>
+               </div>
+               <div class="topRight">
+                 <span class="attention" id="attentionBtn" @click="attention()">+关注</span>
+               </div>
+             </div>
+
+           <p class="scholarAbout clrfix">李静<span class="scholarUniverse">武汉大学</span></p>
+             <p class="scholarMarjor">研究方向：<span>人体解剖和组织胚胎学</span></p>
+           </div>
+
+           <!-- 详情数字部分 -->
+           <div class="numBox">
+             <ul class="clrfix" >
+               <li class="outcomN"><span>12</span><p>成果数</p></li>
+               <li class="citedN"><span>3453</span><p>被引数</p></li>
+               <li class="followerN"><span>33</span><p>跟随着</p></li>
+               <li class="HN"><span>56</span><p>H指数</p></li>
+             </ul>
+           </div>
+        </article>
          <section class="centerListBox">
            <ul class="centerLists">
              <li class="centerItem" @click="toMyFruit">
-               <span>icon</span><span>我的成果</span><span class="iconfont icon-more"></span>
+               <div class="underlineBox">
+                 <div class="iconBox">
+                   <span class="iconfont icon-myFruit"></span>
+                 </div>
+               <span class="centerTitle">我的成果</span>
+               <span class="iconfont icon-enter-more"></span>
+               </div>
             </li>
              <li class="centerItem" @click="toCollect">
-               <span>icon</span><span>我的收藏</span><span class="iconfont icon-more"></span>
+               <div class="underlineBox">
+                 <div class="iconBox">
+                   <span class="iconfont icon-myCollect"></span>
+                 </div>
+                 <span class="centerTitle">我的收藏</span>
+                 <span class="iconfont icon-enter-more"></span>
+                 </div>
              </li>
              <li class="centerItem" @click="toAttention">
-               <span>icon</span><span>我的关注</span><span class="iconfont icon-more"></span>
+               <div class="iconBox">
+                 <span class="iconfont icon-myAttention"></span>
+               </div>
+              <span  class="centerTitle">我的关注</span>
+              <span class="iconfont icon-enter-more"></span>
              </li>
-
              <li class="centerItem" @click="toDynamic">
-                 <span>icon</span>
-               <span>动态</span><span class="iconfont icon-more"></span>
-             </router-link>
+               <div class="iconBox">
+                 <span class="iconfont icon-myDynamic"></span>
+               </div>
+               <span  class="centerTitle">动态</span>
+               <span class="iconfont icon-enter-more"></span>
+
              </li>
              <li class="centerItem" @click="toTalk">
-               <span>icon</span><span>唠嗑</span><span class="iconfont icon-more"></span>
+               <div class="iconBox">
+                 <span class="iconfont icon-myTalk"></span>
+               </div>
+             <span  class="centerTitle">唠嗑</span>
+             <span class="iconfont icon-enter-more"></span>
              </li>
            </ul>
          </section>
+
          <!-- 未认证时 -->
          <!-- <section class="notConfirm" hidden>
                   <img src="../../assets/img/img-waiting_2.png" alt="">
@@ -164,214 +164,94 @@ export default{
 #myInfo{
   margin-bottom: 0.9rem;
 }
-#myInfo .myInfoContent .myConfirm{
-	 padding: .37rem .29rem ;
-   box-sizing: border-box;
-   background: #fff;
-   height: 2.4rem;
-}
-#myInfo .myInfoContent .myConfirm .left img{
-	 width: 1.25rem;
-}
-#myInfo .myInfoContent .myConfirm .left{
-	 float: left;
-}
-#myInfo .myInfoContent .myConfirm .left .Iapprove{
-	width:1.35rem;
-	height: .42rem;
-	border:1px solid #a1ecdd;
-	border-radius: 0.07rem;
-	color: #5eddc1;
-	font-size: .18rem;
-	line-height: .42rem;
-	text-align: center;
-  margin-top: 0.05rem;
-  margin-left: -0.06rem;
-}
-#myInfo .myInfoContent .myConfirm .left .Iapprove span{
-	color: #ffc320;
-	font-size: .18rem;
-	margin: 0 0.03rem;
-}
-#myInfo .myInfoContent .myConfirm .right{
-  margin-left: 1.46rem;
-}
-#myInfo .myInfoContent .myConfirm .right .title span{
-  color: #000;
-  font-size: .3rem;
-  float: left;
-}
-#myInfo .myInfoContent .myConfirm .right .title .weixinName{
-  margin-top: 0.03rem;
-}
-#myInfo .myInfoContent .myConfirm .right .title{
-  height: 0.36rem;
-  margin-bottom: 0.08rem;
-  margin-top: 0.05rem;
-}
-#myInfo .myInfoContent .myConfirm .right .title .status{
-  background: #9c9c9c;
-  width: .8rem;
-  height: 0.36rem;
-  color:#fff;
-  line-height: 0.36rem;
-  text-align: center;
-  font-size: 0.22rem;
-  border-radius: 0.05rem;
-  display: block;
-  float: left;
-  margin-left: 0.26rem;
-  margin-bottom: 0.06rem;
-}
-#myInfo .myInfoContent .myConfirm .right p{
-  color: #000;
-  font-size: .26rem;
-  line-height: .38rem;
-}
-#myInfo .myInfoContent .myConfirm .right .editMyself{
-  float: right;
-  color: #ababab;
-}
-#myInfo .myInfoContent .notConfirm {
-    padding: .7rem 10% 0;
-    box-sizing: border-box;
-}
-#myInfo .myInfoContent .notConfirm img{
-  width: 50%;
-  margin-left: 25%;
-}
-#myInfo .myInfoContent .notConfirm .notConfirmTip{
-  font-size: .27rem;
-  line-height: .42rem;
-  text-align: center;
-  margin-top: 0.15rem;
-}
-#myInfo .myInfoContent .notConfirm .scholarSearchBtn{
-  background: #36d7b6;
-  height: .7rem;
-  font-size: .3rem;
+#myInfo .editMyself{
+  position: absolute;
+  right: .29rem;
+  top: .22rem;
   color: #fff;
-  line-height: .7rem;
-  text-align: center;
-  border:none;
-  width: 100%;
-  margin-top: 0.15rem;
-  border-radius: 0.12rem;
-}
-#myInfo .myInfoContent .hasConfirm{
-  padding: .1rem .29rem 0 ;
-  box-sizing: border-box;
-}
-#myInfo .myInfoContent .hasConfirm .top{
-  height: .68rem;
-}
-#myInfo .myInfoContent .hasConfirm .top .tit{
-  height: .58rem;
   display: block;
-  line-height: .58rem;
-  float: left;
-  font-size: .28rem;
-  color: #36d7b6;
-  border-bottom: 1px solid #36d7b6;
-}
-#myInfo .myInfoContent .hasConfirm .top .fruitMag{
-  float: right;
-  height: .52rem;
-  display: block;
-  line-height: .52rem;
-  padding: 0 0.1rem;
-  border: 1px solid #a8a8a8;
-  color: #000;
-  margin-top: 0.05rem;
-  font-size: .22rem;
-  text-align: center;
-  border-radius: 0.1rem;
-}
-#myInfo .hasConfirm .contentMain .contentItem{
-   padding-top: .17rem;
-   box-sizing: border-box;
-   background: #fff;
-   margin-top: 0.1rem;
-   margin-bottom: 0.2rem;
-}
-#myInfo .hasConfirm .contentMain .contentItem .wordsCon{
-	  margin: 0 0.15rem;
-}
-#myInfo .hasConfirm .contentMain .contentItem .wordsCon .coreCon{
-   font-size: .24rem;
-   color: #000;
-   line-height: .4rem;
-
-}
-#myInfo .hasConfirm .contentMain .contentItem .wordsCon .eachCitedNum{
-   font-size: .18rem;
-   color: #949499;
-   line-height: .4rem;
-}
-#myInfo .hasConfirm .contentMain .contentItem .wordsCon .authorItem{
-   font-size: .22rem;
-   color: #949499;
-   line-height: .4rem;
-   margin-bottom: 0.1rem;
-}
-#myInfo .hasConfirm .contentMain .contentItem .userBtns{
-  height: .6rem;
-  background: #fff;
-  border-top: 1px solid #ddd;
-}
-#myInfo .hasConfirm .contentMain .contentItem .userBtns li{
-  width: 18.7%;
-  float: left;
-  font-size: .25rem;
-  line-height: .6rem;
-  padding: 0 3%;
-  border-right: 1px solid #ddd;
-}
-
-#myInfo .hasConfirm .contentMain .contentItem .userBtns li:nth-of-type(4){
- border-right: none;
-}
-#myInfo .hasConfirm .contentMain .contentItem .userBtns li span{
-	float: left;
-	font-size: .4rem;
-}
-#myInfo .numBox{
-	width: 100%;
-	height: 1.04rem;
-	background: #eee;
-	padding-top: .12rem;
-	box-sizing: border-box;
-	border-bottom: 1px solid #ddddde;
-}
-#myInfo .numBox ul li{
-	width:24.5%;
-	height: .78rem;
-	float: left;
-	border-right: 1px solid #f8f8f8;
-	text-align: center;
-
-}
-#myInfo .numBox ul li span{
-	font-size: .28rem;
-	font-weight: bold;
-	color: #000;
-	line-height: .44rem;
-
-}
-#myInfo .numBox ul li p{
-	font-size: .18rem;
-	color: #949494;
-
-}
-#myInfo .numBox ul .HN{
-	border-right: none;
+  z-index: 1;
+  font-size: .42rem;
 }
 #myInfo .centerListBox{
-	margin-top: 0.3rem;
+ padding: 0 .29rem;
+ box-sizing: border-box;
 }
 #myInfo .centerListBox .centerLists .centerItem{
-	height:.8rem;
+	height:.73rem;
   background: #fff;
-  margin-bottom: 0.2rem;
+  padding: 0 .26rem;
+  box-sizing: border-box;
+}
+#myInfo .centerListBox .centerLists .centerItem .icon-enter-more{
+  float: right;
+  line-height: .7rem;
+  color: #9c9c9c;
+}
+#myInfo .centerListBox .centerLists .iconBox{
+float: left;
+width: .55rem;
+height: .55rem;
+border-radius: 50%;
+margin-top: .09rem;
+margin-right: .19rem;
+}
+#myInfo .centerListBox .centerLists .iconBox span{
+color: #fff;
+font-size: .36rem;
+text-align: center;
+line-height: .55rem;
+display: block;
+}
+#myInfo .centerListBox .centerLists .centerItem:nth-of-type(1){
+border-radius: .1rem .1rem 0 0 ;
+}
+#myInfo .centerListBox .centerLists .centerItem:nth-of-type(3){
+border-radius:0  0  .1rem .1rem;
+margin-bottom: .17rem;
+box-shadow: 0 0.05rem 0.1rem #ddd;
+}
+#myInfo .centerListBox .centerLists .centerItem:nth-of-type(4){
+border-radius:.1rem .1rem;
+margin-bottom: .17rem;
+box-shadow: 0 0.05rem 0.1rem #ddd;
+}
+#myInfo .centerListBox .centerLists .centerItem:nth-of-type(5){
+border-radius: .1rem;
+box-shadow: 0 0.05rem 0.1rem #ddd;
+
+}
+#myInfo .centerListBox .centerLists .centerItem:nth-of-type(1) .iconBox{
+background:#81b3ff;
+}
+#myInfo .centerListBox .centerLists .centerItem:nth-of-type(2) .iconBox{
+background:#ffb374;
+}
+#myInfo .centerListBox .centerLists .centerItem:nth-of-type(3) .iconBox{
+background:#ff6fab;
+}
+#myInfo .centerListBox .centerLists .centerItem:nth-of-type(4) .iconBox{
+background:#5dd99f;
+}
+#myInfo .centerListBox .centerLists .centerItem:nth-of-type(5) .iconBox{
+background:#5fcaf8;
+}
+#myInfo .centerListBox .centerLists .centerItem .centerTitle{
+	display: block;
+  float: left;
+  line-height: .7rem;
+  font-size: .24rem;
+  color: #000;
+  font-family: "微软雅黑";
+}
+#myInfo .centerListBox .centerLists .centerItem .underlineBox{
+  border-bottom: 1px solid #e1e1e1;
+  height:.7rem;
+  line-height: .7rem;
+}
+#myInfo .centerListBox .centerLists .centerItem .underlineBox {
+  border-bottom: 1px solid #e1e1e1;
+  height:.7rem;
+  line-height: .7rem;
 }
 </style>

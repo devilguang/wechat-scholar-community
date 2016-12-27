@@ -1,30 +1,5 @@
 <template lang="html">
   <div id="editMe">
-    <header>
-      <ul class="clrfix">
-        <li>
-          <router-link to="/myCenter/myInfo">
-            <span class="active">我的</span>
-            <p></p>
-          </router-link>
-        </li>
-        <li>
-         <router-link to="/myCenter/dynamic">
-         <span class="">动态</span>
-         </router-link>
-         </li>
-        <li>
-         <router-link to="/myCenter/myApply">
-        <span class="">推荐</span>
-         </router-link>
-         </li>
-          <li>
-         <router-link to="/myCenter/talk">
-         <span class="">唠嗑</span>
-         </router-link>
-         </li>
-      </ul>
-    </header>
     <form class="editBox">
         <section class="imgBox eachBox clrfix">
           <p><img src="../../assets/img/img-scholar_1.png" alt=""></p>
@@ -32,39 +7,36 @@
         </section>
         <section class="weixinBox eachBox clrfix">
           <p>微信号</p>
-            <input  v-model="weixinname" type="text" onkeydown="this.onkeyup();" onkeyup="this.size=(this.value.length>4?this.value.length:8);" size="8" v-bind:value="weixinname">
+            <input  v-model="weixinname" type="text" v-bind:value="weixinname" size="30">
           </section>
         <section class="nameBox eachBox clrfix">
           <p>学者名</p>
-          <input  v-model="selfname" type="text" onkeydown="this.onkeyup();" onkeyup="this.size=(this.value.length>2?this.value.length*2:4);" size="4" v-bind:value="selfname">
+          <input  v-model="selfname" type="text"  v-bind:value="selfname" size="30">
        </section>
         <section class="instituteBox eachBox clrfix">
           <p>机构</p>
-          <input  v-model="insititute" type="text" onkeydown="this.onkeyup();" onkeyup="this.size=(this.value.length>7?this.value.length*2:14);" size="14" v-bind:value="insititute">
-
+          <input  v-model="insititute" type="text"  v-bind:value="insititute" size="30">
         </section>
         <section class="dirBox eachBox clrfix">
           <p>领域方向</p>
-          <input v-model="dir" type="text" onkeydown="this.onkeyup();" onkeyup="this.size=(this.value.length>9?this.value.length*2:18);" size="17" :value="dir">
-
-      </section>
+          <input v-model="dir" type="text"  :value="dir" size="30">
+        </section>
         <section class="statusBox eachBox clrfix">
           <p>认证状态</p>
           <span>{{status}}</span>
         </section>
         <section class="emailBox eachBox clrfix">
           <p>邮箱</p>
-          <input v-model="email" type="text" onkeydown="this.onkeyup();" onkeyup="this.size=(this.value.length>19?this.value.length:19);" size="19" :value="email">
-
+          <input v-model="email" type="text" :value="email" size="30">
         </section>
         <section class="telBox eachBox clrfix">
           <p>手机号</p>
-          <input v-model="tel" type="text" onkeydown="this.onkeyup();" onkeyup="this.size=(this.value.length>12?this.value.length:12);" size="12" :value="tel">
+          <input v-model="tel" type="text"  :value="tel" size="30">
         </section>
         <section class="pswBox eachBox clrfix">
           <p>密码</p>
-          <input  v-model="psw" type="password" onkeydown="this.onkeyup();" onkeyup="this.size=(this.value.length>12?this.value.length:10);" size="12" :value="psw">
-          </section>
+          <input  v-model="psw" type="password"  :value="psw" size="30">
+        </section>
     </form>
     <article class="btnBox clrfix">
       <router-link to="../myCenter/myInfo">
@@ -106,7 +78,7 @@ export default {
 </script>
 <style>
 #editMe .editBox{
-  margin-top: .75rem;
+
   margin-bottom: .9rem;
   padding-top:0.3rem;
   box-sizing: border-box;
@@ -123,6 +95,7 @@ export default {
 #editMe .editBox .eachBox input{
   color: #000;
   font-size: .26rem;
+  text-align: right;
 }
 #editMe .editBox .imgBox p{
   width: 1.25rem;
@@ -137,7 +110,7 @@ export default {
   float: right;
   bottom: 0;
   position: absolute;
-  right: 0.6rem;
+  right: 0.3rem;
    top:.8rem;
    color: #000;
    font-size: .26rem;
@@ -149,7 +122,7 @@ export default {
 #editMe .editBox .statusBox span{
    position: absolute;
    top:.15rem;
-   right: .59rem;
+   right: .39rem;
    font-size: .26rem;
    color: #000;
 }
@@ -166,8 +139,10 @@ export default {
   border: none;
   background: #36d7b6;
   border-radius: 0.1rem;
-  padding: 0.05rem 0.15rem;
+  padding: 0 0.15rem;
   color: #fff;
+  height: .47rem;
+  line-height: .47rem;
   font-size: .26rem;
 }
 #editMe .btnBox .back{

@@ -1,6 +1,6 @@
 <template>
  <div id="findScholar" style="height:100vh;background:#fff">
-       <div class="searchImg"><img src="../assets/img/img-search_bg.jpg"></div>
+       <div class="searchImg"><img src="../assets/img/img-search-bg.png"></div>
 		<form class="searchForm">
 			<fieldset>
 				<legend>学者查询</legend>
@@ -13,9 +13,7 @@
 					<input type="text" v-model="insName" :value="insName" placeholder="请填写尽量详细化"/>
 				</div>
         <!-- <router-link to="/findScholar/scholarResult"> -->
-          <div class="searchFormSubmit" @click="search">
-            <a ><input class="submitBtn" value="开始查询"></a>
-          </div>
+          <p class="searchFormSubmit" @click="search">开始查询</p>
         <!-- </router-link> -->
 			</fieldset>
 		</form>

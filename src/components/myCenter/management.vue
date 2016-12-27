@@ -1,18 +1,17 @@
 <template lang="html">
   <div id="management">
-    
     <article class="managementCon">
       <div class="magBtns">
         <div class="allSelBox">
           <input type="checkbox" name="" value="" @click="checkedAll" v-model="checked"><span>全选</span>
         </div>
-        <h3 class="del" @click="deleteBtn">删除</h3>
         <button type="button" name="button" class="submitFruit" @click="add()">添加</button>
+        <h3 class="del" @click="deleteBtn">删除</h3>
       </div>
       <ul class="fruitList">
         <li class="fruitItem" v-for="checkb in checkboxData">
           <div class="selBox">
-            <input type="checkbox" name="" value="" v-model='checkboxModel' :value='checkb.id'>
+            <input type="checkbox" name="" v-model='checkboxModel' :value='checkb.id' class="checkBox">
           </div>
           <p class="fruitTit">{{checkb.fruitTit}}</p>
           <div class="foot">
@@ -26,23 +25,20 @@
 <script>
 export default {
   methods: {
-    back: function () {
-      this.$router.go(-1)
-    },
-    // s删除部分有些bug
-    deleteBtn: function (index) {
-      // console.log(this.checkboxModel)
-      var _this = this
-      this.checkboxModel.forEach(function (index) {
-        console.log(888 + index)
-        _this.checkboxData.splice(index - 1, 1)
-        console.log(_this.checkboxData)
-        // _this.checkboxData[index].push('')
-      })
+    deleteBtn: function () {
+      var fruitList = document.getElementsByClassName('fruitList')[0]
+      var fruitItem = fruitList.getElementsByClassName('fruitItem')
+      for (var i = 0; i < fruitItem.length; i++) {
+        for (var j = 0; j < this.checkboxModel.length; j++) {
+          if (fruitItem[i].getElementsByClassName('checkBox')[0].getAttribute('value') === this.checkboxModel[j]) {
+            fruitItem[i].parentNode.removeChild(fruitItem[i])
+          }
+        }
+      }
+      this.checkboxModel = []
     },
     checkedAll: function () {
       var _this = this
-      console.log(_this.checkboxModel)
       if (this.checked) { // 实现反选
         _this.checkboxModel = []
       } else { // 实现全选
@@ -51,6 +47,7 @@ export default {
           _this.checkboxModel.push(item.id)
         })
       }
+      console.log(_this.checkboxModel)
     },
     add: function () {
       this.$router.push({
@@ -84,6 +81,15 @@ export default {
       }, {
         id: '4',
         fruitTit: '4语言教育与文化教育的并行名称语言教育与文化教育的并行名称语言教育与文化教育的并行名称'
+      }, {
+        id: '5',
+        fruitTit: '5语言教育与文化教育的并行名称语言教育与文化教育的并行名称语言教育与文化教育的并行名称'
+      }, {
+        id: '6',
+        fruitTit: '6语言教育与文化教育的并行名称语言教育与文化教育的并行名称语言教育与文化教育的并行名称'
+      }, {
+        id: '7',
+        fruitTit: '7语言教育与文化教育的并行名称语言教育与文化教育的并行名称语言教育与文化教育的并行名称'
       }],
       checkboxModel: [],
       checked: ''
@@ -92,7 +98,6 @@ export default {
 }
 </script>
 <style media="screen">
-
 #management .managementCon{
   margin-top: .05rem;
   margin-bottom: .9rem;
@@ -128,14 +133,14 @@ export default {
   height: 0.4rem;
 border-radius: 0.1rem;
   background: #36d7b6;
-  float: left;
+  float: right;
   font-size: .24rem;
   font-weight: normal;
   color: #fff;
   font-family: "微软雅黑";
   line-height: .4rem;
   text-align: center;
-  margin-top: 0.18rem;
+  margin-top: 0.22rem;
   margin-left: 0.2rem;
 }
 #management .managementCon .magBtns .submitFruit{
