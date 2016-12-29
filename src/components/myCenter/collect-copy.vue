@@ -18,6 +18,7 @@
         </li>
       </ul>
     </section>
+
     <section id="cancelCollectBox" style="display:none">
          <div class="alertBox">
             <p class="tip">
@@ -35,7 +36,7 @@
 <script>
 import axios from 'axios'
 import Vue from 'vue'
-var num = 0
+var collectStatus = null
 export default {
   data () {
     return {
@@ -51,7 +52,7 @@ export default {
       }
     },
     collect: function (item, index) {
-      num = index
+      window.event.cancelBubble = true
       if ((typeof item.collectActive) === 'undefined') {
         Vue.set(this.collectItems[index], 'collectActive', true)
       } else {
@@ -66,16 +67,15 @@ export default {
         document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
         document.getElementById('cancelCollectBox').style.display = 'block'
       }
+      collectStatus = window.event.target
     },
     // 取消收藏弹框按钮
     cancel: function () {
       document.getElementById('cancelCollectBox').style.display = 'none'
-      Vue.set(this.collectItems[num], 'collectActive', true)
-      document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
+      console.log(collectStatus)
     },
     confirm: function () {
       document.getElementById('cancelCollectBox').style.display = 'none'
-      Vue.set(this.collectItems[num], 'collectActive', false)
     }
   },
   mounted () {
@@ -91,6 +91,57 @@ export default {
 
 </script>
 <style>
+/*取消收藏弹框*/
+#cancelCollectBox{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top:0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.28);
+}
+#cancelCollectBox .alertBox{
+  position: absolute;
+  width: 80%;
+  height: 2.54rem;
+  background: #fff;
+  border-radius: .1rem;
+  position: absolute;
+  left: 10%;
+  top:30%;
+}
+#cancelCollectBox .alertBox .tip{
+margin-top: .8rem;
+text-align: center;
+}
+#cancelCollectBox .alertBox .tip .iconfont{
+color: #f7b55e;
+}
+#cancelCollectBox .alertBox .tip .tipWord{
+font-size: .28rem;
+font-family: "微软雅黑";
+}
+#cancelCollectBox .alertBox .operate{
+height: .9rem;
+position: absolute;
+bottom:0;
+border-top: 1px solid #eee;
+width: 100%;
+}
+#cancelCollectBox .alertBox .operate span{
+line-height: .9rem;
+color: #000;
+font-size: .28rem;
+font-family: "微软雅黑";
+text-align: center;
+display: block;
+float: left;
+width: 49.5%;
+}
+#cancelCollectBox .alertBox .operate .cancel{
+ border-right: 1px solid #eee;
+}
 #collect .collectBox{
    margin-bottom: 0.9rem;
 }

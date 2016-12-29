@@ -24,7 +24,7 @@ import bookDetail from './components/bookDetail.vue'
 import codeInput from './components/codeInput.vue'
 import setName from './components/setName.vue'
 import chooseField from './components/chooseField.vue'
-import chooseFieldDetail from './components/chooseFieldDetail.vue'
+import recommendDetail from './components/recommendDetail.vue'
 import scholarCircle from './components/myCenter/scholarCircle.vue'
 import dynamic from './components/myCenter/dynamic.vue'
 import editMyself from './components/myCenter/editMyself.vue'
@@ -100,8 +100,8 @@ var router = new VueRouter({
       component: chooseField
     },
     {
-      path: '/chooseField/chooseFieldDetail',
-      component: chooseFieldDetail
+      path: '/recommendDetail',
+      component: recommendDetail
     },
     {
       path: '/myCenter/scholarCircle',

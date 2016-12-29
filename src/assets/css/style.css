@@ -7,6 +7,57 @@
 	background: #f5f5f5;
   font-family: "微软雅黑";
  }
+ /*取消收藏弹框*/
+ #cancelCollectBox{
+   position: fixed;
+   width: 100%;
+   height: 100%;
+   left: 0;
+   top:0;
+   z-index: 2;
+   background: rgba(0, 0, 0, 0.28);
+ }
+ #cancelCollectBox .alertBox{
+   position: absolute;
+   width: 80%;
+   height: 2.54rem;
+   background: #fff;
+   border-radius: .1rem;
+   position: absolute;
+   left: 10%;
+   top:30%;
+ }
+ #cancelCollectBox .alertBox .tip{
+ margin-top: .8rem;
+ text-align: center;
+ }
+ #cancelCollectBox .alertBox .tip .iconfont{
+ color: #f7b55e;
+ }
+ #cancelCollectBox .alertBox .tip .tipWord{
+ font-size: .28rem;
+ font-family: "微软雅黑";
+ }
+ #cancelCollectBox .alertBox .operate{
+ height: .9rem;
+ position: absolute;
+ bottom:0;
+ border-top: 1px solid #eee;
+ width: 100%;
+ }
+ #cancelCollectBox .alertBox .operate span{
+ line-height: .9rem;
+ color: #000;
+ font-size: .28rem;
+ font-family: "微软雅黑";
+ text-align: center;
+ display: block;
+ float: left;
+ width: 49.5%;
+ }
+ #cancelCollectBox .alertBox .operate .cancel{
+  border-right: 1px solid #eee;
+ }
 /*findScholar part*/
 #findScholar .searchImg{
 	width: 100%;
@@ -162,81 +213,70 @@
 }
 
 /*recommend part*/
-#recommend{
-	width: 100%;
-	height: 100%;
-	padding:0.2rem 0.3rem 0;
-	box-sizing: border-box;
- 	background: #f6f6fa;
- 	margin-bottom: 0.95rem;
-
+#recommend .bannerBox{
+  width: 100%;
+  height: 2.35rem;
 }
-#recommend .comTip{
-	height: 1.12rem;
-	color: #000;
-	line-height: .56rem;
-	font-family: "微软雅黑";
-	float: left;
-}
-.recommendBtn{
-	display: inline-block;
-	width: 1rem;
-	height: 0.55rem;
-	background: #ffb656;
-	color: #fff;
- 	border-radius:0.05rem;
- 	margin-top: 0.2rem;
- 	float: right;
- 	margin-right: 0.2rem;
- 	text-align: center;
- 	line-height: .55rem;
-  font-size: 0.26rem;
-}
-.recommendList .recommendItem{
-	margin-top: .4rem;
-}
-.recommendList .recommendItem h3{
-	width: 100%;
-	height: 0.59rem;
-	background: #36d7b6;
-	color: #fff;
-	font-size: .26rem;
-	line-height: .59rem;
-	border-radius: 0.1rem 0.1rem 0 0;
-	padding-left: 0.11rem;
-	box-sizing: border-box;
-
-}
-.recommendList .recommendItem .rem-more{
-	color: #fff;
-	font-weight: normal;
-	float: right;
-	margin-right: 0.1rem;
+#recommend .bannerBox img{
+  width: 100%;
 }
 
-.recommendList .recommendItem .rem-content .rem-author{
-	padding-top: 0.1rem;
+#recommend .recommendBox .recommendMain .recommendItem{
+   padding-top:.17rem;
+   box-sizing: border-box;
+   background: #fff;
+   margin-bottom: 0.2rem;
+   margin-top: .34rem;
+   border-top: 1px solid #e4e4e4;
+   border-bottom: 1px solid #e4e4e4;
+    padding-bottom: 0.05rem;
 }
-.recommendList .recommendItem .rem-content .rem-style{
-	color: #000;
-	padding: 0 0.11rem;
-	background: #fff;
-	line-height: .4rem;
-	font-size: .18rem;
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon{
+	  margin: 0 0.15rem;
+    padding: 0 .29rem ;
+    box-sizing: border-box;
 }
-.recommendList .recommendItem .rem-intro{
-	padding: 0 0.11rem;
-	font-size: .27rem;
-    font-family: "微软雅黑";
-	color: #9c9ca1;
-	background: #fff;
-	line-height: .38rem;
-	height: 1.2rem;
-	overflow: hidden;
-	border-radius: 0 0 0.1rem 0.1rem;
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .coreCon{
+   font-size: .28rem;
+   color: #000;
+   line-height: .4rem;
+   font-family: "微软雅黑";
 }
-.recommendList .recommendItem .rem-intro span{
-	color: #000;
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .eachCitedNum{
+   font-size: .18rem;
+   color: #858585;
+   line-height: .4rem;
+   margin-bottom: 0.1rem;
+}
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .eachCitedNum span{
+   color: #ffb656;
+}
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .authorItem{
+   font-size: .22rem;
+   color: #000;
+   line-height: .4rem;
+   margin-bottom: 0.04rem;
+}
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .abstractItem{
+   font-size: .22rem;
+   color: #5c5c5c;
+   line-height: .4rem;
+   margin-bottom: 0.05rem;
+}
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .authorItem .authorName{
+  color: #ffb656;
+}
+#recommend .nextBtn{
+  height: .76rem;
+  background: #36d7b6;
+  color: #fff;
+  line-height: .76rem;
+  text-align: center;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: .3rem;
+  font-size: .26rem;
+  border-radius: .1rem;
 }
 /*scholarDetail part && myInfo头部*/
 #scholarDetail .detailTopBox,#myInfo .detailTopBox{

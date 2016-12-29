@@ -1,117 +1,212 @@
 <template lang="html">
-  <div id="chooseField" style="height:100vh;background:#fff">
-    <h1>选择学科领域</h1>
-     <ul class="subjectList clrfix">
-       <li @click="changeColor(subjectItem)" v-for="subjectItem in subjectItems" v-bind:class="{active:subjectItem.isChecked}">{{subjectItem.subjectName}}</li>
+  <div id="chooseField">
+    <div class="top">
+      <span class="iconfont icon-beliked"></span>
+      <span class="tip">请选择需推荐的领域</span>
+    </div>
+     <ul class="subjectItems clrfix">
+       <li class="subjectItem" v-for="(subjectItem,index) in subjectItems">
+          <p class="title"><span class="verticleString"></span><span class="subjectName">{{subjectItem.subjectName}}</span></p>
+          <ul class="subjectBox clrfix">
+            <li  v-for="(subName,subindex) in subjectItem.subNames " class="eachSubject" @click="changeStyle(subName,subindex,index)" :class="{active:subName.chooseActive}"><span class="eachName">{{subName.eachName}}<span class="iconfont icon-success"></span></span></li>
+          </ul>
+       </li>
+       <!-- <li @click="changeColor(subjectItem)" v-for="subjectItem in subjectItems" v-bind:class="{active:subjectItem.isChecked}">{{subjectItem.subjectName}}</li> -->
      </ul>
-     <router-link to="/chooseField/chooseFieldDetail">
-       <input type="button" name="" value="下一步" class="next">
-     </router-link>
+     <div class="afterChoose">
+       <p class="tip">可同时选择5个推荐领域</p>
+        <button @click="next">下一步</button>
+      </div>
   </div>
 </template>
 <script>
+import Vue from 'vue'
 export default {
   data: function () {
     return {
-      subjectItems: [
-        {
-          subjectName: '哲学',
-          isChecked: false
+      subjectItems: [{
+        subjectName: '农学',
+        subNames: [{
+          eachName: '作物学'
         }, {
-          subjectName: '经济学',
-          isChecked: false
+          eachName: '园艺学'
         }, {
-          subjectName: '法学',
-          isChecked: false
+          eachName: '畜牧学'
         }, {
-          subjectName: '教育学',
-          isChecked: false
+          eachName: '兽医学'
         }, {
-          subjectName: '文学',
-          isChecked: false
+          eachName: '作物学'
         }, {
-          subjectName: '历史学',
-          isChecked: false
+          eachName: '植被保护'
         }, {
-          subjectName: '理学',
-          isChecked: false
+          eachName: '农业资源与环境'
+        }]
+      }, {
+        subjectName: '哲学',
+        subNames: [{
+          eachName: '1作物学'
         }, {
-          subjectName: '工学',
-          isChecked: false
+          eachName: '2园艺学'
         }, {
-          subjectName: '农学',
-          isChecked: false
+          eachName: '3畜牧学'
         }, {
-          subjectName: '军事学',
-          isChecked: false
+          eachName: '4兽医学'
         }, {
-          subjectName: '医学',
-          isChecked: false
+          eachName: '5作物学'
         }, {
-          subjectName: '管理学',
-          isChecked: false
-        }
-      ]
+          eachName: '6植被保护'
+        }, {
+          eachName: '7农业资源与环境'
+        }]
+      }, {
+        subjectName: '经济学',
+        subNames: [{
+          eachName: '8作物学'
+        }, {
+          eachName: '9园艺学'
+        }, {
+          eachName: '10畜牧学'
+        }, {
+          eachName: '11兽医学'
+        }, {
+          eachName: '12作物学'
+        }, {
+          eachName: '13植被保护'
+        }, {
+          eachName: '14农业资源与环境'
+        }]
+      }]
     }
   },
   methods: {
-    changeColor: function (subjectItem) {
-      subjectItem.isChecked = !subjectItem.isChecked
-      if (subjectItem.isChecked) {
-        console.log(subjectItem.subjectName)
+    changeStyle: function (item, subindex, index) {
+      if ((typeof item.chooseActive) === 'undefined') {
+        Vue.set(this.subjectItems[index].subNames[subindex], 'chooseActive', true)
+      } else {
+        item.chooseActive = !item.chooseActive
       }
     },
     next: function () {
-      console.log(123)
-      window.location.href = 'chooseField/chooseFieldDetail'
+      this.$router.push({
+        path: '/recommendDetail'
+      })
     }
   }
 }
 </script>
 <style media="screen">
-  #chooseField h1{
-    width: 100%;
-    height: .78rem;
-    background: #424951;
-    font-size: .26rem;
-    color: #fff;
-    text-align: center;
-    line-height: .78rem;
-    font-family: "宋体";
+#chooseField .top{
+  height: .65rem;
+  background: #f5f5f9;
+  padding-left: .29rem;
+  box-sizing: border-box;
+}
+#chooseField .top .icon-beliked{
+  color: #feaf16;
+  font-size: .28rem;
+  line-height: .65rem;
+  margin-right: .1rem;
+}
+#chooseField .top .tip{
+  color: #323232;
+  font-size: .22rem;
+  line-height: .65rem;
+}
+#chooseField .subjectItems .subjectItem{
+  border-top: 1px solid #d6d6d7;
+  border-bottom: 1px solid #d6d6d7;
+  margin-bottom: .32rem;
+}
+#chooseField{
+  margin-bottom: .9rem;
+}
+#chooseField .subjectItems .subjectItem .title{
+  border-bottom:1px solid #ebebeb;
+  height: .54rem;
+  background: #fff;
+ }
+ #chooseField .subjectItems .subjectItem .title .verticleString{
+   border-left: 3px solid #36d7b6;
+   height: .32rem;
+  margin:0 .09rem 0 .42rem;
+margin-top: 0.11rem;
+  display: block;
+  float: left;
   }
-  #chooseField .subjectList{
-    padding-top: .36rem;
-    padding-left: .3rem;
-    box-sizing: border-box;
-  }
-  #chooseField .subjectList li{
-    height: .56rem;
-    border: 1px solid #36d7b6;
-    background: #fff;
-    border-radius: 0.1rem;
-    color:#36d7b6;
-    text-align: center;
-    line-height: .56rem;
-    font-size: .24rem;
-    float: left;
-    padding: 0 .46rem;
-    margin-right: .3rem;
-    margin-bottom: .34rem;
-  }
-  #chooseField .subjectList li.active{
-    background: #36d7b6;
-    color:#fff;
-  }
-  #chooseField input{
-    height: .8rem;
-    background: #36d7b6;
-    color: #fff;
-    line-height: .8rem;
-    border: none;
-    border-radius: 0.1rem;
-    display: block;
-    width: 90%;
-    margin: 0 0.29rem;
-    box-sizing: border-box;
-  }
+  #chooseField .subjectItems .subjectItem .title .subjectName{
+  color: #000;
+  font-size: .24rem;
+line-height: .54rem;
+   display: block;
+   float: left;
+   font-family: "微软雅黑";
+ }
+ #chooseField .subjectItems .subjectItem .subjectBox{
+ padding: .18rem .44rem;
+ box-sizing: border-box;
+ background: #fff;
+}
+#chooseField .subjectItems .subjectItem .subjectBox .eachSubject{
+float: left;
+height: .71rem;
+padding: 0.19rem .11rem 0 0.11rem;
+box-sizing: border-box;
+}
+#chooseField .subjectItems .subjectItem .subjectBox .eachSubject .eachName{
+  position: relative;
+  height: .41rem;
+  border-radius: 0.08rem;
+  background: #36d7b6;
+  padding: 0 .2rem;
+  display: block;
+  line-height: .41rem;
+  color: #fff;
+  font-size: .22rem;
+}
+#chooseField .subjectItems .subjectItem .subjectBox .eachSubject.active .eachName{
+  border: 1px solid #36d7b6;
+  color: #36d7b6;
+  background: #fff;
+}
+#chooseField .subjectItems .subjectItem .subjectBox .eachSubject .icon-success{
+display: none;
+}
+#chooseField .subjectItems .subjectItem .subjectBox .eachSubject.active .icon-success{
+display: block;
+position: absolute;
+right: -0.14rem;
+top: -0.18rem;
+color: #feaf16;
+z-index: 3;
+}
+
+#chooseField .afterChoose{
+ height: 1.12rem;
+ border-top: 1px solid #cdcdcd;
+ border-bottom:  1px solid #cdcdcd;
+ background: #fff;
+ padding:  0 .55rem  0 .29rem;
+ box-sizing: border-box;
+}
+#chooseField .afterChoose .tip{
+font-size: .2rem;
+line-height: 1.12rem;
+color: #8e8e8e;
+float: left;
+}
+#chooseField .afterChoose button{
+border: none;
+width: 1.68rem;
+height: .59rem;
+line-height: .59rem;
+text-align: center;
+color: #fff;
+background: #36d7b6;
+float: right;
+border-radius: .09rem;
+margin-top: .27rem;
+}
+
+
+
 </style>

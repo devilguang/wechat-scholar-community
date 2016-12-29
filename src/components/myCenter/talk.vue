@@ -21,7 +21,7 @@
           </section>
           <section class="commitTitle">
             <span class="commitNum">共2312条评论</span>
-            <span class="iconfont icon-recommendBtn"></span>
+            <span class="iconfont icon-recommendBtn" @click="like" :class="{active:likeStatus}"></span>
           </section>
           <section class="commitBox">
             <ul>
@@ -40,12 +40,24 @@
             </div>
           </section>
         </li>
-      
+
       </ul>
     </article>
   </div>
 </template>
 <script>
+export default{
+  data () {
+    return {
+      likeStatus: false
+    }
+  },
+  methods: {
+    like: function () {
+      this.likeStatus = !this.likeStatus
+    }
+  }
+}
 </script>
 <style media="screen">
 #talk{
@@ -151,6 +163,9 @@ height: .73rem;
   color: #c4c4c4;
   float: right;
   margin-right: 0.2rem;
+}
+#talk .talkContent .talkLists .talkList .commitTitle .icon-recommendBtn.active{
+  color: #36d7b6;
 }
 #talk .talkContent .talkLists .talkList .commitTitle{
   height: .64rem;
