@@ -174,3 +174,48 @@ const app = new Vue({
   render: h => h(App)
 }).$mount('#app')
 console.log(app)
+
+var num = 0
+export default {
+  data () {
+    return {
+      collectItems: []
+    }
+  },
+  methods: {
+    recommend: function (item, index) {
+      if ((typeof item.recommendActive) === 'undefined') {
+        Vue.set(this.collectItems[index], 'recommendActive', true)
+      } else {
+        item.recommendActive = !item.recommendActive
+      }
+    },
+    collect: function (item, index) {
+      num = index
+      if ((typeof item.collectActive) === 'undefined') {
+        Vue.set(this.collectItems[index], 'collectActive', true)
+      } else {
+        item.collectActive = !item.collectActive
+      }
+      if (item.collectActive === true) {
+        // item.innerHTML = '已收藏'
+        console.log(item)
+        document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
+      }
+      if (item.collectActive === false) {
+        document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
+        document.getElementById('cancelCollectBox').style.display = 'block'
+      }
+    },
+    // 取消收藏弹框按钮
+    cancel: function () {
+      document.getElementById('cancelCollectBox').style.display = 'none'
+      Vue.set(this.collectItems[num], 'collectActive', true)
+      document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
+    },
+    confirm: function () {
+      document.getElementById('cancelCollectBox').style.display = 'none'
+      Vue.set(this.collectItems[num], 'collectActive', false)
+    }
+  }
+}

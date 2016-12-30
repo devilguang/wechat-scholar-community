@@ -16,7 +16,6 @@
               <span class="attention" id="attentionBtn" @click="attention()">+关注</span>
             </div>
           </div>
-
         <p class="scholarAbout clrfix">{{infos.scholarName}}<span class="scholarUniverse">{{infos.organName}}{{$route.params.userID}}</span></p>
           <p class="scholarMarjor">研究领域：<span>{{infos.research}}</span></p>
         </div>
@@ -32,7 +31,6 @@
           </ul>
         </div>
      </article>
-
      <!-- 详情页选项卡部分 -->
      <article class="tabBox">
         <ul class="tabTop clrfix" id="zxq"  >
@@ -42,8 +40,19 @@
        </ul>
        <!-- 选项卡部分页面在component体现 -->
       <component :is='currentView' keep-alive  :infos="infos" :partnerItems="partnerItems" :instituteItems="instituteItems" :detailItems="detailItems" ></component>
-
-     </article>
+    </article>
+    <section id="cancelAttentionBox" style="display:none" >
+         <div class="alertBox">
+            <p class="tip">
+              <span class="iconfont icon-warn"></span>
+              <span class="tipWord">您确定要取消关注吗?</span>
+            </p>
+            <div class="operate">
+              <span class="cancel" @click="cancel">取消</span>
+              <span class="confirm"@click="confirm">确定</span>
+            </div>
+         </div>
+    </section>
 </div>
 </template>
 <script>
@@ -85,11 +94,21 @@ export default {
     attention: function () {
       var attentionBtn = document.getElementById('attentionBtn')
       if (attentionBtn.innerHTML === '已关注') {
-        attentionBtn.innerHTML = '+关注'
+        document.getElementById('cancelAttentionBox').style.display = 'block'
       } else {
         window.alert('已关注')
         attentionBtn.innerHTML = '已关注'
       }
+    },
+    cancel: function () {
+      var attentionBtn = document.getElementById('attentionBtn')
+      attentionBtn.innerHTML = '已关注'
+      document.getElementById('cancelAttentionBox').style.display = 'none'
+    },
+    confirm: function () {
+      var attentionBtn = document.getElementById('attentionBtn')
+      attentionBtn.innerHTML = '+关注'
+      document.getElementById('cancelAttentionBox').style.display = 'none'
     }
   },
   mounted () {

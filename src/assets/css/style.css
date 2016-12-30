@@ -8,7 +8,7 @@
   font-family: "微软雅黑";
  }
  /*取消收藏弹框*/
- #cancelCollectBox{
+ #cancelCollectBox,#cancelAttentionBox{
    position: fixed;
    width: 100%;
    height: 100%;
@@ -17,7 +17,7 @@
    z-index: 2;
    background: rgba(0, 0, 0, 0.28);
  }
- #cancelCollectBox .alertBox{
+ #cancelCollectBox .alertBox,#cancelAttentionBox .alertBox{
    position: absolute;
    width: 80%;
    height: 2.54rem;
@@ -27,25 +27,25 @@
    left: 10%;
    top:30%;
  }
- #cancelCollectBox .alertBox .tip{
+ #cancelCollectBox .alertBox .tip,#cancelAttentionBox .alertBox .tip{
  margin-top: .8rem;
  text-align: center;
  }
- #cancelCollectBox .alertBox .tip .iconfont{
+ #cancelCollectBox .alertBox .tip .iconfont,#cancelAttentionBox .alertBox .tip .iconfont{
  color: #f7b55e;
  }
- #cancelCollectBox .alertBox .tip .tipWord{
+ #cancelCollectBox .alertBox .tip .tipWord,#cancelAttentionBox .alertBox .tip .tipWord{
  font-size: .28rem;
  font-family: "微软雅黑";
  }
- #cancelCollectBox .alertBox .operate{
+ #cancelCollectBox .alertBox .operate,#cancelAttentionBox .alertBox .operate{
  height: .9rem;
  position: absolute;
  bottom:0;
  border-top: 1px solid #eee;
  width: 100%;
  }
- #cancelCollectBox .alertBox .operate span{
+ #cancelCollectBox .alertBox .operate span,#cancelAttentionBox .alertBox .operate span{
  line-height: .9rem;
  color: #000;
  font-size: .28rem;
@@ -55,7 +55,7 @@
  float: left;
  width: 49.5%;
  }
- #cancelCollectBox .alertBox .operate .cancel{
+ #cancelCollectBox .alertBox .operate .cancel,#cancelAttentionBox .alertBox .operate .cancel{
   border-right: 1px solid #eee;
  }
 /*findScholar part*/
@@ -720,21 +720,27 @@ color: #ffb656;
 /*bookDetail part*/
 #bookDetail{
   margin-bottom: 0.91rem;
+  background: #f5f5f9 !important;
 }
 #bookDetail .bookContent{
   width: 100%;
   padding: .38rem .29rem 0.15rem;
   box-sizing: border-box;
+  background: #fff;
 }
 #bookDetail .bookContent .bookTitle{
 font-size: .3rem;
 color: #000;
+font-family: "微软雅黑";
 }
 #bookDetail .bookContent .bookOrigin{
   color: #ffb656;
   font-size: .18rem;
   line-height: .4rem;
   margin-top: 0.06rem;
+}
+#bookDetail .bookContent .bookOrigin span:nth-of-type(3){
+  color: #9c9c9c;
 }
 #bookDetail .bookContent .bookBrief{
   color: #b1b1b1;
@@ -753,12 +759,16 @@ color: #000;
   font-size: .22rem;
   line-height: .42rem;
 }
+#bookDetail .bookContent .cited span:nth-of-type(2){
+  color: #f7b55e;
+}
 #bookDetail .bookContent .publicOrg span:nth-of-type(1),#bookDetail .bookContent .keyword span:nth-of-type(1),#bookDetail .bookContent span:nth-of-type(1){
   font-weight: bold;
   margin-right: 0.2rem;
 }
 #bookDetail .userBtns{
   height: .73rem;
+  background: #fff;
   border-top: 0.01rem solid #ebebeb;
   border-bottom: 0.01rem solid #ebebeb;
 }
@@ -786,9 +796,95 @@ color: #000;
 #bookDetail .userBtns li:nth-of-type(4){
   border: none;
 }
-#bookDetail .originBox{
-  padding: 0 .25rem;
+#bookDetail .commitArea{
+  height: 1.98rem;
+  padding: .33rem .29rem 0;
   box-sizing: border-box;
+ background: #fff;
+  margin-top: .34rem;
+  border-bottom: 1px solid #cacaca;
+}
+#bookDetail .commitArea .writeArea{
+width: 100%;
+height: .81rem;
+border: 1px solid #ffb656;
+border-radius: .1rem;
+resize: none;
+font-size: .21rem;
+color: #9c9c9c;
+text-indent: .1rem;
+line-height: .39rem;
+}
+#bookDetail .commitArea .pubulishBtn{
+width: .75rem;
+height: .42rem;
+background: #36d7b6;
+color: #fff;
+line-height: .42rem;
+float: right;
+border: none;
+border-radius: 0.08rem;
+font-size: .22rem;
+text-align: center;
+margin-top: .13rem;
+}
+#bookDetail .commitContent .commitItems .commitItem {
+ padding: .17rem .29rem .26rem .29rem;
+ box-sizing: border-box;
+ border-bottom: 1px solid #d6d6d6;
+ background: #fff;
+}
+#bookDetail .commitContent .commitItems .commitItem .top{
+  height: .92rem;
+ }
+ #bookDetail .commitContent .commitItems .commitItem .top .left{
+   width: .84rem;
+   height: .84rem;
+   float: left;
+   border-radius: 50%;
+   margin-right: .27rem;
+}
+#bookDetail .commitContent .commitItems .commitItem .top .right{
+  float: left;
+  margin-top: .08rem;
+}
+#bookDetail .commitContent .commitItems .commitItem .top .right .name{
+   font-size: .25rem;
+   color: #000;
+   line-height: .36rem;
+}
+#bookDetail .commitContent .commitItems .commitItem .top .right .time{
+  font-size: .22rem;
+  color: #9C9C9C;
+  line-height: .38rem;
+}
+#bookDetail .commitContent .commitItems .commitItem .mainContent{
+    font-size: .22rem;
+    color: #000;
+    line-height: .36rem;
+    margin-top: 0.06rem;
+}
+#bookDetail .commitContent .commitItems .commitItem .top .left img{
+width: 100%;
+border-radius: 50%;
+}
+#bookDetail .commitContent .loadMore{
+font-weight: normal;
+width: 100%;
+height: .5rem;
+color: #ffb656;
+background: #fff;
+line-height: .5rem;
+font-size: .22rem;
+text-align: center;
+}
+#bookDetail .originBox{
+  padding: 0 .25rem 0.1rem;
+  box-sizing: border-box;
+  background: #fff;
+  margin-top: .34rem;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
 }
 #bookDetail .originBox h3{
   font-size: .28rem;
@@ -816,6 +912,9 @@ color: #000;
   width: 100%;
   padding: .2rem .28rem;
   box-sizing: border-box;
+  margin-top: .35rem;
+  background: #fff;
+  border-top: 1px solid #d8d8d8;
 }
 #bookDetail .literature .tabBox{
   height: .48rem;
@@ -830,8 +929,8 @@ color: #000;
   color: #fff;
   line-height: .48rem;
 }
-#bookDetail .literature .tabBox p:hover{
- background: #36d7b6;
+#bookDetail .literature .tabBox p.active{
+ background:#36d7b6;
 }
 #bookDetail .literature .tabBox p:nth-of-type(1){
  border-radius: 0.1rem 0 0 0.1rem;
@@ -842,20 +941,6 @@ color: #000;
 }
 #bookDetail .literature .tabBox p:nth-of-type(3){
  border-radius:0 0.1rem  0.1rem 0;
-}
-#bookDetail .literature .literatureCon ul li{
-    border-bottom:0.01rem solid #ccc;
-}
-#bookDetail .literature .literatureCon ul li .literTitle{
-    font-size: .28rem;
-    color: #323232;
-    line-height: .7rem;
-}
-#bookDetail .literature .literatureCon ul li .literAuthor{
-    font-size: .2rem;
-    line-height: .35rem;
-    color: #b2b2b2;
-    margin-bottom: 0.18rem;
 }
 /*loginReg part&codeInput part*/
 #personalCenter h1,#codeInput h1{

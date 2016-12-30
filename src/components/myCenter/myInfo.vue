@@ -77,39 +77,19 @@
              </li>
            </ul>
          </section>
-
-         <!-- 未认证时 -->
-         <!-- <section class="notConfirm" hidden>
-                  <img src="../../assets/img/img-waiting_2.png" alt="">
-                  <p class="notConfirmTip">您还未认领自己的学术作品，试着搜索 您的姓名找到自己的成果吧</p>
-                  <button type="button" name="button" class="scholarSearchBtn">学者搜索</button>
-         </section> -->
-         <!-- 认证过后的列表页 -->
-         <!-- <section class="hasConfirm">
-            <div class="top">
-              <span class="tit">成果列表</span>
-              <router-link to="/myCenter/management">
-                <p class="fruitMag" >成果管理</p>
-              </router-link>
-            </div>
-            <ul class="contentMain">
-              <li class="contentItem">
-                <div class="wordsCon">
-                     <p class="coreCon">坚持正确方向创新方法手段 提高新闻舆论传播力引导力</p>
-                     <p class="eachCitedNum">被引用次数：3</p>
-                     <p class="authorItem">习近平：《资源节约与环保》</p>
-                </div>
-                <ul class="userBtns clrfix">
-                   <li><span class="iconfont icon-remark"></span>评论</li>
-                   <li><span class="iconfont icon-recommendBtn"></span>推荐</li>
-                   <li><span class="iconfont icon-share"></span>分享</li>
-                   <li><span class="iconfont icon-collect"></span>收藏</li>
-                </ul>
-              </li>
-
-            </ul>
-         </section> -->
     </article>
+    <section id="cancelAttentionBox" style="display:none" >
+         <div class="alertBox">
+            <p class="tip">
+              <span class="iconfont icon-warn"></span>
+              <span class="tipWord">您确定要取消关注吗?</span>
+            </p>
+            <div class="operate">
+              <span class="cancel" @click="cancel">取消</span>
+              <span class="confirm"@click="confirm">确定</span>
+            </div>
+         </div>
+    </section>
   </div>
 </template>
 <script>
@@ -156,6 +136,26 @@ export default{
       this.$router.push({
         path: '/myCenter/talk'
       })
+    },
+    // 加关注按钮
+    attention: function () {
+      var attentionBtn = document.getElementById('attentionBtn')
+      if (attentionBtn.innerHTML === '已关注') {
+        document.getElementById('cancelAttentionBox').style.display = 'block'
+      } else {
+        window.alert('已关注')
+        attentionBtn.innerHTML = '已关注'
+      }
+    },
+    cancel: function () {
+      var attentionBtn = document.getElementById('attentionBtn')
+      attentionBtn.innerHTML = '已关注'
+      document.getElementById('cancelAttentionBox').style.display = 'none'
+    },
+    confirm: function () {
+      var attentionBtn = document.getElementById('attentionBtn')
+      attentionBtn.innerHTML = '+关注'
+      document.getElementById('cancelAttentionBox').style.display = 'none'
     }
   }
 }

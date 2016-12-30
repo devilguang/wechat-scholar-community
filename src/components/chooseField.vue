@@ -14,13 +14,14 @@
        <!-- <li @click="changeColor(subjectItem)" v-for="subjectItem in subjectItems" v-bind:class="{active:subjectItem.isChecked}">{{subjectItem.subjectName}}</li> -->
      </ul>
      <div class="afterChoose">
-       <p class="tip">可同时选择5个推荐领域</p>
+       <p class="tip">可选择5个领域,你已选择{{this.choosedNum}}个</p>
         <button @click="next">下一步</button>
       </div>
   </div>
 </template>
 <script>
 import Vue from 'vue'
+var choosedNum = 0
 export default {
   data: function () {
     return {
@@ -75,16 +76,33 @@ export default {
         }, {
           eachName: '14农业资源与环境'
         }]
-      }]
+      }],
+      choosedNum: '0'
     }
   },
   methods: {
     changeStyle: function (item, subindex, index) {
       if ((typeof item.chooseActive) === 'undefined') {
         Vue.set(this.subjectItems[index].subNames[subindex], 'chooseActive', true)
+        if (choosedNum < 5) {
+          choosedNum++
+        }
       } else {
         item.chooseActive = !item.chooseActive
+        if (item.chooseActive && choosedNum < 5) {
+          choosedNum++
+        } else if (!item.chooseActive && choosedNum >= 1) {
+          choosedNum--
+        } else if (!item.chooseActive) {
+          choosedNum = 0
+        }
       }
+      if (this.choosedNum === 5 && item.chooseActive) {
+        item.chooseActive = false
+        window.alert('最多选择5个')
+      }
+      this.choosedNum = choosedNum
+      console.log(this.choosedNum)
     },
     next: function () {
       this.$router.push({
@@ -111,6 +129,9 @@ export default {
   color: #323232;
   font-size: .22rem;
   line-height: .65rem;
+}
+#chooseField .subjectItems{
+  margin-bottom: 2.32rem;
 }
 #chooseField .subjectItems .subjectItem{
   border-top: 1px solid #d6d6d7;
@@ -156,17 +177,17 @@ box-sizing: border-box;
   position: relative;
   height: .41rem;
   border-radius: 0.08rem;
-  background: #36d7b6;
   padding: 0 .2rem;
   display: block;
   line-height: .41rem;
-  color: #fff;
-  font-size: .22rem;
-}
-#chooseField .subjectItems .subjectItem .subjectBox .eachSubject.active .eachName{
-  border: 1px solid #36d7b6;
   color: #36d7b6;
   background: #fff;
+  font-size: .22rem;
+  border: 1px solid #36d7b6;
+}
+#chooseField .subjectItems .subjectItem .subjectBox .eachSubject.active .eachName{
+  background: #36d7b6;
+  color: #fff;
 }
 #chooseField .subjectItems .subjectItem .subjectBox .eachSubject .icon-success{
 display: none;
@@ -182,6 +203,9 @@ z-index: 3;
 
 #chooseField .afterChoose{
  height: 1.12rem;
+ position: fixed;
+ bottom:.9rem;
+ width: 100%;
  border-top: 1px solid #cdcdcd;
  border-bottom:  1px solid #cdcdcd;
  background: #fff;

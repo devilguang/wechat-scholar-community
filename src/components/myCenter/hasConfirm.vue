@@ -19,13 +19,25 @@
                <p class="eachCitedNum">被引用次数：<span>3</span></p>
           </div>
           <ul class="userBtns clrfix">
-             <li><span class="iconfont icon-remark"></span>评论</li>
-             <li @click="recommend(myFruitItem,index)" :class="{active:myFruitItem.recommendActive}"><span class="iconfont icon-recommendBtn"></span>推荐</li>
-             <li><span class="iconfont icon-share"></span>分享</li>
-             <li @click="collect(myFruitItem,index)" :class="{active:myFruitItem.collectActive}"><span class="iconfont icon-collect"></span>收藏</li>
+             <li><span class="iconfont icon-remark"></span><span class="word">评论</span></li>
+             <li @click="recommend(myFruitItem,index)" :class="{active:myFruitItem.recommendActive}"><span class="iconfont icon-recommendBtn"></span><span class="word">推荐</span></li>
+             <li><span class="iconfont icon-share"></span><span class="word">分享</span></li>
+             <li @click="collect(myFruitItem,index)" :class="{active:myFruitItem.collectActive}"><span class="iconfont icon-collect"></span><span class="collectWord">收藏</span></li>
           </ul>
         </li>
       </ul>
+    </section>
+    <section id="cancelCollectBox" style="display:none">
+         <div class="alertBox">
+            <p class="tip">
+              <span class="iconfont icon-warn"></span>
+              <span class="tipWord">您确定要取消收藏吗?</span>
+            </p>
+            <div class="operate">
+              <span class="cancel" @click="cancel">取消</span>
+              <span class="confirm"@click="confirm">确定</span>
+            </div>
+         </div>
     </section>
 
   </div>
@@ -33,6 +45,7 @@
 <script>
 import axios from 'axios'
 import Vue from 'vue'
+var num = 0
 export default {
   data () {
     return {
@@ -53,11 +66,30 @@ export default {
       }
     },
     collect: function (item, index) {
+      num = index
       if ((typeof item.collectActive) === 'undefined') {
         Vue.set(this.myFruitItems[index], 'collectActive', true)
       } else {
         item.collectActive = !item.collectActive
       }
+      if (item.collectActive === true) {
+        // item.innerHTML = '已收藏'
+        console.log(item)
+        document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
+      }
+      if (item.collectActive === false) {
+        document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
+        document.getElementById('cancelCollectBox').style.display = 'block'
+      }
+    },
+    cancel: function () {
+      document.getElementById('cancelCollectBox').style.display = 'none'
+      Vue.set(this.myFruitItems[num], 'collectActive', true)
+      document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
+    },
+    confirm: function () {
+      document.getElementById('cancelCollectBox').style.display = 'none'
+      Vue.set(this.myFruitItems[num], 'collectActive', false)
     }
   },
   mounted () {
@@ -180,11 +212,13 @@ display: block;
   border-top: 1px solid #ddd;
 }
 #hasConfirm .hasConfirmBox .contentMain .contentItem .userBtns li{
-  width: 18.7%;
+  width: 24.7%;
   float: left;
   font-size: .25rem;
   line-height: .6rem;
-  padding: 0 3%;
+  padding: 0 2%;
+  box-sizing: border-box;
+  text-align: center;
   border-right: 1px solid #ddd;
 }
 #hasConfirm .hasConfirmBox .contentMain .contentItem .userBtns li.active{
@@ -197,6 +231,17 @@ color: #36d7b6;
 #hasConfirm .hasConfirmBox .contentMain .contentItem .userBtns li span{
 	float: left;
 	font-size: .4rem;
-  margin: 0 0.02rem 0 0.06rem;
+  margin: 0 0 0 0.06rem;
+}
+#hasConfirm .hasConfirmBox .contentMain .contentItem .userBtns li span:nth-of-type(1){
+	float: left;
+width: .34rem;
+}
+#hasConfirm .hasConfirmBox .contentMain .contentItem .userBtns li .collectWord{
+font-size: .24rem;
+}
+#hasConfirm .hasConfirmBox .contentMain .contentItem .userBtns li .word{
+	font-size: .25rem;
+  float: left;
 }
 </style>
