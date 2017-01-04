@@ -144,7 +144,7 @@ export default {
   width: 100%;
   height: 100%;
   z-index: 3;
-  background: rgba(0,0,0,0.28);
+  background: rgba(0,0,0,0.28) !important;
 }
 #selectBox .chooseArea{
   padding: .24rem .29rem  .17rem .29rem;

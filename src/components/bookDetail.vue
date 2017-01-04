@@ -47,7 +47,7 @@
          <p class="mainContent">文学是以语言文字为工具，形象形象形象文学是以语言文字为工具，形象形象形象文学是以语言。</p>
        </li>
      </ul>
-     <h4 class="loadMore">点击加载更多</h4>
+     <h4 class="loadMore" @click="loadMore">点击加载更多</h4>
    </article>
    <article class="originBox">
      <h3>全部来源</h3>
@@ -131,6 +131,10 @@ export default {
     confirm: function () {
       document.getElementById('cancelCollectBox').style.display = 'none'
       document.getElementsByClassName('collectWord')[0].innerHTML = '收藏'
+    },
+    // 点击加载更多
+    loadMore: function () {
+      console.log(123)
     }
   },
   mounted () {

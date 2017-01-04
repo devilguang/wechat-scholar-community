@@ -139,10 +139,10 @@ export default {
   border: none;
   background: #36d7b6;
   border-radius: 0.1rem;
-  padding: 0 0.15rem;
+  padding: 0 0.3rem;
   color: #fff;
-  height: .47rem;
-  line-height: .47rem;
+  height: .68rem;
+  line-height: .68rem;
   font-size: .26rem;
 }
 #editMe .btnBox .back{

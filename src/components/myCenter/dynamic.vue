@@ -50,21 +50,19 @@ export default {
   height: .68rem;
 }
 #mydynamic .dynamicContent .tabBox p{
-  width: 49.5%;
+  width: 48.5%;
   float: left;
   text-align: center;
   line-height: .68rem;
-  background: #bdbdbd;
-  color: #fff;
+  border: 1px solid #36d7b6;
+  background: #fff;
+  color: #36d7b6;
   font-size: .26rem;
-  margin-left: 0.01rem;
 }
-#mydynamic .dynamicContent .tabBox p:hover{
-  background: #36d7b6;
 
-}
 #mydynamic .dynamicContent .tabBox p.active{
   background: #36d7b6;
+  color: #fff;
 
 }
 #mydynamic .dynamicContent .tabBox p:nth-of-type(1){

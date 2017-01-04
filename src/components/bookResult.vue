@@ -4,37 +4,34 @@
      <input type="text" name="" value="" placehoder="请输入搜索内容" v-model="bookName" :value="bookName" >
      <span class="searchBtn iconfont icon-searchBtn" @click="searchBook"></span>
    </article>
-   <article class="findTip clrfix">
-     <div class="findLogo">
-       <span class="iconfont icon-flower" ></span>
-     </div>
-    <p>找到相关的文献共{{num}}条</p>
-    <div class="choose" @click="choose">
-     <span class="iconfont icon-choose"></span><span>筛选</span>
-    </div>
-</article>
+   <article>
+     <article class="findTip clrfix">
+         <div class="findLogo">
+           <span class="iconfont icon-flower" ></span>
+         </div>
+         <p>找到相关的文献共{{num}}条</p>
+         <div class="choose" @click="choose">
+           <span class="iconfont icon-choose"></span><span>筛选</span>
+         </div>
+       </article>
 
- <article class="chooseBox" v-show="chooseShow" >
-     <section class="selectBox clrfix">
-       <p>年限:</p>
-       <span :class="{active: activeTime == nolimit}" @click="chooseTime(nolimit)">时间不限</span>
-       <span :class="{active: activeTime == six}" @click="chooseTime(six)">2016至今</span>
-       <span :class="{active: activeTime == five}"  @click="chooseTime(five)">2015至今</span>
-       <span :class="{active: activeTime == four}" @click="chooseTime(four)">2014至今</span>
-     </section>
-
-
-       <section class="sortBox clrfix">
-       <p>排序:</p>
-       <span :class="{active: activeWay == about}" @click="chooseSort(about)">按相关性</span>
-       <span :class="{active: activeWay == cite}" @click="chooseSort(cite)">按被引量</span>
-       <span :class="{active: activeWay == timeDown}" @click="chooseSort(timeDown)">按时间降序</span>
-     </section>
-    </section>
-</article>
-
-
-
+       <article id="mainChoose" class="chooseBox" v-show="chooseShow">
+         <section class="selectBox clrfix ">
+           <p>年限:</p>
+           <span :class="{active: activeTime == nolimit}" @click="chooseTime(nolimit)">时间不限</span>
+           <span :class="{active: activeTime == six}" @click="chooseTime(six)">2016至今</span>
+           <span :class="{active: activeTime == five}"  @click="chooseTime(five)">2015至今</span>
+           <span :class="{active: activeTime == four}" @click="chooseTime(four)">2014至今</span>
+         </section>
+         <section class="sortBox clrfix">
+           <p>排序:</p>
+           <span :class="{active: activeWay == about}" @click="chooseSort(about)">按相关性</span>
+           <span :class="{active: activeWay == cite}" @click="chooseSort(cite)">按被引量</span>
+           <span :class="{active: activeWay == timeDown}" @click="chooseSort(timeDown)">按时间降序</span>
+         </section>
+       </section>
+     </article>
+   </article>
    <article class="bookList">
      <ul class="clrfix">
        <li class="bookListItem" v-for="(bookListItem,index) in bookList" >
@@ -47,17 +44,31 @@
            <li class="clrfix"><span class="iconfont icon-remark"></span><span class="word">评论</span></li>
            <li @click="recommend(bookListItem,index)" :class="{active:bookListItem.recommendActive}"><span class="iconfont icon-recommendBtn"></span><span class="word">推荐</span></li>
            <li class="clrfix"><span class="iconfont icon-share"></span><span class="word">分享</span></li>
-           <li @click="collect(bookListItem,index)" :class="{active:bookListItem.collectActive}"><span class="iconfont icon-collect"></span><span class="word">收藏</span></li>
+           <li @click="collect(bookListItem,index)" :class="{active:bookListItem.collectActive}"><span class="iconfont icon-collect"></span><span class="collectWord word">收藏</span></li>
          </ul>
        </li>
      </ul>
    </article>
+   <section id="cancelCollectBox" style="display:none">
+        <div class="alertBox">
+           <p class="tip">
+             <span class="iconfont icon-warn"></span>
+             <span class="tipWord">您确定要取消收藏吗?</span>
+           </p>
+           <div class="operate">
+             <span class="cancel" @click="cancel">取消</span>
+             <span class="confirm"@click="confirm">确定</span>
+           </div>
+        </div>
+   </section>
 </div>
+
 </template>
 <script>
 import Vue from 'vue'
 import axios from 'axios'
 import qs from 'querystring'
+var num = 0
 export default {
   name: 'scholarDetail',
   data () {
@@ -112,11 +123,31 @@ export default {
       }
     },
     collect: function (item, index) {
+      num = index
       if ((typeof item.collectActive) === 'undefined') {
         Vue.set(this.bookList[index], 'collectActive', true)
       } else {
         item.collectActive = !item.collectActive
       }
+      if (item.collectActive === true) {
+        // item.innerHTML = '已收藏'
+        console.log(item)
+        document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
+      }
+      if (item.collectActive === false) {
+        document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
+        document.getElementById('cancelCollectBox').style.display = 'block'
+      }
+    },
+    // 取消收藏弹框按钮
+    cancel: function () {
+      document.getElementById('cancelCollectBox').style.display = 'none'
+      Vue.set(this.bookList[num], 'collectActive', true)
+      document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
+    },
+    confirm: function () {
+      document.getElementById('cancelCollectBox').style.display = 'none'
+      Vue.set(this.bookList[num], 'collectActive', false)
     }
   },
   mounted () {
@@ -126,3 +157,13 @@ export default {
   }
 }
 </script>
+<style media="screen">
+#mainChoose{
+  position: fixed !important;
+  top:0rem;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  background: rgba(0,0,0,0.28);
+}
+</style>
