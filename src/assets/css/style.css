@@ -946,7 +946,7 @@ text-align: center;
  border-radius:0 0.1rem  0.1rem 0;
 }
 /*loginReg part&codeInput part*/
-#personalCenter h1,#codeInput h1{
+#mockLogin h1,#codeInput h1{
   width: 100%;
   height: .78rem;
   background: #424951;
@@ -956,18 +956,18 @@ text-align: center;
   line-height: .78rem;
   font-family: "宋体";
 }
-#personalCenter .regBox,#codeInput .regBox{
+#mockLogin .regBox,#codeInput .regBox{
   padding: .68rem .29rem 0 ;
   box-sizing: border-box;
 }
-#personalCenter .regBox input,#codeInput .regBox input{
+#mockLogin .regBox input,#codeInput .regBox input{
   width: 100%;
 }
-#personalCenter .regBox p,#codeInput .regBox p{
+#mockLogin .regBox p,#codeInput .regBox p{
   height: .87rem;
   position: relative;
 }
-#personalCenter .regBox p span,#codeInput .regBox p span{
+#mockLogin .regBox p span,#codeInput .regBox p span{
   position: absolute;
   display: block;
   height: .87rem;
@@ -978,22 +978,22 @@ text-align: center;
   font-size: .26rem;
   margin-top: 0.03rem;
 }
-#personalCenter .regBox p input,#codeInput .regBox p input{
+#mockLogin .regBox p input,#codeInput .regBox p input{
   height: .87rem;
   text-indent: 1.33rem;
   color: #bbbbbb;
   border: 1px solid #e7e7e7;
 }
-#personalCenter .regBox p .userTel{
+#mockLogin .regBox p .userTel{
   border-radius: 0.1rem 0.1rem 0 0 ;
 }
-#personalCenter .regBox p .userPsw{
+#mockLogin .regBox p .userPsw{
   border-radius:0  0  0.1rem 0.1rem;
 }
 #codeInput .regBox p .putCode{
   border-radius: 0.1rem ;
 }
-#personalCenter .regBox .regTip,#codeInput .regBox .regTip{
+#mockLogin .regBox .regTip,#codeInput .regBox .regTip{
   font-size: .24rem;
   color: #b8b8b8;
   margin: 1.11rem 0 .35rem 0;
@@ -1003,13 +1003,14 @@ text-align: center;
 #codeInput .regBox .regTip{
   margin: 0.5rem 0 .35rem 0;
 }
-#personalCenter .regBox .next,#codeInput .regBox .next{
+#mockLogin .regBox .next,#codeInput .regBox .next{
   height: .9rem;
   background: #36d7b6;
   color: #fff;
   line-height: .9rem;
   border: none;
   border-radius: 0.1rem;
+  margin-top: .4rem;
 }
 /*myCenter part*/
 /*scholarCircle part*/

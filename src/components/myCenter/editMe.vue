@@ -10,15 +10,15 @@
             <input  v-model="weixinname" type="text" v-bind:value="weixinname" size="30">
           </section>
         <section class="nameBox eachBox clrfix">
-          <p>学者名</p>
+          <p>学者名*</p>
           <input  v-model="selfname" type="text"  v-bind:value="selfname" size="30">
        </section>
         <section class="instituteBox eachBox clrfix">
-          <p>机构</p>
+          <p>机构*</p>
           <input  v-model="insititute" type="text"  v-bind:value="insititute" size="30">
         </section>
         <section class="dirBox eachBox clrfix">
-          <p>领域方向</p>
+          <p>领域方向*</p>
           <input v-model="dir" type="text"  :value="dir" size="30">
         </section>
         <section class="statusBox eachBox clrfix">
@@ -32,12 +32,7 @@
         <section class="telBox eachBox clrfix">
           <p>手机号</p>
           <input v-model="tel" type="text"  :value="tel" size="30">
-        </section>
-        <section class="pswBox eachBox clrfix">
-          <p>密码</p>
-          <input  v-model="psw" type="password"  :value="psw" size="30">
-        </section>
-    </form>
+        </section>  </form>
     <article class="btnBox clrfix">
       <router-link to="../myCenter/myInfo">
         <button type="button" name="button" class="back" >返回</button>
@@ -51,14 +46,13 @@
 export default {
   data () {
     return {
-      weixinname: '凉风微澜',
-      selfname: '李瑞',
-      insititute: '北京中医药大学',
-      dir: '针灸推拿学 临床医学',
-      status: '已认证',
-      email: '305649323@qq.com',
-      tel: '13896664872',
-      psw: '13131131'
+      weixinname: '麦达',
+      selfname: '',
+      insititute: '',
+      dir: '',
+      status: '',
+      email: '',
+      tel: ''
     }
   },
   methods: {
@@ -70,8 +64,15 @@ export default {
       console.log('状态:' + this.status)
       console.log('邮件:' + this.email)
       console.log('手机：' + this.tel)
-      console.log('密码：' + this.psw)
-      // 提交表单内容
+      if (this.selfname && this.insititute && this.dir) {
+        window.localStorage.setItem('myData', JSON.stringify({scholarname: this.selfname, insititute: this.insititute, dir: this.dir}))
+        // 提交表单内容
+        this.$router.push({
+          path: './myInfo'
+        })
+      } else {
+        window.alert('带星号的是必填项')
+      }
     }
   }
 }

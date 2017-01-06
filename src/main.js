@@ -14,8 +14,7 @@ Vue.use(VueRouter)
 import findScholar from './components/findScholar.vue'
 import findBook from './components/findBook.vue'
 import recommend from './components/recommend.vue'
-import personalCenter from './components/personalCenter.vue'
-
+import mockLogin from './components/mockLogin.vue'
 import scholarResult from './components/scholarResult.vue'
 import bookResult from './components/bookResult.vue'
 import scholarDetail from './components/scholarDetail.vue'
@@ -41,6 +40,8 @@ import publishFruit from './components/myCenter/publishFruit.vue'
 import publishTip from './components/myCenter/publishTip.vue'
 import collect from './components/myCenter/collect.vue'
 import attention from './components/myCenter/attention.vue'
+import sendemail from './components/myCenter/sendemail.vue'
+
 // 创建一个路由器实例
 // 并且配置路由规则
 var router = new VueRouter({
@@ -84,8 +85,8 @@ var router = new VueRouter({
       component: recommend
     },
     {
-      path: '/personalCenter',
-      component: personalCenter
+      path: '/mockLogin',
+      component: mockLogin
     },
     {
       path: '/codeInput',
@@ -162,6 +163,10 @@ var router = new VueRouter({
     {
       path: '/myCenter/Iwillconfirm',
       component: Iwillconfirm
+    },
+    {
+      path: '/myCenter/sendemail',
+      component: sendemail
     }
   ]
 })

@@ -1,17 +1,16 @@
 <template>
   <div id="Iwillconfirm">
     <article class="toConfirmContent">
-        <p class="confirmTip">请提供您所在的机构邮箱，我们将发送验证邮件</p>
+      <div class="bgBox">
+        <img src="../../assets/img/confirm-bg.png" alt="">
+      </div>
         <div class="confirmBox">
           <div class="emailBox itemBox">
             <span class="iconfont icon-email"></span>
             <input type="text" name="" value="" placeholder="请输入您的邮箱地址">
           </div>
-          <div class="telBox itemBox">
-            <span class="iconfont icon-tel"></span>
-            <input type="text" name="" value="" placeholder="请输入您的手机号">
-          </div>
-          <button type="button" name="button" class="submitBtn">提交</button>
+          <p class="confirmTip">请使用您所在机构的邮箱认证，163、QQ等个人邮箱不可用</p>
+          <button type="button" name="button" class="submitBtn" @click='publish'>提交</button>
         </div>
 
     </article>
@@ -20,19 +19,37 @@
   </div>
 </template>
 <script>
+export default {
+  methods: {
+    publish: function () {
+      this.$router.push({
+        path: '/myCenter/sendemail'
+      })
+    }
+  }
+}
 </script>
 <style>
-
-#Iwillconfirm .toConfirmContent .confirmTip{
-  height: .59rem;
-  background: #e9e9e9;
-  line-height: .59rem;
+#Iwillconfirm .toConfirmContent .bgBox{
+  width: 100%;
+  padding: 1rem 26% 0.5rem;
+  box-sizing: border-box;
+}
+#Iwillconfirm .toConfirmContent .bgBox img{
+  width: 100%;
+  height: 100%;
+}
+#Iwillconfirm .toConfirmContent .confirmBox .confirmTip{
+  height: .46rem;
+  line-height: .46rem;
   font-size: .2rem;
   color: #9d9c9c;
-  text-align: center;
+  box-sizing: border-box;
+  margin-top: .2rem;
+  margin-bottom: 0.3rem;
 }
 #Iwillconfirm .toConfirmContent .confirmBox{
- padding: .14rem .77rem 0 ;
+ padding: 0 .77rem 0 ;
  box-sizing: border-box;
 }
 #Iwillconfirm .toConfirmContent .confirmBox .itemBox{
@@ -54,6 +71,7 @@
   display: block;
   float: left;
   line-height: .68rem;
+  width: 80%;
 }
 #Iwillconfirm .toConfirmContent .confirmBox .submitBtn{
   height: .75rem;

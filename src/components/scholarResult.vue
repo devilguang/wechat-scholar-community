@@ -13,7 +13,7 @@
             </div>
           	<p class="scholarPosition">{{item.organName}}</p>
             <p class="scholarCited">被引数：{{item.achCount}}</p>
-            <p class="scholarDir">研究方向：<span>{{item.research}}</span></p>
+            <p class="scholarDir">领域方向：<span>{{item.research}}</span></p>
           </div>
           <span class="moreBtn iconfont icon-more"></span>
       <!-- </router-link> -->

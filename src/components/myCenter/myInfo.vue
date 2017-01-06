@@ -1,5 +1,7 @@
 <template lang="html">
   <div id="myInfo"  style="height:100vh;background:#f5f5f9">
+     <!-- 完善资料后 -->
+      <div id="completed" style="display:none">
         <router-link to="/myCenter/editMe">
           <span  class="editMyself iconfont icon-editMe" ></span>
         </router-link>
@@ -7,7 +9,7 @@
           <div class="scholarHeader">
              <div class="headerTop clrfix">
                <div class="topLeft">
-                 <span class="scholarStatus" @click="toMyFruit">未认证</span>
+                 <span class="scholarStatus" @click="toConfirm">未认证</span>
                </div>
                <div class="topMiddle">
                  <div class="imgBox">
@@ -19,8 +21,8 @@
                </div>
              </div>
 
-           <p class="scholarAbout clrfix">李静<span class="scholarUniverse">武汉大学</span></p>
-             <p class="scholarMarjor">研究方向：<span>人体解剖和组织胚胎学</span></p>
+           <p class="scholarAbout clrfix">{{infos.scholarname}}<span class="scholarUniverse">{{infos.insititute}}</span></p>
+             <p class="scholarMarjor">领域方向：<span>{{infos.dir}}</span></p>
            </div>
 
            <!-- 详情数字部分 -->
@@ -33,6 +35,16 @@
              </ul>
            </div>
         </article>
+      </div>
+      <!-- 未完善资料时 -->
+      <div id="notcomplete" style="display:block">
+        <div class="imgBox">
+          <img src="../../assets/img/img-scholar_1.png" >
+        </div>
+        <p class="getMorePower">完善资料后，将拥有更多权限</p>
+          <div class="toComplete" @click="toComplete">立即完善</div>
+      </div>
+
          <section class="centerListBox">
            <ul class="centerLists">
              <li class="centerItem" @click="toMyFruit">
@@ -66,14 +78,6 @@
                </div>
                <span  class="centerTitle">动态</span>
                <span class="iconfont icon-enter-more"></span>
-
-             </li>
-             <li class="centerItem" @click="toTalk">
-               <div class="iconBox">
-                 <span class="iconfont icon-myTalk"></span>
-               </div>
-             <span  class="centerTitle">唠嗑</span>
-             <span class="iconfont icon-enter-more"></span>
              </li>
            </ul>
          </section>
@@ -100,10 +104,21 @@ export default{
   data () {
     return {
     // 控制是否认证切换页面
-      isComfirm: false
+      isComfirm: true,
+      infos: []
     }
   },
   methods: {
+    toConfirm: function () {
+      this.$router.push({
+        path: '/myCenter/Iwillconfirm'
+      })
+    },
+    toComplete: function () {
+      this.$router.push({
+        path: './editMe'
+      })
+    },
     toMyFruit: function () {
       console.log(this.isComfirm)
       if (this.isComfirm) {
@@ -132,11 +147,6 @@ export default{
         path: '/myCenter/dynamic'
       })
     },
-    toTalk: function () {
-      this.$router.push({
-        path: '/myCenter/talk'
-      })
-    },
     // 加关注按钮
     attention: function () {
       var attentionBtn = document.getElementById('attentionBtn')
@@ -157,13 +167,66 @@ export default{
       attentionBtn.innerHTML = '+关注'
       document.getElementById('cancelAttentionBox').style.display = 'none'
     }
+  },
+  mounted: function () {
+    // 按需加载个人信息头部
+    if (window.localStorage.getItem('myData')) {
+      this.infos = JSON.parse(window.localStorage.getItem('myData'))
+      console.log(window.localStorage.getItem('myData'))
+      document.getElementById('completed').style.display = 'block'
+      document.getElementById('notcomplete').style.display = 'none'
+    }
   }
 }
 </script>
 <style>
-#myInfo{
-  margin-bottom: 0.9rem;
+/*未完善资料头部*/
+#notcomplete{
+  width: 100%;
+  height: 2.82rem;
+  background: url('../../assets/img/notcomplete-bg.jpg');
+  background-size: 100% 100%;
+  padding-top: .18rem;
+  box-sizing: border-box;
 }
+#notcomplete .imgBox{
+  width:.92rem;
+  height: .92rem;
+  position: absolute;
+  left: 50%;
+  margin-left: -.46rem;
+  background: #fff;
+  border-radius: 50%;
+}
+#notcomplete .imgBox img{
+  width:.84rem;
+  height:.84rem;
+  display: block;
+  margin: .04rem 0.04rem 0 0.04rem;
+  border-radius: 50%;
+}
+#notcomplete .getMorePower{
+  margin-top: 1.15rem;
+  font-size: .21rem;
+  text-align: center;
+  color: #fff;
+}
+#notcomplete .toComplete{
+border: 0.01rem solid #ffdcbe;
+width: 1.78rem;
+height: .48rem;
+line-height: .48rem;
+border-radius: .24rem;
+  font-size: .23rem;
+  text-align: center;
+  color: #ffb374;
+  background:#fff;
+  position: absolute;
+  left: 50%;
+  margin-left: -.89rem;
+  margin-top: .28rem;
+}
+
 #myInfo .editMyself{
   position: absolute;
   right: .29rem;
@@ -176,6 +239,9 @@ export default{
 #myInfo .centerListBox{
  padding: 0 .29rem;
  box-sizing: border-box;
+}
+#myInfo .centerListBox .centerLists{
+padding-top: .33rem;
 }
 #myInfo .centerListBox .centerLists .centerItem{
 	height:.73rem;

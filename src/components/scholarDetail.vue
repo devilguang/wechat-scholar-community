@@ -17,7 +17,7 @@
             </div>
           </div>
         <p class="scholarAbout clrfix">{{infos.scholarName}}<span class="scholarUniverse">{{infos.organName}}{{$route.params.userID}}</span></p>
-          <p class="scholarMarjor">研究领域：<span>{{infos.research}}</span></p>
+          <p class="scholarMarjor">领域方向：<span>{{infos.research}}</span></p>
         </div>
 
         <!-- 详情数字部分 -->
@@ -92,12 +92,20 @@ export default {
     },
     // 加关注
     attention: function () {
-      var attentionBtn = document.getElementById('attentionBtn')
-      if (attentionBtn.innerHTML === '已关注') {
-        document.getElementById('cancelAttentionBox').style.display = 'block'
+      // 未登录状态
+      if (!window.sessionStorage.getItem('userName')) {
+        this.$router.push({
+          path: '/mockLogin'
+        })
       } else {
-        window.alert('已关注')
-        attentionBtn.innerHTML = '已关注'
+        // 已登录状态
+        var attentionBtn = document.getElementById('attentionBtn')
+        if (attentionBtn.innerHTML === '已关注') {
+          document.getElementById('cancelAttentionBox').style.display = 'block'
+        } else {
+          window.alert('已关注')
+          attentionBtn.innerHTML = '已关注'
+        }
       }
     },
     cancel: function () {

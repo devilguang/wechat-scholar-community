@@ -14,7 +14,7 @@
        <!-- <li @click="changeColor(subjectItem)" v-for="subjectItem in subjectItems" v-bind:class="{active:subjectItem.isChecked}">{{subjectItem.subjectName}}</li> -->
      </ul>
      <div class="afterChoose">
-       <p class="tip">可选择5个领域,你已选择{{this.choosedNum}}个</p>
+       <p class="tip">可选择<span>5</span>个领域,你已选择<span>{{this.choosedNum}}</span>个</p>
         <button @click="next">下一步</button>
       </div>
   </div>
@@ -26,7 +26,7 @@ export default {
   data: function () {
     return {
       subjectItems: [{
-        subjectName: '农学',
+        subjectName: '哲学',
         subNames: [{
           eachName: '作物学'
         }, {
@@ -43,7 +43,7 @@ export default {
           eachName: '农业资源与环境'
         }]
       }, {
-        subjectName: '哲学',
+        subjectName: '经济学',
         subNames: [{
           eachName: '1作物学'
         }, {
@@ -60,7 +60,7 @@ export default {
           eachName: '7农业资源与环境'
         }]
       }, {
-        subjectName: '经济学',
+        subjectName: '法学',
         subNames: [{
           eachName: '8作物学'
         }, {
@@ -75,6 +75,74 @@ export default {
           eachName: '13植被保护'
         }, {
           eachName: '14农业资源与环境'
+        }]
+      }, {
+        subjectName: '教育学',
+        subNames: [{
+          eachName: '1作物学'
+        }, {
+          eachName: '2园艺学'
+        }, {
+          eachName: '3畜牧学'
+        }, {
+          eachName: '4兽医学'
+        }, {
+          eachName: '5作物学'
+        }, {
+          eachName: '6植被保护'
+        }, {
+          eachName: '7农业资源与环境'
+        }]
+      }, {
+        subjectName: '文学',
+        subNames: [{
+          eachName: '1作物学'
+        }, {
+          eachName: '2园艺学'
+        }, {
+          eachName: '3畜牧学'
+        }, {
+          eachName: '4兽医学'
+        }, {
+          eachName: '5作物学'
+        }, {
+          eachName: '6植被保护'
+        }, {
+          eachName: '7农业资源与环境'
+        }]
+      }, {
+        subjectName: '历史学',
+        subNames: [{
+          eachName: '1作物学'
+        }, {
+          eachName: '2园艺学'
+        }, {
+          eachName: '3畜牧学'
+        }, {
+          eachName: '4兽医学'
+        }, {
+          eachName: '5作物学'
+        }, {
+          eachName: '6植被保护'
+        }, {
+          eachName: '7农业资源与环境'
+        }]
+      }, {
+        subjectName: '理学',
+        subNames: [{
+          eachName: '1作物学'
+        }, {
+          eachName: '2园艺学'
+        }, {
+          eachName: '3畜牧学'
+        }, {
+          eachName: '4兽医学'
+        }, {
+          eachName: '5作物学'
+        }, {
+          eachName: '6植被保护'
+        }, {
+          eachName: '7农业资源与环境'
         }]
       }],
       choosedNum: '0'
@@ -129,6 +197,9 @@ export default {
   color: #323232;
   font-size: .22rem;
   line-height: .65rem;
+}
+#chooseField .top .tip span{
+color: #feaf16;
 }
 #chooseField .subjectItems{
   margin-bottom: 2.32rem;
@@ -217,6 +288,9 @@ font-size: .2rem;
 line-height: 1.12rem;
 color: #8e8e8e;
 float: left;
+}
+#chooseField .afterChoose .tip span{
+color: #feaf16;
 }
 #chooseField .afterChoose button{
 border: none;

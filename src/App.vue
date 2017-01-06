@@ -21,10 +21,8 @@
        </router-link>
        </li>
        <li @click="navTab(nav04Text)" :class="{active: activeName == nav04Text}">
-       <router-link to="/myCenter/myInfo">
-       <span class="iconfont icon-person" ></span>
+         <span class="iconfont icon-person" ></span>
        <span class="nav-title" >个人中心</span>
-       </router-link>
        </li>
     </ul>
   </footer>
@@ -67,6 +65,18 @@ export default {
       this.activeName = navText
       // this.isChecked = !this.isChecked
       // console.log(this.navItems[1])
+      // 到个人中心页面
+      if (navText === this.nav04Text) {
+        if (!window.sessionStorage.getItem('userName')) {
+          this.$router.push({
+            path: '/mockLogin'
+          })
+        } else {
+          this.$router.push({
+            path: '/myCenter/myInfo'
+          })
+        }
+      }
     }
   }
 }
