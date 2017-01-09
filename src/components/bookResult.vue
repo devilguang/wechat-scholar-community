@@ -34,7 +34,7 @@
    </article>
    <article class="bookList">
      <ul class="clrfix">
-       <li class="bookListItem" v-for="(bookListItem,index) in bookList" >
+       <li class="bookListItem" v-for="(bookListItem,index) in bookList" @click="toBookDetail()">
          <!-- <router-link :to="{ name: 'bookDetail', params: { bookID: bookListItem.bookID }}"> -->
          <p class="bookTitle">{{bookListItem.title}}</p>
          <p class="bookBrief"><span class="author">{{bookListItem.docAuthors}}</span><span> —{{bookListItem.qikanName}}— </span><span>{{bookListItem.ym}}(刊号)</span></p>
@@ -113,6 +113,16 @@ export default {
     },
     chooseSort: function (way) {
       this.activeWay = way
+    },
+    // 进入文献详情
+    toBookDetail: function () {
+      if (!this.loginJudge()) {
+        this.$router.push({
+          path: '/findBook/bookResult/bookDetail/1'
+        })
+      } else {
+        return
+      }
     },
     recommend: function (item, index) {
       // set设置数据相应 增加data里面的 一个recommendActive 属性 可以控制高亮

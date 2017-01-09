@@ -16,35 +16,23 @@
       <li @click="collect" :class="{active:colActive}"><span class="iconfont icon-collect"></span><span class="collectWord">收藏</span></li>
    </ul>
    <article class="commitArea">
-      <textarea name="talk" class="writeArea" placeholder="输入内容"></textarea>
-      <button type="button" name="button" class="pubulishBtn">发布</button>
+      <textarea name="talk" class="writeArea" placeholder="输入内容" v-model="clearItem"></textarea>
+      <button type="button" name="button" class="pubulishBtn" @click="publishCommit">发布</button>
    </article>
 
    <article class="commitContent">
      <ul class="commitItems">
-       <li class="commitItem">
+       <li class="commitItem" v-for="commitItem in commitItems">
          <div class="top clrfix">
            <div class="left">
              <img src="../assets/img/img-public_1.jpg" alt="">
            </div>
            <div class="right">
-             <p class="name">姓名</p>
-             <span class="time">发布时间 2016-11-10 13:03</span>
+             <p class="name">{{commitItem.myName}}</p>
+             <span class="time">发布时间 {{commitItem.presentTime}}</span>
            </div>
          </div>
-         <p class="mainContent">文学是以语言文字为工具，形象形象形象文学是以语言文字为工具，形象形象形象文学是以语言。</p>
-       </li>
-       <li class="commitItem">
-         <div class="top clrfix">
-           <div class="left">
-             <img src="../assets/img/img-public_1.jpg" alt="">
-           </div>
-           <div class="right">
-             <p class="name">姓名</p>
-             <span class="time">发布时间 2016-11-10 13:03</span>
-           </div>
-         </div>
-         <p class="mainContent">文学是以语言文字为工具，形象形象形象文学是以语言文字为工具，形象形象形象文学是以语言。</p>
+         <p class="mainContent">{{commitItem.mainContent}}</p>
        </li>
      </ul>
      <h4 class="loadMore" @click="loadMore">点击加载更多</h4>
@@ -94,7 +82,17 @@ export default {
       tab03Text: 'docuQuote',
       currentView: 'docuSimilar',
       activeName: 'tab01Text',
-      activeFirst: true
+      activeFirst: true,
+      clearItem: '',
+      commitItems: [{
+        mainContent: '文学是以语言文字为工具，形象形象形象文学是以语言文字为工具，形象形象形象文学是以语言。',
+        presentTime: '2017-02-01',
+        myName: '凉风微澜'
+      }, {
+        mainContent: '2文学是以语言文字为工具，形象形象形象文学是以语言文字为工具，形象形象形象文学是以语言。',
+        presentTime: '2016-02-01',
+        myName: '豆豆'
+      }]
     }
   },
   components: {
@@ -114,6 +112,32 @@ export default {
       if (!this.colActive) {
         document.getElementById('cancelCollectBox').style.display = 'block'
       }
+    },
+    // 发表留言
+    publishCommit: function () {
+      // 获取留言内容
+      var content = document.getElementsByClassName('writeArea')[0].value
+      // 获取当前时间
+      var myDate = new Date()
+      // var year = myDate.getFullYear()
+      // var month = myDate.getMonth()
+      // var date = myDate.getDate()
+      // var hour = myDate.getHours()
+      // var minute = myDate.getMinutes()
+      // var second = myDate.getSeconds()
+      var localtime = myDate.toLocaleString().split('/').join('-')
+      var name = window.sessionStorage.getItem('userName')
+      console.log(localtime)
+      if (content === '') {
+        window.alert('输入内容不能为空')
+      } else {
+        this.commitItems.unshift({
+          mainContent: content,
+          presentTime: localtime,
+          myName: name
+        })
+      }
+      this.clearItem = ''
     },
     // 选项卡切换
     tabToggle: function (tabText) {

@@ -21,7 +21,7 @@
                </div>
              </div>
 
-           <p class="scholarAbout clrfix">{{infos.scholarname}}<span class="scholarUniverse">{{infos.insititute}}</span></p>
+           <p class="scholarAbout clrfix">{{infos.selfname}}<span class="scholarUniverse">{{infos.insititute}}</span></p>
              <p class="scholarMarjor">领域方向：<span>{{infos.dir}}</span></p>
            </div>
 
@@ -52,7 +52,7 @@
                  <div class="iconBox">
                    <span class="iconfont icon-myFruit"></span>
                  </div>
-               <span class="centerTitle">我的成果</span>
+               <span class="centerTitle">我的&nbsp;成果</span>
                <span class="iconfont icon-enter-more"></span>
                </div>
             </li>

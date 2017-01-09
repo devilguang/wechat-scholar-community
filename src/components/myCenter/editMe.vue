@@ -34,9 +34,8 @@
           <input v-model="tel" type="text"  :value="tel" size="30">
         </section>  </form>
     <article class="btnBox clrfix">
-      <router-link to="../myCenter/myInfo">
-        <button type="button" name="button" class="back" >返回</button>
-      </router-link>
+      <button type="button" name="button" class="back" @click="back()">返回</button>
+
       <button type="button" name="button" class="confirmChange" @click="confirmChange()">确认修改</button>
     </article>
 
@@ -52,7 +51,8 @@ export default {
       dir: '',
       status: '',
       email: '',
-      tel: ''
+      tel: '',
+      momentInfo: []
     }
   },
   methods: {
@@ -65,7 +65,7 @@ export default {
       console.log('邮件:' + this.email)
       console.log('手机：' + this.tel)
       if (this.selfname && this.insititute && this.dir) {
-        window.localStorage.setItem('myData', JSON.stringify({scholarname: this.selfname, insititute: this.insititute, dir: this.dir}))
+        window.localStorage.setItem('myData', JSON.stringify({selfname: this.selfname, insititute: this.insititute, dir: this.dir}))
         // 提交表单内容
         this.$router.push({
           path: './myInfo'
@@ -73,13 +73,35 @@ export default {
       } else {
         window.alert('带星号的是必填项')
       }
+    },
+    back: function () {
+      window.localStorage.setItem('moment', JSON.stringify({selfname: this.selfname, insititute: this.insititute, dir: this.dir, email: this.email, tel: this.tel}))
+      console.log(window.localStorage.getItem('moment'))
+      this.$router.push({
+        path: './myInfo'
+      })
     }
+  },
+  mounted: function () {
+    // 获取未确认修改时的信息
+    var that = null
+    if (window.localStorage.getItem('myData')) {
+      that = JSON.parse(window.localStorage.getItem('myData'))
+    } else {
+      that = JSON.parse(window.localStorage.getItem('moment'))
+    }
+    this.selfname = that.selfname
+    this.insititute = that.insititute
+    this.dir = that.dir
+    this.email = that.email
+    this.tel = that.tel
+    console.log(this.weixinname)
+    console.log(that)
   }
 }
 </script>
 <style>
 #editMe .editBox{
-
   margin-bottom: .9rem;
   padding-top:0.3rem;
   box-sizing: border-box;

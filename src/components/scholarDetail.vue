@@ -4,7 +4,7 @@
      <article class="detailTopBox clrfix">
        <div class="scholarHeader">
           <div class="headerTop clrfix">
-            <div class="topLeft">
+            <div class="topLeft" @click="approve">
               <span class="scholarStatus">未认证</span>
             </div>
             <div class="topMiddle">
@@ -92,12 +92,7 @@ export default {
     },
     // 加关注
     attention: function () {
-      // 未登录状态
-      if (!window.sessionStorage.getItem('userName')) {
-        this.$router.push({
-          path: '/mockLogin'
-        })
-      } else {
+      if (!this.loginJudge()) {
         // 已登录状态
         var attentionBtn = document.getElementById('attentionBtn')
         if (attentionBtn.innerHTML === '已关注') {
@@ -106,6 +101,29 @@ export default {
           window.alert('已关注')
           attentionBtn.innerHTML = '已关注'
         }
+      } else {
+        return
+      }
+    },
+    approve: function () {
+      if (!this.loginJudge()) {
+        // 已登录未完善
+        if (!window.localStorage.getItem('myData')) {
+          // window.confirm('请先完善资料')
+          if (window.confirm('请先完善资料')) {
+            this.$router.push({
+              path: '../../../myCenter/myInfo'
+            })
+          }
+        } else {
+          // 已登录已完善
+          this.$router.push({
+            path: '../../../myCenter/Iwillconfirm'
+          })
+          console.log('yiwanshan')
+        }
+      } else {
+        return
       }
     },
     cancel: function () {
