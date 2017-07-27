@@ -4,9 +4,9 @@
        <li class="partnerItem" v-for="partnerItem in partnerItems">
           <div class="top clrfix">
               <img src="../assets/img/img-scholar_1.png">
-              <span class="name">{{partnerItem.author}}</span>
+              <span class="name">{{partnerItem.cooperatorName}}</span>
           </div>
-          <p>机构:&nbsp{{partnerItem.organName}}</p>
+          <p>机构:&nbsp{{partnerItem.cooperOrgName}}</p>
        </li>
      </ul>
   </section>
@@ -19,7 +19,8 @@ export default {
     'partnerItems'
   ],
   ready () {
-    console.log(this.partnerItems)
+    // this.partnerItems = this.partnerItems.slice(0, 10)
+    // console.log("length = " + this.partnerItems.length)
   }
 }
 </script>

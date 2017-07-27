@@ -70,7 +70,7 @@ var router = new VueRouter({
     },
     {
       name: 'detail',
-      path: '/findScholar/scholarResult/scholarDetail/:link',
+      path: '/findScholar/scholarResult/scholarDetail/:scholarUnique',
       component: scholarDetail
     },
     {

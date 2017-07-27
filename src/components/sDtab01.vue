@@ -5,12 +5,13 @@
         <div class="allFruits">全部成果</div>
           <p class="citedNum">被引次数：<span>{{infos.cite}}</span></p>
       </div>
-      <ul class="contentMain">
+      <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10" class="contentMain">
         <li class="contentItem" v-for="(detailItem,index) in detailItems" >
           <div class="wordsCon">
                <p class="coreCon">{{detailItem.title}}</p>
-               <p class="eachCitedNum">被引用次数：{{detailItem.cites}}</p>
-               <p class="authorItem">{{detailItem.docAuthors}}：{{detailItem.source}}</p>
+               <p class="authorItem">{{detailItem.pub_name}} {{detailItem.yvip}}</p>
+               <!-- <p class="authorItem">{{detailItem.author.length > 0 ? detailItem.author.join(';').substring(0, 45) + '...' : ''}}</p> -->
+               <p class="eachCitedNum">被引次数：{{detailItem.cite_count.length > 0 ? detailItem.cite_count[0] : '-'}}</p>
           </div>
           <ul class="userBtns clrfix">
              <li><span class="iconfont icon-remark"></span>评论</li>
@@ -26,14 +27,16 @@
 <script>
 // import axios from 'axios'
 import Vue from 'vue'
+import qs from 'querystring'
+
 export default {
   props: [
-    'detailItems',
     'infos'
   ],
-  data () {
+  data() {
     return {
-
+      detailItems: [],
+      pageNum: 1
     }
   },
   methods: {
@@ -53,12 +56,33 @@ export default {
       } else {
         item.collectActive = !item.collectActive
       }
+    },
+    loadMore: function () {
+      this.busy = true;
+      var solrQuery = {
+        "q": "*:*",
+        "wt": "json",
+        "fl": "",
+        "indent": "off",
+        "rows": 10,
+        "start": 0,
+      }
+      solrQuery.start = (this.pageNum - 1) * 10;
+      solrQuery.q = 'claims:"' + this.$route.params.scholarUnique + '"';
+      this.$http.post('/solr/achievement/select', qs.stringify(solrQuery))
+        .then((response) => {
+          this.detailItems.push(...response.data.response.docs)
+          this.pageNum++
+          this.busy = false;
+        })
+        .then((error) => { })
     }
   },
-  mounted () {
+  mounted() {
 
   }
 }
 </script>
 <style lang="css">
+
 </style>
