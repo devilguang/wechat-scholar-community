@@ -149,14 +149,18 @@
 .scholarList .scholarItem .scholarHead img,.attentionBox .scholarItem .scholarHead img{
 	width: 100%;
 }
+
+.scholarList .scholarItem .scholarHead img {
+  border-radius: 0px
+}
+
 .scholarList .scholarItem .scholarInfos,.attentionBox .scholarItem .scholarInfos{
     width: 60%;
      float: left;
      margin-top: -0.1rem;
 }
 .scholarList .scholarItem .scholarInfos .scholarTitle,.attentionBox .scholarItem .scholarInfos .scholarTitle{
-     height: .4rem;
-
+     height: .5rem;
 }
 
 .scholarList .scholarItem .scholarName,.attentionBox .scholarItem .scholarName{

@@ -9,25 +9,25 @@
             </div>
             <div class="topMiddle">
               <div class="imgBox">
-                <img src="../assets/img/img-scholar_1.png" >
+                <img v-if="infos.headPhotoUrl && infos.headPhotoUrl.length > 0" :src="'http://120.55.191.189:9000/v1/userInfo/headPhotoDownload?filePath=' + infos.headPhotoUrl">
+                <img v-else src="../assets/img/img-scholar_1.png">
               </div>
             </div>
             <div class="topRight">
               <span class="attention" id="attentionBtn" @click="attention()">+关注</span>
             </div>
           </div>
-        <p class="scholarAbout clrfix">{{infos.scholarName}}<span class="scholarUniverse">{{infos.organName}}{{$route.params.userID}}</span></p>
-          <p class="scholarMarjor">领域方向：<span>{{infos.research}}</span></p>
+        <p class="scholarAbout clrfix">{{infos.scholarName}}<span class="scholarUniverse">{{infos.orgName}}</span></p>
+          <p class="scholarMarjor">领域方向：<span>{{infos.area}}</span></p>
         </div>
 
         <!-- 详情数字部分 -->
         <div class="numBox">
-
           <ul class="clrfix" >
-            <li class="outcomN"><span>{{infos.achCount}}</span><p>成果数</p></li>
-            <li class="citedN"><span>{{infos.cite}}</span><p>被引数</p></li>
-            <li class="followerN"><span>{{infos.g}}</span><p>跟随着</p></li>
-            <li class="HN"><span>{{infos.h}}</span><p>H指数</p></li>
+            <li class="outcomN"><span>{{infos.achAllNum || '-'}}</span><p>成果数</p></li>
+            <li class="citedN"><span>{{infos.allCitedNum || '-'}}</span><p>被引数</p></li>
+            <li class="followerN"><span>-</span><p>关注者</p></li>
+            <li class="HN"><span>{{infos.h || '-'}}</span><p>H指数</p></li>
           </ul>
         </div>
      </article>
@@ -140,10 +140,10 @@ export default {
   mounted () {
     var scDetail = JSON.parse(window.sessionStorage.getItem('scDetail'))
     console.log(scDetail)
-    this.infos = scDetail.data
-    this.detailItems = scDetail.data.cnkiDetailLists
-    this.partnerItems = scDetail.data.cnkiAuthorsList
-    this.instituteItems = scDetail.data.cnkiOrgansList
+    this.infos = scDetail.data.scholar
+    this.detailItems = scDetail.data.scholar.cnkiDetailLists
+    this.partnerItems = scDetail.scholar.cnkiAuthorsList
+    this.instituteItems = scDetail.scholar.cnkiOrgansList
 
     // console.log(this.$route.params.link)
     // axios.post('http://localhost/query/gatherScholarDetail', qs.stringify({link: this.$route.params.link})).then((response) => {

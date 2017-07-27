@@ -2,11 +2,17 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
+import infiniteScroll from 'vue-infinite-scroll'
 
 // 开启debug模式
 Vue.config.debug = true
 // 调用VueRouter
 Vue.use(VueRouter)
+Vue.use(infiniteScroll)
+
+Vue.prototype.$http = axios;
+
+
 
 // const FETCH_DATA_PREFIX_URL = 'http://localhost/'
 
@@ -170,6 +176,9 @@ var router = new VueRouter({
     }
   ]
 })
+
+const irsback = 'http://120.55.191.189:9000/v1';
+
 // ajax传data编码问题
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // 现在我们可以启动应用了！
@@ -182,7 +191,7 @@ console.log(app)
 
 var num = 0
 export default {
-  data () {
+  data() {
     return {
       collectItems: []
     }
