@@ -4,7 +4,10 @@ import VueRouter from 'vue-router'
 import axios from 'axios'
 import infiniteScroll from 'vue-infinite-scroll'
 import Vuex from 'vuex';
+import lodash from 'lodash'
+import VueLodash from 'vue-lodash/dist/vue-lodash.min'
 
+Vue.use(VueLodash, lodash)
 Vue.use(Vuex)
 // 开启debug模式
 Vue.config.debug = true
@@ -186,22 +189,22 @@ var router = new VueRouter({
 const store = new Vuex.Store({
     state: {
         queryScholar: {},
-        scholarUnique: ''
+        scholarInfo: {}
     },
     mutations: {
-        queryScholarBySolr (state, q) {
-            state.queryScholar['q'] = q;
+        queryScholarBySolr (state, queryScholar) {
+            state.queryScholar = queryScholar;
         },
-        findScholarByUnique (state, scholarUnique) {
-            state.scholarUnique = scholarUnique;
+        findScholarByUnique (state, scholarInfo) {
+            state.scholarInfo = scholarInfo;
         }
     },
     actions: {
-        saveQueryScholar: function (context, q) {
-            context.commit('queryScholarBySolr', q)
+        saveQueryScholar: function (context, queryScholar) {
+            context.commit('queryScholarBySolr', queryScholar)
         },
-        saveScholarUnique: function (context, scholarUnique) {
-            context.commit('findScholarByUnique', scholarUnique)
+        saveScholarInfo: function (context, scholarInfo) {
+            context.commit('findScholarByUnique', scholarInfo)
         }
     }
 })

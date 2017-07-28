@@ -38,26 +38,26 @@
             return {
                 items: [],
                 pageNum: 1,
-                q: "*:*"
+                queryScholar: {},
+                q: '*:*',
+                type: 'wd'
             }
         },
         methods: {
             //  点击进学者详情页
             toDetail: function (scholar_unique) {
-                this.$store.dispatch('saveScholarUnique', scholar_unique)
-                this.$http.get('/v1/scholar/' + scholar_unique, {})
-                    .then((response) => {
-                        this.$store.scholarInfo = scholar_unique;
-                        window.sessionStorage.setItem('scDetail', JSON.stringify(response))
-                        this.$router.push({
-                            name: 'detail'
-                        })
-                    })
-                    .then((error) => console.log(error))
+                let scholarInfo = {
+                    scholarUnique: scholar_unique,
+                    type: this.type
+                }
+                this.$store.dispatch('saveScholarInfo', scholarInfo)
+                this.$router.push({
+                    name: 'detail'
+                })
             },
             loadMore: function () {
                 this.busy = true;
-                var solrQuery = {
+                let solrQuery = {
                     "q": "*:*",
                     "wt": "json",
                     "fl": "scholar_unique,scholar_name,org_name,subject,ach_all_num,head_photo_url",
@@ -65,23 +65,114 @@
                     "defType": "edismax",
                     "mm": "75%",
                     "rows": 10,
-                    "start": 0,
+                    "start": 0
                 }
-                solrQuery.q = this.q;
-                solrQuery.start = (this.pageNum - 1) * 10;
-                this.$http.post('/solr/scholar/select', qs.stringify(solrQuery))
-                    .then((result) => {
-                        this.items.push(...result.data.response.docs);
-                        this.pageNum++;
-                        this.busy = false;
-                    })
-                    .then((error) => {
-                    })
+
+                let solrQueryWechat = {
+                    "q": "*:*",
+                    "wt": "json",
+                    "fl": "SCHOLAR_UNIQUE,SCHOLAR_NAME,ORG_NAME,AREA,ACH_ALL_NUM",
+                    "indent": "off",
+                    "defType": "edismax",
+                    "mm": "75%",
+                    "rows": 10,
+                    "start": 0
+                }
+
+                let keymap = {
+                    SCHOLAR_UNIQUE: 'scholar_unique',
+                    SCHOLAR_NAME: 'scholar_name',
+                    ORG_NAME: 'org_name',
+                    AREA: 'subject',
+                    ACH_ALL_NUM: 'ach_all_num'
+                }
+
+                if (this.type == 'wd') {
+                    console.log('type = ' + this.type);
+                    var q = '';
+                    if (this.queryScholar.scholarName != '') {
+                        q += 'scholar_name:"' + this.queryScholar.scholarName + '"'
+                    }
+                    if (this.queryScholar.insName != '') {
+                        q += ' and org_name:' + this.queryScholar.insName
+                    }
+                    solrQuery.q = q
+                    solrQuery.start = (this.pageNum - 1) * 10;
+                    this.$http.post('/indexWD/scholar/select', qs.stringify(solrQuery))
+                        .then((result) => {
+                            var count = result.data.response.numFound
+                            // console.log('count = ' + count)
+                            if (count == 0) {
+                                this.type = 'server'
+                                q = ''
+                                if (this.queryScholar.scholarName != '') {
+                                    q += 'SCHOLAR_NAME:"' + this.queryScholar.scholarName + '"'
+                                }
+                                if (this.queryScholar.insName != '') {
+                                    q += ' and ORG_NAME:' + this.queryScholar.insName;
+                                }
+                                solrQueryWechat.q = q
+                                solrQueryWechat.start = solrQuery.start
+                                this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
+                                    .then((result) => {
+                                        var wechatSolrCount = result.data.response.numFound
+                                        // console.log('wechatSolrCount = ' + wechatSolrCount)
+                                        var server_docs = [];
+                                        if (wechatSolrCount > 0) {
+                                            _(result.data.response.docs).forEach(function (doc) {
+                                                doc['AREA'] = doc.AREA.split('/')
+                                                server_docs.push(_.mapKeys(doc, function (value, key) {
+                                                    return keymap[key]
+                                                }))
+                                            })
+                                        }
+                                        this.items.push(...server_docs)
+                                        this.pageNum++
+                                        this.busy = false
+                                    })
+                            } else {
+                                _(result.data.response.docs).forEach(function (doc) {
+                                    doc.org_name = '武汉大学' + doc.org_name
+                                })
+                                this.items.push(...result.data.response.docs)
+                                this.pageNum++;
+                                this.busy = false;
+                            }
+                        })
+                        .then((error) => {
+                        })
+                } else {
+                    q = ''
+                    if (this.queryScholar.scholarName != '') {
+                        q += 'SCHOLAR_NAME:"' + this.queryScholar.scholarName + '"'
+                    }
+                    if (this.queryScholar.insName != '') {
+                        q += ' and ORG_NAME:' + this.queryScholar.insName
+                    }
+                    solrQueryWechat.q = q
+                    solrQueryWechat.start = solrQuery.start
+                    this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
+                        .then((result) => {
+                            var wechatSolrCount = result.data.response.numFound
+                            // console.log('wechatSolrCount = ' + wechatSolrCount)
+                            var server_docs = []
+                            if (wechatSolrCount > 0) {
+                                _(result.data.response.docs).forEach(function (doc) {
+                                    doc['AREA'] = doc.AREA.split('/')
+                                    server_docs.push(_.mapKeys(doc, function (value, key) {
+                                        return keymap[key]
+                                    }))
+                                })
+                            }
+                            this.items.push(...server_docs)
+                            this.pageNum++
+                            this.busy = false
+                        })
+                }
             }
         },
         mounted() {
-            var queryScholar = this.$store.state.queryScholar
-            this.q = queryScholar.q
+            this.queryScholar = this.$store.state.queryScholar
         }
     }
 </script>

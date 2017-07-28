@@ -37,15 +37,9 @@ export default {
 	methods: {
 		search: function () {
 			// defType=edismax&indent=on&mm=75%&q=scholar_name:"乐江"%20and%20org_name:"基础医学院"&wt=json
-			var q = '';
-			if (this.scholarName != '') {
-				q += 'scholar_name:"' + this.scholarName + '"';
-			}
-			if (this.insName != '') {
-				q += ' and org_name:' + this.insName;
-			}
-			// window.sessionStorage.setItem('data', JSON.stringify(q))
-            this.$store.dispatch('saveQueryScholar', q);
+
+			let queryScholar = this
+            this.$store.dispatch('saveQueryScholar', queryScholar);
 			this.$router.push({
 				path: '/findScholar/scholarResult'
 			})
