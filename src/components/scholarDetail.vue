@@ -113,7 +113,6 @@
             // 选项卡切换
             tabToggle: function (tabText) {
                 this.currentView = tabText
-                console.log(tabText)
                 this.activeFirst = false
                 this.activeName = tabText
             },
@@ -162,17 +161,109 @@
                 var attentionBtn = document.getElementById('attentionBtn')
                 attentionBtn.innerHTML = '+关注'
                 document.getElementById('cancelAttentionBox').style.display = 'none'
-            }
-        },
-        mounted() {
-            this.$http.get('/v1/scholar/' + this.$store.state.scholarUnique, {})
-                .then((response) => {
+            },
+            pullScholarFromWD: function() {
+                this.$http.get('/v1/scholar/' + this.$store.state.scholarInfo.scholarUnique, {})
+                    .then((response) => {
                     this.infos = response.data.scholar
                     // this.detailItems = response.data.scholar.cnkiDetailLists
                     this.partnerItems = response.data.cooperatorslist.slice(0, 10)
                     // this.instituteItems = response.scholar.cnkiOrgansList
-                })
-                .then((error) => {})
+                }).then((error) => {})
+            },
+            pullScholarFromServer: function() {
+                let solrQueryWechat = {
+                    "q": "*:*",
+                    "wt": "json",
+                    "fl": "SCHOLAR_UNIQUE,SCHOLAR_NAME,ORG_NAME,AREA,ACH_ALL_NUM,ALL_CITED_NUM,H_EXPONENT",
+                    "indent": "off",
+                    "rows": 1,
+                    "start": 0
+                }
+
+                let keymap = {
+                    SCHOLAR_UNIQUE: 'scholar_unique',
+                    SCHOLAR_NAME: 'scholarName',
+                    ORG_NAME: 'orgName',
+                    AREA: 'area',
+                    ACH_ALL_NUM: 'achAllNum',
+                    ALL_CITED_NUM: 'allCitedNum',
+                    H_EXPONENT: 'h'
+                }
+                solrQueryWechat.q = 'SCHOLAR_UNIQUE:"' + this.$store.state.scholarInfo.scholarUnique + '"';
+                this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
+                    .then((response) => {
+                    this.infos = _.mapKeys(response.data.response.docs[0], function (value, key) {
+                        return keymap[key]
+                    })
+                    // this.detailItems = response.data.scholar.cnkiDetailLists
+                    // this.partnerItems = response.data.cooperatorslist.slice(0, 10)
+                    // this.instituteItems = response.scholar.cnkiOrgansList
+                }).then((error) => {})
+            },
+            pullCoper: function() {
+                let solrQueryCoper = {
+                    "q": "*:*",
+                    "wt": "json",
+                    "fl": "COOPERATOR_NAME,COOPER_ORG_NAME",
+                    "indent": "off",
+                    "rows": 10,
+                    "start": 0
+                }
+
+                let keymapCoper = {
+                    COOPERATOR_NAME: 'cooperatorName',
+                    COOPER_ORG_NAME: 'cooperOrgName'
+                }
+                solrQueryCoper.q = 'scholar_info_id:"' + this.$store.state.scholarInfo.scholarUnique + '"';
+                this.$http.post('/indexServer/scholar_coper/select', qs.stringify(solrQueryCoper))
+                    .then((result) => {
+                        var server_docs = []
+                        _(result.data.response.docs).forEach(function (doc) {
+                            server_docs.push(_.mapKeys(doc, function (value, key) {
+                                return keymapCoper[key]
+                            }))
+                        })
+                        // this.detailItems = response.data.scholar.cnkiDetailLists
+                        this.partnerItems = server_docs.slice(0, 10)
+                        // this.instituteItems = response.scholar.cnkiOrgansList
+                    }).then((error) => {})
+            },
+            pullCoorgan: function() {
+                let solrQueryCoorgan = {
+                    "q": "*:*",
+                    "wt": "json",
+                    "fl": "COOPER_ORG_NAME,COOPER_NUM",
+                    "indent": "off",
+                    "rows": 10,
+                    "start": 0
+                }
+
+                let keymapCoporgan = {
+                    COOPER_ORG_NAME: 'organName',
+                    COOPER_NUM: 'achCount'
+                }
+                solrQueryCoorgan.q = 'scholar_info_id:"' + this.$store.state.scholarInfo.scholarUnique + '"';
+                this.$http.post('/indexServer/scholar_coorgan/select', qs.stringify(solrQueryCoorgan))
+                    .then((result) => {
+                        var server_docs = []
+                        _(result.data.response.docs).forEach(function (doc) {
+                            server_docs.push(_.mapKeys(doc, function (value, key) {
+                                return keymapCoporgan[key]
+                            }))
+                        })
+                        this.instituteItems = server_docs.slice(0, 10)
+                    }).then((error) => {})
+            }
+        },
+        mounted() {
+            if (this.$store.state.scholarInfo.type == 'wd') {
+                this.pullScholarFromWD();
+            } else {
+                this.pullScholarFromServer();
+                this.pullCoper();
+                this.pullCoorgan();
+            }
         }
     }
 
