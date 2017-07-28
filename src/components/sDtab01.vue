@@ -68,7 +68,7 @@ export default {
         "start": 0,
       }
       solrQuery.start = (this.pageNum - 1) * 10;
-      solrQuery.q = 'claims:"' + this.$route.params.scholarUnique + '"';
+      solrQuery.q = 'claims:"' + this.$store.state.scholarUnique + '"';
       this.$http.post('/solr/achievement/select', qs.stringify(solrQuery))
         .then((response) => {
           this.detailItems.push(...response.data.response.docs)

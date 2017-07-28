@@ -44,11 +44,13 @@
         methods: {
             //  点击进学者详情页
             toDetail: function (scholar_unique) {
+                this.$store.dispatch('saveScholarUnique', scholar_unique)
                 this.$http.get('/v1/scholar/' + scholar_unique, {})
                     .then((response) => {
+                        this.$store.scholarInfo = scholar_unique;
                         window.sessionStorage.setItem('scDetail', JSON.stringify(response))
                         this.$router.push({
-                            name: 'detail', params: {scholarUnique: scholar_unique}
+                            name: 'detail'
                         })
                     })
                     .then((error) => console.log(error))

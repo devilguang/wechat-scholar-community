@@ -69,7 +69,7 @@ var router = new VueRouter({
         },
         {
             name: 'detail',
-            path: '/findScholar/scholarResult/scholarDetail/:scholarUnique',
+            path: '/findScholar/scholarResult/scholarDetail',
             component: scholarDetail
         },
         {
@@ -185,21 +185,24 @@ var router = new VueRouter({
 // 全局状态管理器
 const store = new Vuex.Store({
     state: {
-        queryScholar: {}
+        queryScholar: {},
+        scholarUnique: ''
     },
     mutations: {
-        queryScholar (state, q) {
+        queryScholarBySolr (state, q) {
             state.queryScholar['q'] = q;
+        },
+        findScholarByUnique (state, scholarUnique) {
+            state.scholarUnique = scholarUnique;
         }
     },
     actions: {
         saveQueryScholar: function (context, q) {
-            context.commit('queryScholar', q)
+            context.commit('queryScholarBySolr', q)
+        },
+        saveScholarUnique: function (context, scholarUnique) {
+            context.commit('findScholarByUnique', scholarUnique)
         }
-    },
-    getters: state => {
-        console.log(state.queryScholar)
-        return state.queryScholar
     }
 })
 
