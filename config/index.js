@@ -23,7 +23,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/solr': {
-        target: 'http://192.168.16.81:8001/solr/',
+        target: 'http://120.55.191.189:8001/solr/',
         changeOrigin: true,
         pathRewrite: {
           '^/solr': ''
