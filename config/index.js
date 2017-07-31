@@ -42,6 +42,13 @@ module.exports = {
                 pathRewrite: {
                     '^/indexServer': '/solr'
                 }
+            },
+            '/indexPaperServer': {
+                target: 'http://114.55.24.210:8983/',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/indexPaperServer': '/solr'
+                }
             }
         },
         // CSS Sourcemaps off by default because relative paths are "buggy"

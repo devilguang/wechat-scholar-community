@@ -189,7 +189,8 @@ var router = new VueRouter({
 const store = new Vuex.Store({
     state: {
         queryScholar: {},
-        scholarInfo: {}
+        scholarInfo: {},
+        queryAch: {}
     },
     mutations: {
         queryScholarBySolr (state, queryScholar) {
@@ -197,6 +198,9 @@ const store = new Vuex.Store({
         },
         findScholarByUnique (state, scholarInfo) {
             state.scholarInfo = scholarInfo;
+        },
+        findAchByTitle (state, queryAch) {
+            state.queryAch = queryAch;
         }
     },
     actions: {
@@ -205,6 +209,9 @@ const store = new Vuex.Store({
         },
         saveScholarInfo: function (context, scholarInfo) {
             context.commit('findScholarByUnique', scholarInfo)
+        },
+        saveSearchAchQuery: function (context, queryAch) {
+            context.commit('findAchByTitle', queryAch)
         }
     }
 })

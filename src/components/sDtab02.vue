@@ -67,6 +67,4 @@
         margin-top: 0.1rem;
 
     }
-
-
 </style>

@@ -1,7 +1,8 @@
 <template>
     <div id="bookResult">
         <article class="searchTop">
-            <input type="text" name="" value="" placehoder="请输入搜索内容" v-model="bookName" :value="bookName">
+            <input type="text" name="" value="" placehoder="请输入搜索内容" v-model="queryAch.achTitle"
+                   :value="queryAch.achTitle">
             <span class="searchBtn iconfont icon-searchBtn" @click="searchBook"></span>
         </article>
         <article>
@@ -29,17 +30,17 @@
                     <span :class="{active: activeWay == cite}" @click="chooseSort(cite)">按被引量</span>
                     <span :class="{active: activeWay == timeDown}" @click="chooseSort(timeDown)">按时间降序</span>
                 </section>
-                </section>
             </article>
         </article>
         <article class="bookList">
-            <ul class="clrfix">
+            <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
+                class="clrfix">
                 <li class="bookListItem" v-for="(bookListItem,index) in bookList" @click="toBookDetail()">
                     <!-- <router-link :to="{ name: 'bookDetail', params: { bookID: bookListItem.bookID }}"> -->
                     <p class="bookTitle">{{bookListItem.title}}</p>
-                    <p class="bookBrief"><span class="author">{{bookListItem.docAuthors}}</span><span> —{{bookListItem.qikanName}}— </span><span>{{bookListItem.ym}}(刊号)</span>
+                    <p class="bookBrief"><span class="author">{{bookListItem.author && bookListItem.author.length > 0 ? bookListItem.author.join(',') : ''}}</span><span> —{{bookListItem.yvip}}</span><span></span>
                     </p>
-                    <p class="abstract"><span>摘要:</span><span>{{bookListItem.ab}}</span></p>
+                    <p v-if="bookListItem.ab" class="abstract"><span>摘要:</span><span>{{bookListItem.ab}}</span></p>
                     <!-- </router-link> -->
                     <ul class="userBtns clrfix">
                         <li class="clrfix"><span class="iconfont icon-remark"></span><span class="word">评论</span></li>
@@ -65,12 +66,13 @@
             </div>
         </section>
     </div>
-
 </template>
+
+
 <script>
     import Vue from 'vue'
-    import axios from 'axios'
     import qs from 'querystring'
+
     var num = 0
     export default {
         name: 'scholarDetail',
@@ -88,27 +90,20 @@
                 about: 'about',
                 cite: 'cite',
                 timeDown: 'timeDown',
-                activeWay: ''
+                activeWay: '',
+                pageNum: 1,
+                queryAch: {}
             }
         },
         methods: {
             searchBook: function () {
-                var that = this
-                axios.post('http://localhost/query/gatherAchs', qs.stringify({
-                    p: '1',
-                    title: that.bookName
-                }))
-                    .then((response) => {
-                        console.log(response)
-                        this.bookList = response.data
-                        this.num = this.bookList.length
-                    })
-                    .then((error) => console.log(error))
+                this.bookList = []
+                this.queryAch.isNewQuery = true;
+                this.loadMore()
             },
             // 控制筛选模块显示隐藏
             choose: function () {
                 this.chooseShow = !this.chooseShow
-                console.log(this.sortShow)
             },
             // 选择筛选内容
             chooseTime: function (time) {
@@ -161,12 +156,44 @@
             confirm: function () {
                 document.getElementById('cancelCollectBox').style.display = 'none'
                 Vue.set(this.bookList[num], 'collectActive', false)
+            },
+            loadMore: function () {
+                let solrQuery = {
+                    "q": "*:*",
+                    "wt": "json",
+                    "fl": "",
+                    "indent": "off",
+                    "defType": "edismax",
+                    "mm": "75%",
+                    "rows": 10,
+                    "start": 0
+                }
+                if (this.queryAch.achTitle && this.queryAch.achTitle != '') {
+                    solrQuery.q = 'allfields:"' + this.queryAch.achTitle + '"'
+                } else {
+                    solrQuery.q = '*:*'
+                }
+
+                solrQuery.start = (this.pageNum - 1) * 10
+                this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery))
+                    .then((result) => {
+                        this.num = result.data.response.numFound
+                        if (this.num > 0) {
+                            if (this.queryAch.isNewQuery) {
+                                this.bookList = []
+                                this.bookList.push(...result.data.response.docs)
+                                this.queryAch.isNewQuery = false
+                            } else {
+                                this.bookList.push(...result.data.response.docs)
+                            }
+                            this.pageNum++
+                        }
+                        this.busy = false
+                    }).then((error) => console.log(error))
             }
         },
         mounted () {
-            var bookResult = JSON.parse(window.sessionStorage.getItem('data'))
-            this.bookList = bookResult.data
-            this.num = this.bookList.length
+            this.queryAch = this.$store.state.queryAch
         }
     }
 </script>
