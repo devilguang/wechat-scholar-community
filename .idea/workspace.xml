@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b948d78f-dcc5-4d30-b495-c31dca872302" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/index.js" afterPath="$PROJECT_DIR$/config/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/css/style.css" afterPath="$PROJECT_DIR$/src/assets/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/bookResult.vue" afterPath="$PROJECT_DIR$/src/components/bookResult.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/findBook.vue" afterPath="$PROJECT_DIR$/src/components/findBook.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/sDtab01.vue" afterPath="$PROJECT_DIR$/src/components/sDtab01.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/sDtab02.vue" afterPath="$PROJECT_DIR$/src/components/sDtab02.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.js" afterPath="$PROJECT_DIR$/src/main.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -40,8 +31,8 @@
                 <state relative-caret-position="285">
                   <caret line="20" column="27" lean-forward="false" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
                   <folding>
-                    <element signature="e#4029#4050#0" expanded="true" />
-                    <marker date="1501493086000" expanded="true" signature="4120:8838" ph="{&quot;name&quot;: 'scholarDetail'...}" />
+                    <element signature="e#4106#4127#0" expanded="true" />
+                    <marker date="1501495800000" expanded="true" signature="4197:9302" ph="{&quot;name&quot;: 'scholarDetail'...}" />
                   </folding>
                 </state>
               </provider>
@@ -151,8 +142,8 @@
           <file leaf-file-name="bookResult.vue" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/components/bookResult.vue">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="285">
-                  <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+                <state relative-caret-position="390">
+                  <caret line="39" column="67" lean-forward="true" selection-start-line="39" selection-start-column="67" selection-end-line="39" selection-end-column="67" />
                   <folding />
                 </state>
               </provider>
@@ -249,6 +240,11 @@
       <find>pageNum</find>
       <find>bookListItem</find>
       <find>bookName</find>
+      <find>chooseTime</find>
+      <find>activeWay</find>
+      <find>chooseSort</find>
+      <find>activeTime</find>
+      <find>six</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -531,12 +527,12 @@
       <updated>1501206145729</updated>
       <workItem from="1501206148618" duration="193000" />
       <workItem from="1501206389053" duration="18603000" />
-      <workItem from="1501471102155" duration="12024000" />
+      <workItem from="1501471102155" duration="14217000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30820000" />
+    <option name="totallyTimeSpent" value="33013000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1436" height="877" extended-state="6" />
@@ -803,8 +799,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/bookResult.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+        <state relative-caret-position="390">
+          <caret line="39" column="67" lean-forward="true" selection-start-line="39" selection-start-column="67" selection-end-line="39" selection-end-column="67" />
           <folding />
         </state>
       </provider>

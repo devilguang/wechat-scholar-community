@@ -26,7 +26,7 @@
                 </section>
                 <section class="sortBox clrfix">
                     <p>排序:</p>
-                    <span :class="{active: activeWay == about}" @click="chooseSort(about)">按相关性</span>
+                    <span :class="{active: activeWay == normal}" @click="chooseSort(normal)">按相关性</span>
                     <span :class="{active: activeWay == cite}" @click="chooseSort(cite)">按被引量</span>
                     <span :class="{active: activeWay == timeDown}" @click="chooseSort(timeDown)">按时间降序</span>
                 </section>
@@ -40,7 +40,7 @@
                     <p class="bookTitle">{{bookListItem.title}}</p>
                     <p class="bookBrief"><span class="author">{{bookListItem.author && bookListItem.author.length > 0 ? bookListItem.author.join(',') : ''}}</span><span> —{{bookListItem.yvip}}</span><span></span>
                     </p>
-                    <p v-if="bookListItem.ab" class="abstract"><span>摘要:</span><span>{{bookListItem.ab}}</span></p>
+                    <p v-if="bookListItem.ab" class="abstract"><span>摘要:</span><span>{{bookListItem.ab.length > 200 ? bookListItem.ab.substring(0, 190) + '...' : bookListItem.ab}}</span></p>
                     <!-- </router-link> -->
                     <ul class="userBtns clrfix">
                         <li class="clrfix"><span class="iconfont icon-remark"></span><span class="word">评论</span></li>
@@ -83,15 +83,16 @@
                 num: '',
                 chooseShow: false,
                 nolimit: 'nolimit',
-                six: 'six',
-                five: 'five',
-                four: 'four',
+                six: '2016',
+                five: '2015',
+                four: '2014',
                 activeTime: '',
                 about: 'about',
-                cite: 'cite',
-                timeDown: 'timeDown',
+                cite: 'total_cite_count',
+                timeDown: 'py',
                 activeWay: '',
                 pageNum: 1,
+                normal: '',
                 queryAch: {}
             }
         },
@@ -123,7 +124,7 @@
                 }
             },
             recommend: function (item, index) {
-                // set设置数据相应 增加data里面的 一个recommendActive 属性 可以控制高亮
+                // set设置数据相应 增加data里面的 一个recommendActive属性可以控制高亮
                 if ((typeof item.recommendActive) === 'undefined') {
                     Vue.set(this.bookList[index], 'recommendActive', true)
                 } else {
@@ -166,7 +167,8 @@
                     "defType": "edismax",
                     "mm": "75%",
                     "rows": 10,
-                    "start": 0
+                    "start": 0,
+                    "sort": ''
                 }
                 if (this.queryAch.achTitle && this.queryAch.achTitle != '') {
                     solrQuery.q = 'allfields:"' + this.queryAch.achTitle + '"'
@@ -174,7 +176,17 @@
                     solrQuery.q = '*:*'
                 }
 
+                if (this.activeTime != '') {
+                    solrQuery.q += ' and py:[' + this.activeTime + ' TO *]'
+                }
+
+                if (this.activeWay && this.activeWay != '') {
+                    solrQuery.sort = this.activeWay + ' asc'
+                }
+
                 solrQuery.start = (this.pageNum - 1) * 10
+
+                console.log(solrQuery)
                 this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery))
                     .then((result) => {
                         this.num = result.data.response.numFound
