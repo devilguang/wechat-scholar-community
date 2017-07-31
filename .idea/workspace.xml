@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b948d78f-dcc5-4d30-b495-c31dca872302" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/bookResult.vue" afterPath="$PROJECT_DIR$/src/components/bookResult.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -527,12 +528,12 @@
       <updated>1501206145729</updated>
       <workItem from="1501206148618" duration="193000" />
       <workItem from="1501206389053" duration="18603000" />
-      <workItem from="1501471102155" duration="14217000" />
+      <workItem from="1501471102155" duration="14232000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33013000" />
+    <option name="totallyTimeSpent" value="33028000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1436" height="877" extended-state="6" />
