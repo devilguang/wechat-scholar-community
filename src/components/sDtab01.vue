@@ -79,8 +79,8 @@
                         "start": 0,
                     }
                     solrQuery.start = (this.pageNum - 1) * 10;
-                    solrQuery.q = 'claims:"' + this.$store.state.scholarUnique + '"';
-                    this.$http.post('/solr/achievement/select', qs.stringify(solrQuery))
+                    solrQuery.q = 'claims:"' + this.$store.state.scholarInfo.scholarUnique + '"';
+                    this.$http.post('/indexWD/achievement/select', qs.stringify(solrQuery))
                         .then((response) => {
                             this.detailItems.push(...response.data.response.docs)
                             this.pageNum++
@@ -123,7 +123,7 @@
                             })
                             this.detailItems.push(...server_docs)
                             this.pageNum++
-                            this.busy = false;
+                            this.busy = false
                         }).then((error) => {
                     })
                 }

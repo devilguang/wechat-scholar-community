@@ -657,12 +657,18 @@ padding-top: 0.1rem;
 }
 #bookResult .bookList ul .bookListItem{
   width: 100%;
-  padding: .36rem .29rem 0 ;
+  padding: .36rem 0 0 0;
   box-sizing: border-box;
   background: #fff;
   border-bottom: 1px solid #e2e2e3;
     margin-bottom: .35rem;
 }
+
+#bookResult .bookList ul .bookListItem p {
+    padding-left: .29rem;
+    padding-right: .29rem;
+}
+
 #bookResult .bookList ul .bookListItem .bookTitle{
   font-size: .28rem;
   color: #000;
@@ -703,7 +709,7 @@ color: #ffb656;
   margin-bottom: 0.01rem;
   border-right:0.01rem solid #e2e2e2;
   box-sizing: border-box;
-  padding-left: 0.2rem;
+  padding-left: 0.3rem;
 }
 
 #bookResult .bookList ul .bookListItem .userBtns li .iconfont{
