@@ -2,12 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
-
+import store from './components/store/vuex'
 // 开启debug模式
 Vue.config.debug = true
 // 调用VueRouter
 Vue.use(VueRouter)
-
+Vue.prototype.$http = axios.create({ baseURL: 'http://120.55.191.189:9000' });
 // const FETCH_DATA_PREFIX_URL = 'http://localhost/'
 
 // 定义组件, 也可以像教程之前教的方法从别的文件引入
@@ -171,14 +171,14 @@ var router = new VueRouter({
   ]
 })
 // ajax传data编码问题
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // 现在我们可以启动应用了！
 // 路由器会创建一个 App 实例，并且挂载到选择符 #app 匹配的元素上。
 const app = new Vue({
-  router: router,
+  router,
+  store,
   render: h => h(App)
 }).$mount('#app')
-console.log(app)
 
 var num = 0
 export default {
@@ -188,14 +188,14 @@ export default {
     }
   },
   methods: {
-    recommend: function (item, index) {
+    recommend (item, index) {
       if ((typeof item.recommendActive) === 'undefined') {
         Vue.set(this.collectItems[index], 'recommendActive', true)
       } else {
         item.recommendActive = !item.recommendActive
       }
     },
-    collect: function (item, index) {
+    collect(item, index) {
       num = index
       if ((typeof item.collectActive) === 'undefined') {
         Vue.set(this.collectItems[index], 'collectActive', true)
@@ -213,26 +213,27 @@ export default {
       }
     },
     // 取消收藏弹框按钮
-    cancel: function () {
+    cancel() {
       document.getElementById('cancelCollectBox').style.display = 'none'
       Vue.set(this.collectItems[num], 'collectActive', true)
       document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
     },
-    confirm: function () {
+    confirm() {
       document.getElementById('cancelCollectBox').style.display = 'none'
       Vue.set(this.collectItems[num], 'collectActive', false)
     }
   }
 }
-// 判断是否登录
-Vue.prototype.loginJudge = function () {
-  if (!window.sessionStorage.getItem('userName')) {
-    window.alert('请您先登录!')
-    this.$router.push({
-      path: '/mockLogin'
-    })
-    return true
-  } else {
-    return false
-  }
-}
+// // 判断是否登录
+// Vue.prototype.loginJudge() {
+//   if (!window.sessionStorage.getItem('userName')) {
+//     window.alert('请您先登录!')
+//     this.$router.push({
+//       path: '/mockLogin'
+//     })
+//     return true
+//   } else {
+//     return false
+//   }
+// }
+

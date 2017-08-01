@@ -22,20 +22,39 @@
 </div>
 </template>
 <script>
-import axios from 'axios'
-import qs from 'querystring'
+//import qs from 'querystring'
 export default {
   name: 'scholarDetail',
   data () {
     return {
-      items: []
+      items: [
+        {
+          scholarName:'薛之谦',
+          organName:'机构名称',
+          achCount:'1223423',
+          research:'歌手'
+        },
+       {
+         scholarName:'陈奕迅',
+         organName:'机构名称',
+         achCount:'12344',
+         research:'歌手'
+       }
+      ]
     }
+  },
+  created(){
+
   },
   methods: {
   //  点击进学者详情页
     toDetail: function (linkUrl) {
+      this.$router.push({
+        name: 'detail', params: {link: linkUrl}
+      })
+      return
       // console.log(linkUrl)
-      axios.post('http://localhost/query/gatherScholarDetail', qs.stringify({
+      axios.post('/query/gatherScholarDetail', qs.stringify({
         link: linkUrl
       }))
       .then((response) => {
@@ -49,9 +68,9 @@ export default {
     }
   },
   mounted () {
-    var scResult = JSON.parse(window.sessionStorage.getItem('data'))
-    // console.log(scResult)
-    this.items = scResult.data
+//    var scResult = JSON.parse(window.sessionStorage.getItem('data'))
+//    // console.log(scResult)
+//    this.items = scResult.data
   }
 }
 </script>

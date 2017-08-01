@@ -72,9 +72,9 @@ export default {
       activeName: 'tab01Text',
       activeFirst: true,
       infos: [],
-      detailItems: [],
-      partnerItems: [],
-      instituteItems: []
+      detailItems: [1,2,3],
+      partnerItems: [4,5,6],
+      instituteItems: [1,2,3]
     }
   },
   components: {

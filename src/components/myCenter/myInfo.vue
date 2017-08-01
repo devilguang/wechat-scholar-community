@@ -1,7 +1,7 @@
 <template lang="html">
   <div id="myInfo"  style="height:100vh;background:#f5f5f9">
      <!-- 完善资料后 -->
-      <div id="completed" style="display:none">
+      <div id="completed" style="display:block">
         <router-link to="/myCenter/editMe">
           <span  class="editMyself iconfont icon-editMe" ></span>
         </router-link>
@@ -9,11 +9,12 @@
           <div class="scholarHeader">
              <div class="headerTop clrfix">
                <div class="topLeft">
-                 <span class="scholarStatus" @click="toConfirm">未认证</span>
+                 <span class="scholarStatus" @click="toConfirm" v-show="approve">未认证</span>
+                 <span class="scholarStatus" v-show="!approve">已认证</span>
                </div>
                <div class="topMiddle">
                  <div class="imgBox">
-                   <img src="../../assets/img/img-scholar_1.png" >
+                   <img :src="userImg" alt="a">
                  </div>
                </div>
                <div class="topRight">
@@ -21,25 +22,27 @@
                </div>
              </div>
 
-           <p class="scholarAbout clrfix">{{infos.selfname}}<span class="scholarUniverse">{{infos.insititute}}</span></p>
-             <p class="scholarMarjor">领域方向：<span>{{infos.dir}}</span></p>
+           <p class="scholarAbout clrfix">{{userInfo.name}}<span class="scholarUniverse"></span></p>
+             <p class="scholarMarjor">领域方向：<span></span></p>
            </div>
 
            <!-- 详情数字部分 -->
-           <div class="numBox">
+           <div class="numBox" v-show="true">
              <ul class="clrfix" >
-               <li class="outcomN"><span>12</span><p>成果数</p></li>
-               <li class="citedN"><span>3453</span><p>被引数</p></li>
-               <li class="followerN"><span>33</span><p>跟随着</p></li>
-               <li class="HN"><span>56</span><p>H指数</p></li>
+               <li class="outcomN"><span>0</span><p>成果数</p></li>
+               <li class="citedN"><span>0</span><p>被引数</p></li>
+               <li class="followerN"><span>0</span><p>跟随着</p></li>
+               <li class="HN"><span>0</span><p>H指数</p></li>
              </ul>
            </div>
         </article>
       </div>
+
+
       <!-- 未完善资料时 -->
-      <div id="notcomplete" style="display:block">
+      <div id="notcomplete" style="display:none">
         <div class="imgBox">
-          <img src="../../assets/img/img-scholar_1.png" >
+          <img :src="userImg">
         </div>
         <p class="getMorePower">完善资料后，将拥有更多权限</p>
           <div class="toComplete" @click="toComplete">立即完善</div>
@@ -81,7 +84,7 @@
              </li>
            </ul>
          </section>
-    </article>
+    <!--</article>-->
     <section id="cancelAttentionBox" style="display:none" >
          <div class="alertBox">
             <p class="tip">
@@ -97,19 +100,23 @@
   </div>
 </template>
 <script>
-// import Vue from 'vue'
-// import VueRouter from 'vue-router'
-// Vue.use(VueRouter)
+  import {mapGetters} from 'vuex';
 export default{
   data () {
     return {
     // 控制是否认证切换页面
       isComfirm: true,
-      infos: []
+      userImg:'../../../static/img/img-scholar_1.png',
+      approve:false,   //是否认证
     }
   },
+  computed:{
+    ...mapGetters({
+          userInfo:'getUserInfo'
+      }),
+  },
   methods: {
-    toConfirm: function () {
+    toConfirm() {
       this.$router.push({
         path: '/myCenter/Iwillconfirm'
       })
@@ -125,7 +132,6 @@ export default{
         this.$router.push({
           path: '/myCenter/hasNotConfirm'
         })
-        console.log(this.$route)
       } else {
         this.$router.push({
           path: '/myCenter/hasConfirm'
@@ -168,13 +174,12 @@ export default{
       document.getElementById('cancelAttentionBox').style.display = 'none'
     }
   },
-  mounted: function () {
-    // 按需加载个人信息头部
-    if (window.localStorage.getItem('myData')) {
-      this.infos = JSON.parse(window.localStorage.getItem('myData'))
-      console.log(window.localStorage.getItem('myData'))
-      document.getElementById('completed').style.display = 'block'
-      document.getElementById('notcomplete').style.display = 'none'
+  mounted () {
+    let scholarUnique = this.userInfo.scholarUnique
+    if(!scholarUnique){
+      this.approve = true
+    }else{
+      this.approve = false
     }
   }
 }
