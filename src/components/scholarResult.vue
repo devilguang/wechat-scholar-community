@@ -26,6 +26,7 @@
                 <!-- </router-link> -->
             </li>
         </ul>
+        <span class="noData" v-show="items.length>0?false:true">暂无数据...</span>
     </div>
 </template>
 
@@ -46,6 +47,7 @@
             }
         },
         components:{
+
         },
         methods: {
             //  点击进学者详情页
@@ -71,7 +73,6 @@
                     "rows": 10,
                     "start": 0
                 }
-
                 let solrQueryWechat = {
                     "q": "*:*",
                     "wt": "json",
@@ -82,7 +83,6 @@
                     "rows": 10,
                     "start": 0
                 }
-
                 let keymap = {
                     SCHOLAR_UNIQUE: 'scholar_unique',
                     SCHOLAR_NAME: 'scholar_name',
@@ -90,9 +90,8 @@
                     AREA: 'subject',
                     ACH_ALL_NUM: 'ach_all_num'
                 }
-
+                console.log(this.type)
                 if (this.type == 'wd') {
-//                    console.log('type = ' + this.type);
                     var q = '';
                     if (this.queryScholar.scholarName != '') {
                         q += 'scholar_name:"' + this.queryScholar.scholarName + '"'
@@ -104,6 +103,7 @@
                     solrQuery.start = (this.pageNum - 1) * 10;
                     this.$http.post('/indexWD/scholar/select', qs.stringify(solrQuery))
                         .then((result) => {
+                            console.log(result)
                             this.barFlag = false
                             var count = result.data.response.numFound
                             // console.log('count = ' + count)
@@ -120,6 +120,7 @@
                                 solrQueryWechat.start = solrQuery.start
                                 this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
                                     .then((result) => {
+                                    console.log(result,1212213)
                                         var wechatSolrCount = result.data.response.numFound
                                         // console.log('wechatSolrCount = ' + wechatSolrCount)
                                         var server_docs = [];
@@ -143,8 +144,6 @@
                                 this.pageNum++;
                                 this.busy = false;
                             }
-                        })
-                        .then((error) => {
                         })
                 } else {
                     q = ''
@@ -181,3 +180,10 @@
         }
     }
 </script>
+<style lang="css">
+    .noData{
+        display: block;
+        text-align: center;
+        margin-top:100px;
+    }
+</style>

@@ -6,13 +6,16 @@
                     class="iconfont icon-link"></span><span>来源 — — </span><span>{{infosList.author}}</span></p>
             <p class="bookBrief">
                 <span>{{infosList.ach_type}}</span><span>— — 《期刊名》 — —</span><span>(刊号)</span></p>
-            <p class="abstract"><span>摘要</span><span>{{infosList.ab.length>200?infosList.ab.substr(0,200)+'...':infosList.ab}}</span></p>
+            <p class="abstract">
+                <span>摘要</span><span>{{infosList.ab.length > 200 ? infosList.ab.substr(0, 200) + '...' : infosList.ab}}</span>
+            </p>
             <p class="publicOrg"><span> 出版源</span><span>{{infosList.punishOrg}}</span></p>
             <p class="keyword"><span>关键词</span><span>{{infosList.keywords_q}}</span></p>
             <p class="cited"><span>被引量</span><span>{{infosList.cite_count}}</span></p>
         </article>
         <ul class="userBtns clrfix">
-            <li @click="comments"><span class="iconfont icon-remark" :class="{cActive:commentsFlag}"></span><span :class="{cActive:commentsFlag}">评论</span></li>
+            <li @click="comments"><span class="iconfont icon-remark" :class="{cActive:commentsFlag}"></span><span
+                    :class="{cActive:commentsFlag}">评论</span></li>
             <li @click="recommend" :class="{active:remActive}"><span
                     class="iconfont icon-recommendBtn"></span><span>推荐</span></li>
             <li><span class="iconfont icon-share"></span><span>分享</span></li>
@@ -69,6 +72,9 @@
                 </div>
             </div>
         </section>
+        <transition name="fade">
+            <bounced-out v-show="dataFlag" meassage="输入内容不能为空" v-on:listenToChild="showMsgChild"></bounced-out>
+        </transition>
     </div>
 </template>
 <script>
@@ -76,21 +82,22 @@
     import docuSimilar from './docuSimilar'
     import docuReference from './docuReference'
     import docuQuote from './docuQuote'
-    import {mapGetters} from 'vuex'
+    import { mapGetters } from 'vuex'
+    import bouncedOut from './diaLog.vue'
     export default {
         name: 'bookDetail',
         data () {
             return {
                 infosList: {
                     title: '',
-                    author:'',
-                    ab:'',
-                    punishOrg:'',
-                    keywords_q:'',
-                    cite_count:'',
-                    ach_type:'',
+                    author: '',
+                    ab: '',
+                    punishOrg: '',
+                    keywords_q: '',
+                    cite_count: '',
+                    ach_type: '',
                 },
-                infos:[],
+                infos: [],
                 remActive: false,
                 colActive: false,
                 tab01Text: 'docuSimilar',
@@ -104,75 +111,92 @@
                 index: '',
                 showNumber: 5,
                 commitItems: [],
-                isLike:'',
-                commentsFlag:false,
-                message:'hello world'
+                isLike: '',
+                commentsFlag: false,
+                message: 'hello world',
+                dataFlag: false,
             }
         },
         computed: {
             sliceShow(){
                 return this.commitItems.slice(0, this.showNumber)
             },
+            ...mapGetters([
+                'getDatatype'
+            ])
         },
         components: {
             docuSimilar: docuSimilar,
             docuReference: docuReference,
-            docuQuote: docuQuote
+            docuQuote: docuQuote,
+            bouncedOut
         },
         methods: {
+            showMsgChild(data){
+                this.dataFlag = data
+            },
             showMore(){
                 this.showFlag = false
                 this.showNumber = this.commitItems.length
             },
             // 点击评论
             comments(){
-                if(this.commentsFlag == false){
+                if (this.commentsFlag == false) {
                     this.commentsFlag = true
-                }else{
+                } else {
                     this.commentsFlag = false
                 }
             },
             // 点赞
             recommend () {
-                if(this.isLike == 1){
+                if (this.isLike == 1) {
                     this.$axios({
                         method: 'delete',
-                        url:'/v1/weChat/achLike',
-                        data:{
-                            'achUniques': [this.infos.ach_unique]
+                        url: '/v1/weChat/achLike',
+                        data: {
+                            achUniques: [this.infos.ach_unique],
+                            dataType: this.getDatatype.type
                         }
                     }).then((res) => {
                         this.remActive = false
+                        this.isLike = 0
                     })
-                }else{
+                } else {
                     this.$axios({
                         method: 'post',
                         url: '/v1/weChat/achLike',
                         data: {
-                            achUnique: this.infos.ach_unique
+                            achUnique: this.infos.ach_unique,
+                            dataType:this.getDatatype.type
                         }
                     }).then((res) => {
+                        console.log(res,0)
                         this.remActive = true
+                        this.isLike = 1
                     })
                 }
             },
 //            收藏成果
-            collect () {
+            collect(){
                 this.$axios({
                     method: 'post',
                     url: '/v1/weChat/achFavorite',
                     data: {
-                        "achUniques": [this.infos.ach_unique]
+                        "achUnique": this.infos.ach_unique,
+                        "title": this.infosList.title,
+                        "achType": this.infosList.ach_type,
+                        "dataType":this.getDatatype.type
+                    }
+                }).then((res) => {
+                    this.colActive = !this.colActive
+                    if (this.colActive) {
+                        this.colActive = true
+                        document.getElementsByClassName('collectWord')[0].innerHTML = '已收藏'
+                    }
+                    if (!this.colActive) {
+                        document.getElementById('cancelCollectBox').style.display = 'block'
                     }
                 })
-                this.colActive = !this.colActive
-                if (this.colActive) {
-                    this.colActive = true
-                    document.getElementsByClassName('collectWord')[0].innerHTML = '已收藏'
-                }
-                if (!this.colActive) {
-                    document.getElementById('cancelCollectBox').style.display = 'block'
-                }
             },
             // 发表评论
             publishCommit () {
@@ -180,7 +204,7 @@
                 let myDate = new Date()
                 let localtime = myDate.toLocaleString().split('/').join('-')
                 if (this.clearItem === '') {
-                    window.alert('输入内容不能为空')
+                    this.dataFlag = true
                     return
                 } else {
                     this.$axios({
@@ -189,7 +213,7 @@
                         data: {
                             achUnique: this.infos.ach_unique,
                             achTitle: this.infos.title,
-                            content: this.clearItem
+                            content: this.clearItem,
                         }
                     }).then((res) => {
                         this.getContent()
@@ -204,7 +228,8 @@
                 this.$axios.get('/v1/weChat/achComments', {
                     params: {
                         'field[]': 'achUnique',
-                        'value[]': this.infos.ach_unique
+                        'value[]': this.infos.ach_unique,
+
                     }
                 }).then((res) => {
                     this.commitItems = res.data.data.docs
@@ -222,6 +247,7 @@
                 this.$axios.get('/v1/weChat/userToAch', {params: {achUniques: achUniques}}).then((res) => {
                     let isFavorite = res.data.data[0].isFavorite
                     let isLike = res.data.data[0].isLike
+                    console.log(isLike,"12321414")
                     this.isLike = isLike
                     if (isFavorite == 1) {
                         this.colActive = true
@@ -229,9 +255,9 @@
                     } else {
                         document.getElementsByClassName('collectWord')[0].innerHTML = '收藏'
                     }
-                    if(isLike == 1){  //已点赞
+                    if (isLike == 1) {  //已点赞
                         this.remActive = true
-                    }else{
+                    } else {
                         this.remActive = false
                     }
                 })
@@ -253,8 +279,9 @@
                     method: 'delete',
                     url: '/v1/weChat/achFavorite',
                     data: {
-                        achUniques: [this.infos.ach_unique]
-                    }
+                        achUniques: [this.infos.ach_unique],
+                        dataType:this.getDatatype.type
+                }
                 }).then((res) => {
                     document.getElementById('cancelCollectBox').style.display = 'none'
                     document.getElementsByClassName('collectWord')[0].innerHTML = '收藏'
@@ -273,10 +300,10 @@
             this.infosList.ach_type = this.$store.state.scholarsList[this.index].ach_type
             this.getContent()
             this.collectionList()
-            if(this.$store.state.review){
+            if (this.$store.state.review) {
                 this.commentsFlag = true
                 this.commentsFlag = true
-            }else{
+            } else {
                 this.commentsFlag = false
                 this.commentsFlag = false
             }
@@ -284,7 +311,15 @@
     }
 </script>
 <style>
-    .cActive{
+    .cActive {
         color: #36d7b6;
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .7s
+    }
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0
     }
 </style>

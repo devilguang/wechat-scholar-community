@@ -14,18 +14,19 @@
                     <label>机构</label>
                     <input type="text" v-model="insName" :value="insName" placeholder="请填写尽量详细化"/>
                 </div>
-                <!-- <router-link to="/findScholar/scholarResult"> -->
                 <p class="searchFormSubmit" @click="search">开始查询</p>
-                <!-- </router-link> -->
             </fieldset>
         </form>
+        <transition  name="fade">
+            <bounced-out v-show="dataFlag" meassage="学者姓名不能为空" v-on:listenToChild="showMsgChild"></bounced-out>
+        </transition>
     </div>
 </template>
-
 <script>
     import axios from 'axios'
     import qs from 'querystring'
     import infiniteScroll from 'vue-infinite-scroll'
+    import bouncedOut from './diaLog.vue'
     export default {
         name: 'findScholar',
         data () {
@@ -33,13 +34,20 @@
                 scholarName: '',
                 insName: "",
                 scholarList: [],
-                infos: {}
+                infos: {},
+                dataFlag: false
             }
         },
+        components: {
+            bouncedOut
+        },
         methods: {
+            showMsgChild(data){
+                this.dataFlag = data
+            },
             search () {
                 if (this.scholarName == '') {
-                    alert("请输入学者姓名")
+                    this.dataFlag = true
                     return
                 }
                 // defType=edismax&indent=on&mm=75%&q=scholar_name:"乐江"%20and%20org_name:"基础医学院"&wt=json
@@ -51,7 +59,7 @@
                 })
             },
             getQueryString(name){
-                var reg = new RegExp("(^|&)"    + name + "=([^&]*)(&|$)", "i");
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
                 var r = window.location.search.substr(1).match(reg);
                 if (r != null) return (r[2]);
                 return ''
@@ -63,20 +71,19 @@
                     return value;
                 }
                 localStorage.setItem(key, value);
-            },
+            }
         },
         mounted () {
             let openId = this.local('openId')
-            this.$axios.get('/v1/weChat/token/'+openId).then((res)=>{
+            this.$axios.get('/v1/weChat/token/' + openId).then((res) => {
                 let token = res.data.token
-                this.$store.commit('SET_TOKEN',token)
+                this.$store.commit('SET_TOKEN', token)
             })
             let code = this.getQueryString('code')
             if (openId) return
 //            if (code) {
 //                this.$axios.get('/v1/weChat/getUserInfo/' + code).then((res) => {
 //                    let openId = res.data.data.openId
-//
 //                    this.local('openId', openId)
 //                    this.$store.commit('SET_USERINFO', res.data.data)
 //                })
@@ -85,5 +92,12 @@
 //            }
         }
     }
-
 </script>
+<style>
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .7s
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0
+    }
+</style>

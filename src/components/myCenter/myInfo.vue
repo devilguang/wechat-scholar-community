@@ -22,7 +22,7 @@
                </div>
              </div>
 
-           <p class="scholarAbout clrfix">{{userInfo.name}}<span class="scholarUniverse"></span></p>
+           <p class="scholarAbout clrfix">{{userInfo.name}}<span class="scholarUniverse" v-show="userInfo.college?true:false">{{userInfo.college}}</span></p>
              <p class="scholarMarjor">领域方向：<span></span></p>
            </div>
 
@@ -113,7 +113,7 @@ export default{
   computed:{
     ...mapGetters({
           userInfo:'getUserInfo'
-      }),
+      })
   },
   methods: {
     toConfirm() {
@@ -138,7 +138,7 @@ export default{
         })
       }
     },
-    toCollect: function () {
+    toCollect () {
       this.$router.push({
         path: '/myCenter/collect'
       })

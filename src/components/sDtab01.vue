@@ -26,25 +26,25 @@
                 </ul>
             </li>
         </ul>
-        <loading-bar v-if="barFlag"></loading-bar>
+        <!--<loading-bar v-if="barFlag"></loading-bar>-->
     </section>
 </template>
 
 <script>
     import qs from 'querystring'
     import Vue from 'vue'
-    import loadingBar from './loadingBar.vue'
+//    import loadingBar from './loadingBar.vue'
     export default {
         data() {
             return {
                 detailItems: [],
                 pageNum: 1,
                 collectActive:false,
-                barFlag:true
+//                barFlag:true
             }
         },
         components:{
-            loadingBar
+//            loadingBar
         },
 //        computed:{
 //
@@ -60,7 +60,6 @@
 //                }
             },
             collect(item, index) {
-                console.log(item)
 //                if ((typeof item.collectActive) === 'undefined') {
 //                    Vue.set(this.detailItems[index], 'collectActive', true)
 //                } else {
@@ -83,7 +82,7 @@
                     solrQuery.q = 'claims:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                     this.$http.post('/indexWD/achievement/select', qs.stringify(solrQuery))
                         .then((response) => {
-                            this.barFlag = false
+//                            this.barFlag = false
                             this.detailItems.push(...response.data.response.docs)
                             this.pageNum++
                             this.busy = false
@@ -91,9 +90,14 @@
                             this.detailItems.forEach((item,index) =>{
                                 arr.push(item.ach_unique)
                             })
-                            this.$axios.get('/v1/weChat/userToAch',{params:{
-                                achUniques:arr.slice(0,5)
-                            }}).then((res)=>{
+                            this.$axios({
+                                method:'post',
+                                url:'/v1/weChat/userToAch',
+                                data:{
+                                    achUniques:arr
+                                }
+                            }).then((res)=>{
+//                                console.log(res)
                             })
                         })
                 } else {
@@ -116,6 +120,7 @@
                     solrQueryWechat.q = 'scholar_info_id:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                     this.$http.post('/indexServer/scholar_paper/select', qs.stringify(solrQueryWechat))
                         .then((result) => {
+//                            this.barFlag = false
                             var server_docs = []
                             _(result.data.response.docs).forEach(function (doc) {
                                 doc = _.mapKeys(doc, function (value, key) {

@@ -416,12 +416,8 @@ height: .32rem;
 }
 #scholarDetail .tabBox .tabTop li{
     height: 100%;
-    width: 23.3333%;
-    float: left;
     text-align: center;
-
     box-sizing: border-box;
-    margin:0 5%;
 }
 #scholarDetail .tabBox .tabTop li.active{
     border-bottom: 0.04rem solid #ffc320;

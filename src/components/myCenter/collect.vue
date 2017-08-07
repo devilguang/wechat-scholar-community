@@ -4,8 +4,8 @@
             <ul class="contentMain">
                 <li class="contentItem" v-for="(collectItem,index) in collectItems">
                     <div class="wordsCon">
-                        <p class="coreCon">{{collectItem.bookTitle}}</p>
-                        <p class="authorItem"><span class="authorTit">作者：</span><span class="authorName">李瑞，胡勇军</span>
+                        <p class="coreCon">{{collectItem.achName}}</p>
+                        <p class="authorItem"><span class="authorTit">作者：</span><span class="authorName">{{collectItem.achAuthor}}</span>
                         </p>
                         <p class="abstractItem"><span class="abstractTit">摘要：</span><span class="abstractCon">三十功名尘与土，八千里路云和月。莫等闲白了少年头，空故今日之责任，不在他人而全在我少年。少年智则国智少年富则国富少年强则</span>
                         </p>
@@ -16,8 +16,8 @@
                         <li @click="recommend(collectItem,index)" :class="{active:collectItem.recommendActive}"><span
                                 class="iconfont icon-recommendBtn"></span><span class="word">推荐</span></li>
                         <li><span class="iconfont icon-share"></span><span class="word">分享</span></li>
-                        <li @click="collect(collectItem,index)" :class="{active:collectItem.collectActive}"><span
-                                class="iconfont icon-collect"></span><span class="collectWord word">收藏</span></li>
+                        <li @click="collect(collectItem,index)" class="active"><span
+                                class="iconfont icon-collect"></span><span class="collectWord word">已收藏</span></li>
                     </ul>
                 </li>
             </ul>
@@ -44,72 +44,81 @@
     export default {
         data () {
             return {
-                collectItems: [],
+                collectItems:{
+//                    achAuthor:'',
+//                    achName:'',
+//                    achType:'',
+//                    achTypeCode:'',
+//                    achUnique:'',
+//                    favoriteTime:'',
+//                    id:'',
+//                    userId:''
+                },
             }
         },
         computed: {
 //            ...mapGetters({
-//                userInfo :'getUserInfo'
+//                userInfo: 'getUserInfo'
 //            })
 
-    },
-    methods: {
-        recommend: function (item, index) {
-            if ((typeof item.recommendActive) === 'undefined') {
-                Vue.set(this.collectItems[index], 'recommendActive', true)
-            } else {
-                item.recommendActive = !item.recommendActive
+        },
+        methods: {
+            recommend: function (item, index) {
+                if ((typeof item.recommendActive) === 'undefined') {
+                    Vue.set(this.collectItems[index], 'recommendActive', true)
+                } else {
+                    item.recommendActive = !item.recommendActive
+                }
+            }
+            ,
+            collect: function (item, index) {
+                num = index
+                if ((typeof item.collectActive) === 'undefined') {
+                    Vue.set(this.collectItems[index], 'collectActive', true)
+                } else {
+                    item.collectActive = !item.collectActive
+                }
+                if (item.collectActive === true) {
+                    // item.innerHTML = '已收藏'
+                    console.log(item)
+                    document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
+                }
+                if (item.collectActive === false) {
+                    document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
+                    document.getElementById('cancelCollectBox').style.display = 'block'
+                }
+            }
+            ,
+            // 取消收藏弹框按钮
+            cancel: function () {
+                document.getElementById('cancelCollectBox').style.display = 'none'
+                Vue.set(this.collectItems[num], 'collectActive', true)
+                document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
+            }
+            ,
+            confirm: function () {
+                document.getElementById('cancelCollectBox').style.display = 'none'
+                Vue.set(this.collectItems[num], 'collectActive', false)
             }
         }
-    ,
-        collect: function (item, index) {
-            num = index
-            if ((typeof item.collectActive) === 'undefined') {
-                Vue.set(this.collectItems[index], 'collectActive', true)
-            } else {
-                item.collectActive = !item.collectActive
-            }
-            if (item.collectActive === true) {
-                // item.innerHTML = '已收藏'
-                console.log(item)
-                document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
-            }
-            if (item.collectActive === false) {
-                document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
-                document.getElementById('cancelCollectBox').style.display = 'block'
-            }
+        ,
+        mounted(){
+            this.$axios.get('/v1/weChat/achFavorites',{
+                params: {
+                    userId: '58805440-b163-4b49-8ce2-6f9bbc6995d1',
+                }
+            }).then((res)=>{
+                this.collectItems = res.data.data.docs
+                console.log(this.collectItems)
+            })
+//            axios.get('../../../static/mock-data/userInfo.json')
+//                .then((response) => {
+//                    console.log(response.data)
+//                    // 先模拟用一个用户的信息
+//                    this.userInfo = response.data[0]
+//                    this.collectItems = this.userInfo.collect
+//                }).then((error) => console.log(error))
         }
-    ,
-        // 取消收藏弹框按钮
-        cancel: function () {
-            document.getElementById('cancelCollectBox').style.display = 'none'
-            Vue.set(this.collectItems[num], 'collectActive', true)
-            document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
-        }
-    ,
-        confirm: function () {
-            document.getElementById('cancelCollectBox').style.display = 'none'
-            Vue.set(this.collectItems[num], 'collectActive', false)
-        }
-    }
-    ,
-    mounted(){
-            console.log(this.userInfo)
-//        this.$axios.get('/v1/weChat/achFavorites', {
-//            params: {
-//                userId: '58805440-b163-4b49-8ce2-6f9bbc6995d1',
-//                field: '',
-//                value: ''
-//            }
-//        })
-    axios.get('../../../static/mock-data/userInfo.json')
-    .then((response) => {
-      console.log(response.data)
-      // 先模拟用一个用户的信息
-      this.userInfo = response.data[0]
-      this.collectItems = this.userInfo.collect
-    }).then((error) => console.log(error))
-    }
     }
 
 </script>

@@ -222,6 +222,7 @@
                 solrQueryCoper.q = 'scholar_info_id:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                 this.$http.post('/indexServer/scholar_coper/select', qs.stringify(solrQueryCoper))
                     .then((result) => {
+                    console.log(result,3)
                         var server_docs = []
                         _(result.data.response.docs).forEach(function (doc) {
                             server_docs.push(_.mapKeys(doc, function (value, key) {
@@ -263,7 +264,7 @@
         mounted() {
             if (this.$store.state.scholarInfo.type == 'wd'){
                 this.pullScholarFromWD()
-            } else {
+            }else {
                 this.pullScholarFromServer()
                 this.pullCoper()
                 this.pullCoorgan()
@@ -272,3 +273,11 @@
     }
 
 </script>
+<style>
+    #zxq{
+        display: flex;
+    }
+    #zxq li{
+        flex:1
+    }
+</style>

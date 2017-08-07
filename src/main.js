@@ -243,7 +243,9 @@ const store = new Vuex.Store({
         getUserInfo(state){
             return state.userInfo || localStorage.getItem('userInfo')
         },
-
+        getDatatype: state =>{
+            return state.scholarInfo
+        }
     }
 })
 //拦截器
