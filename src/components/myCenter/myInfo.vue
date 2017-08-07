@@ -150,7 +150,9 @@ export default{
     },
     toDynamic: function () {
       this.$router.push({
+
         path: '/myCenter/dynamic'
+
       })
     },
     // 加关注按钮

@@ -30,50 +30,56 @@
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        nav01Text: 'nav01',
-        nav02Text: 'nav02',
-        nav03Text: 'nav03',
-        nav04Text: 'nav04',
-        currentView: 'nav01',
-        activeName: 'nav01Text',
-        activeFirst: true,
-        navItems: [
-          {
-            navName: '找人',
-            isChecked: false
-          }, {
-            navName: '找文献',
-            isChecked: false
-          }, {
-            navName: '定制推荐',
-            isChecked: false
-          }, {
-            navName: '个人中心',
-            isChecked: false
-          }
-        ]
-      }
+export default {
+    name: 'App',
+    data: function () {
+        return {
+            nav01Text: 'nav01',
+            nav02Text: 'nav02',
+            nav03Text: 'nav03',
+            nav04Text: 'nav04',
+            currentView: 'nav01',
+            activeName: 'nav01Text',
+            activeFirst: true,
+            navItems: [
+                {
+                    navName: '找人',
+                    isChecked: false
+                }, {
+                    navName: '找文献',
+                    isChecked: false
+                }, {
+                    navName: '定制推荐',
+                    isChecked: false
+                }, {
+                    navName: '个人中心',
+                    isChecked: false
+                }
+            ]
+        }
     },
     methods: {
-      navTab (navText) {
-        this.currentView = navText
-        console.log(navText)
-        this.activeFirst = false
-        this.activeName = navText
-        // this.isChecked = !this.isChecked
-        // console.log(this.navItems[1])
-        // 到个人中心页面
-        if (navText === this.nav04Text) {
-            this.$router.push({
-              path: '/myCenter/myInfo'
-            })
+        navTab: function (navText) {
+            this.currentView = navText
+            this.activeFirst = false
+            this.activeName = navText
+            // this.isChecked = !this.isChecked
+            // console.log(this.navItems[1])
+            // 到个人中心页面
+            if (navText === this.nav04Text) {
+//                if (!window.sessionStorage.getItem('userName')) {
+//                    this.$router.push({
+//                        path: '/mockLogin'
+//                    })
+//                } else {
+                    this.$router.push({
+                        path: '/myCenter/myInfo'
+                    })
+//                }
+            }
         }
-      }
     }
-  }
+}
 </script>
 <style scroped src='./assets/css/base.css'></style>
 <style scroped src='./assets/css/style.css'></style>
