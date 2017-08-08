@@ -17,7 +17,7 @@
                 <p class="searchFormSubmit" @click="search">开始查询</p>
             </fieldset>
         </form>
-        <transition  name="fade">
+        <transition name="fade">
             <bounced-out v-show="dataFlag" meassage="学者姓名不能为空" v-on:listenToChild="showMsgChild"></bounced-out>
         </transition>
     </div>
@@ -81,15 +81,19 @@
             })
             let code = this.getQueryString('code')
             if (openId) return
-            if (code) {
-                this.$axios.get('/v1/weChat/userInfo/' + code).then((res) => {
-                    let openId = res.data.data.openId
-                    this.local('openId', openId)
-                    this.$store.commit('SET_USERINFO', res.data.data)
-                })
-            } else {
-                window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8115bea15b8d7d1a&redirect_uri=http://mobile.subject.net.cn&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
-            }
+//            if (code) {
+//                this.$axios.get('/v1/weChat/userInfo/' + code).then((res) => {
+//                    let openId = res.data.data.openId
+//                    this.local('openId', openId)
+//                    this.$store.commit('SET_USERINFO', res.data.data)
+////                    this.$axios.get('/v1/weChat/token/' + openId).then((res) => {
+////                        let token = res.data.token
+////                        this.$store.commit('SET_TOKEN', token)
+////                    })
+//                })
+//            } else {
+//                window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8115bea15b8d7d1a&redirect_uri=http://mobile.subject.net.cn&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
+//            }
         }
     }
 </script>
@@ -97,6 +101,7 @@
     .fade-enter-active, .fade-leave-active {
         transition: opacity .7s
     }
+
     .fade-enter, .fade-leave-to {
         opacity: 0
     }

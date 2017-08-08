@@ -229,10 +229,9 @@
                     params: {
                         'field[]': 'achUnique',
                         'value[]': this.infos.ach_unique,
-
                     }
                 }).then((res) => {
-                    this.commitItems = res.data.data.docs
+                    this.commitItems = res.data.data
                     if (this.commitItems.length <= 5) {
                         this.showFlag = false
                     } else {
@@ -244,10 +243,10 @@
             collectionList(){
                 let achUniques = []
                 achUniques.push(this.infos.ach_unique)
-                this.$axios.get('/v1/weChat/userToAch', {params: {achUniques: achUniques}}).then((res) => {
+                this.$axios.get('/v1/weChat/userToAch',{params: {achUniques: achUniques}}).then((res) => {
+                    console.log(res)
                     let isFavorite = res.data.data[0].isFavorite
                     let isLike = res.data.data[0].isLike
-                    console.log(isLike,"12321414")
                     this.isLike = isLike
                     if (isFavorite == 1) {
                         this.colActive = true
@@ -289,22 +288,22 @@
             },
         },
         mounted () {
-            this.index = localStorage.getItem('index')
-            this.infos = this.$store.state.scholarsList[this.index]
-            this.infosList.title = this.$store.state.scholarsList[this.index].title
-            this.infosList.author = this.$store.state.scholarsList[this.index].author.join(',')
-            this.infosList.ab = this.$store.state.scholarsList[this.index].ab
-            this.infosList.punishOrg = this.$store.state.scholarsList[this.index].punishOrg
-            this.infosList.keywords_q = this.$store.state.scholarsList[this.index].keywords_q
-            this.infosList.cite_count = this.$store.state.scholarsList[this.index].cite_count.join(" ")
-            this.infosList.ach_type = this.$store.state.scholarsList[this.index].ach_type
+            if(this.getDatatype.type == "wd"){
+                this.index = localStorage.getItem('index')
+                let scholarList = this.$store.state.scholarsList[this.index]
+                this.infos = scholarList
+                let {title , author, ab,punishOrg,keywords_q,cite_count,ach_type} = this.infos;
+                author = author.join(',')
+                cite_count = cite_count.join(" ")
+                Object.assign(this.infosList, {title , author, ab,punishOrg,keywords_q,cite_count,ach_type})
+            }else{
+                //如果不是武大的库 就用solr查询 ，进这个方法
+            }
             this.getContent()
             this.collectionList()
             if (this.$store.state.review) {
                 this.commentsFlag = true
-                this.commentsFlag = true
             } else {
-                this.commentsFlag = false
                 this.commentsFlag = false
             }
         }

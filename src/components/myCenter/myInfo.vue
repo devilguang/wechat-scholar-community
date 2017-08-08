@@ -178,7 +178,8 @@ export default{
   },
   mounted () {
     let scholarUnique = this.userInfo.scholarUnique
-    if(!scholarUnique){
+    let userType = this.userInfo.userType
+    if(!scholarUnique||userType===1){
       this.approve = true
     }else{
       this.approve = false
