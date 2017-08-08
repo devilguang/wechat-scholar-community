@@ -81,15 +81,15 @@
             })
             let code = this.getQueryString('code')
             if (openId) return
-//            if (code) {
-//                this.$axios.get('/v1/weChat/getUserInfo/' + code).then((res) => {
-//                    let openId = res.data.data.openId
-//                    this.local('openId', openId)
-//                    this.$store.commit('SET_USERINFO', res.data.data)
-//                })
-//            } else {
-//                window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8115bea15b8d7d1a&redirect_uri=http://mobile.subject.net.cn&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
-//            }
+            if (code) {
+                this.$axios.get('/v1/weChat/userInfo/' + code).then((res) => {
+                    let openId = res.data.data.openId
+                    this.local('openId', openId)
+                    this.$store.commit('SET_USERINFO', res.data.data)
+                })
+            } else {
+                window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8115bea15b8d7d1a&redirect_uri=http://mobile.subject.net.cn&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
+            }
         }
     }
 </script>
