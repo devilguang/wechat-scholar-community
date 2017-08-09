@@ -310,15 +310,15 @@ export default {
     }
 }
 // // 判断是否登录
-Vue.prototype.loginJudge = function () {
-    if (!window.sessionStorage.getItem('userName')) {
-        window.alert('请您先登录!')
-        this.$router.push({
-            path: '/mockLogin'
-        })
-        return true
-    } else {
-        return false
-    }
-}
+// Vue.prototype.loginJudge = function () {
+//     if (!window.sessionStorage.getItem('userName')) {
+//         window.alert('请您先登录!')
+//         this.$router.push({
+//             path: '/mockLogin'
+//         })
+//         return true
+//     } else {
+//         return false
+//     }
+// }
 

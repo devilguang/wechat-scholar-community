@@ -16,11 +16,11 @@
                 </div>
                 <ul class="userBtns clrfix">
                     <li @click="discuss(index)"><span class="iconfont icon-remark" ></span>评论</li>
-                    <li @click="recommend(detailItem,index)" :class="{active:detailItem.recommendActive}">
+                    <li @click="recommend(detailItem,index)" :class="{active:detailItem.isLike?detailItem.isLike:false}">
                         <span class="iconfont icon-recommendBtn"></span>推荐
                     </li>
                     <li><span class="iconfont icon-share"></span>分享</li>
-                    <li @click="collect(detailItem,index)" :class="{active:collectActive}">
+                    <li @click="collect(detailItem,index)" :class="{active:detailItem.isFavorite?detailItem.isFavorite:false}">
                         <span class="iconfont icon-collect"></span>收藏
                     </li>
                 </ul>
@@ -33,40 +33,64 @@
 <script>
     import qs from 'querystring'
     import Vue from 'vue'
-//    import loadingBar from './loadingBar.vue'
+    import { mapGetters } from 'vuex'
+    //    import loadingBar from './loadingBar.vue'
     export default {
         data() {
             return {
                 detailItems: [],
                 pageNum: 1,
-                collectActive:false,
-//                barFlag:true
+                isLike: '',
             }
         },
         components:{
 //            loadingBar
         },
-//        computed:{
-//
-//        },
+        computed:{
+            ...mapGetters([
+                'getDatatype'
+            ])
+        },
         methods: {
             // 推荐和收藏高亮
-            recommend: function (item, index) {
-                // set设置数据相应 增加data里面的 一个recommendActive 属性 可以控制高亮
-//                if ((typeof item.recommendActive) === 'undefined') {
-//                    Vue.set(this.detailItems[index], 'recommendActive', true)
-//                } else {
-//                    item.recommendActive = !item.recommendActive
-//                }
+            recommend(item, index) {
+                if(item.isLike == true){
+                    this.$set(item,'isLike',false)
+                    this.$axios({
+                        method: 'delete',
+                        url: '/v1/weChat/achLikes',
+                        data: {
+                            achUniques: [item.ach_unique],
+                            dataType:this.getDatatype.type
+                        }
+                    })
+                }else{
+                    this.$set(item,'isLike',true)
+                    this.$axios({
+                        method: 'post',
+                        url: '/v1/weChat/achLike',
+                        data: {
+                            achUnique: item.ach_unique,
+                            dataType: this.getDatatype.type
+                        }
+                    })
+                }
             },
             collect(item, index) {
-//                if ((typeof item.collectActive) === 'undefined') {
-//                    Vue.set(this.detailItems[index], 'collectActive', true)
-//                } else {
-//                    item.collectActive = !item.collectActive
-//                }
+                this.$set(item,'isFavorite',true)
+                this.$axios({
+                    method: 'post',
+                    url: '/v1/weChat/achFavorite',
+                    data: {
+                        "achUnique": item.ach_unique,
+                        "title": item.title,
+                        "achType": item.ach_type,
+                        "dataType":this.getDatatype.type
+                    }
+                }).then((res)=>{
+                    console.log(res)
+                })
             },
-
             loadMore () {
                 if (this.$store.state.scholarInfo.type == 'wd') {
                     this.busy = true;
@@ -82,7 +106,6 @@
                     solrQuery.q = 'claims:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                     this.$http.post('/indexWD/achievement/select', qs.stringify(solrQuery))
                         .then((response) => {
-//                            this.barFlag = false
                             this.detailItems.push(...response.data.response.docs)
                             this.pageNum++
                             this.busy = false
@@ -97,7 +120,27 @@
                                     achUniques:arr
                                 }
                             }).then((res)=>{
-//                                console.log(res)
+                                let array = res.data.data
+                                let userIndex = []
+                                let collectIndex = []
+                                array.forEach((item,index)=> {
+                                    if(item.isLike ===1){
+                                        userIndex.push(index)
+                                    }
+                                    if(item.isFavorite ===1){
+                                        collectIndex.push(index)
+                                    }
+                                })
+                                this.detailItems.forEach((item)=>{
+                                    userIndex.forEach((index)=> {
+                                        this.$set(this.detailItems[index],'isLike',true)
+                                    })
+                                })
+                                this.detailItems.forEach((item)=>{
+                                    collectIndex.forEach((index)=> {
+                                        this.$set(this.detailItems[index],'isFavorite',true)
+                                    })
+                                })
                             })
                         })
                 } else {
@@ -120,7 +163,6 @@
                     solrQueryWechat.q = 'scholar_info_id:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                     this.$http.post('/indexServer/scholar_paper/select', qs.stringify(solrQueryWechat))
                         .then((result) => {
-//                            this.barFlag = false
                             var server_docs = []
                             _(result.data.response.docs).forEach(function (doc) {
                                 doc = _.mapKeys(doc, function (value, key) {
@@ -155,7 +197,6 @@
             }
         },
         mounted() {
-
         }
     }
 </script>

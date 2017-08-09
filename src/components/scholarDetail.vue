@@ -9,9 +9,9 @@
                     </div>
                     <div class="topMiddle">
                         <div class="imgBox">
-                            <img v-show="infos.headPhotoUrl && infos.headPhotoUrl.length > 0"
-                                 :src="'http://120.55.191.189:9000/v1/userInfo/headPhotoDownload?filePath=' + infos.headPhotoUrl">
-                            <!--<img src="../../static/img/img-scholar_1.png" alt="">-->
+                            <img v-if="infos.headPhotoUrl && infos.headPhotoUrl.length > 0"
+                                 :src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath=' + infos.headPhotoUrl">
+                            <!--<img v-else :src="baseImg" alt="">-->
                         </div>
                     </div>
                     <div class="topRight">
@@ -89,6 +89,7 @@
     import sDtab02 from './sDtab02'
     import sDtab03 from './sDtab03'
     import qs from 'querystring'
+    import { mapGetters } from 'vuex'
     import loadingBar from './loadingBar.vue'
     export default {
         name: 'scholarDetail',
@@ -104,7 +105,7 @@
                 detailItems: [],
                 partnerItems: [],
                 instituteItems: [],
-                baseImg:'assets/img/img-scholar_1.png',
+                baseImg:'../../static/img/img-scholar_1.png',
                 barFlag:true
             }
         },
@@ -114,8 +115,12 @@
             sDtab03,
             loadingBar
         },
+        computed:{
+            ...mapGetters([
+                'getDatatype'
+            ])
+        },
         methods: {
-
             // 选项卡切换
             tabToggle: function (tabText) {
                 this.currentView = tabText
@@ -124,18 +129,24 @@
             },
             // 加关注
             attention () {
-                if (!this.loginJudge()) {
-                    // 已登录状态
+                    console.log(this.infos)
                     let attentionBtn = document.getElementById('attentionBtn')
                     if (attentionBtn.innerHTML === '已关注') {
                         document.getElementById('cancelAttentionBox').style.display = 'block'
                     } else {
-                        window.alert('已关注')
+                        window.alert('关注成功')
                         attentionBtn.innerHTML = '已关注'
+                        this.$axios({
+                            method:'post',
+                            url:'/v1/weChat/scholarAttention',
+                            data:{
+                                'scholarUnique':this.infos.scholarUnique,
+                                'scholarName':this.infos.scholarName,
+                                'area':this.infos.area,
+                                'dataType':this.getDatatype.type
+                            }
+                        })
                     }
-                } else {
-                    return
-                }
             },
             approve () {
                 if (!this.loginJudge()) {
@@ -162,17 +173,24 @@
                 attentionBtn.innerHTML = '已关注'
                 document.getElementById('cancelAttentionBox').style.display = 'none'
             },
-            confirm () {
+            confirm () { //取消关注
                 var attentionBtn = document.getElementById('attentionBtn')
                 attentionBtn.innerHTML = '+关注'
                 document.getElementById('cancelAttentionBox').style.display = 'none'
+                this.$axios({
+                    method:'delete',
+                    url:'/v1/weChat/scholarAttentions',
+                    data:{
+                        scholarUniques:[this.infos.scholarUnique]
+                    }
+                })
             },
             pullScholarFromWD() {
                 this.$http.get('/v1/scholar/' + this.$store.state.scholarInfo.scholarUnique, {})
                     .then((response) => {
-                    this.infos = response.data.scholar
+                    this.infos = response.data.data.scholar
                     // this.detailItems = response.data.scholar.cnkiDetailLists
-                    this.partnerItems = response.data.cooperatorslist.slice(0, 10)
+                    this.partnerItems = response.data.data.cooperatorslist.slice(0, 10)
                     // this.instituteItems = response.scholar.cnkiOrgansList
                 }).then((error) => {})
             },
@@ -222,7 +240,6 @@
                 solrQueryCoper.q = 'scholar_info_id:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                 this.$http.post('/indexServer/scholar_coper/select', qs.stringify(solrQueryCoper))
                     .then((result) => {
-                    console.log(result,3)
                         var server_docs = []
                         _(result.data.response.docs).forEach(function (doc) {
                             server_docs.push(_.mapKeys(doc, function (value, key) {

@@ -149,10 +149,10 @@
             },
             // 点赞
             recommend () {
-                if (this.isLike == 1) {
+                if (this.isLike == 1) { //已经点赞
                     this.$axios({
                         method: 'delete',
-                        url: '/v1/weChat/achLike',
+                        url: '/v1/weChat/achLikes',
                         data: {
                             achUniques: [this.infos.ach_unique],
                             dataType: this.getDatatype.type
@@ -170,7 +170,6 @@
                             dataType:this.getDatatype.type
                         }
                     }).then((res) => {
-                        console.log(res,0)
                         this.remActive = true
                         this.isLike = 1
                     })
@@ -243,7 +242,13 @@
             collectionList(){
                 let achUniques = []
                 achUniques.push(this.infos.ach_unique)
-                this.$axios.get('/v1/weChat/userToAch',{params: {achUniques: achUniques}}).then((res) => {
+                this.$axios({
+                    method:'post',
+                    url:'/v1/weChat/userToAch',
+                    data:{
+                        achUniques: achUniques
+                    }
+                }).then((res)=>{
                     console.log(res)
                     let isFavorite = res.data.data[0].isFavorite
                     let isLike = res.data.data[0].isLike
