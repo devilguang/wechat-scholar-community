@@ -4,12 +4,12 @@
             <ul class="contentMain">
                 <li class="contentItem" v-for="(collectItem,index) in collectItems">
                     <div class="wordsCon">
-                        <p class="coreCon">{{collectItem.achName}}</p>
-                        <p class="authorItem"><span class="authorTit">作者：</span><span class="authorName">{{collectItem.achAuthor}}</span>
+                        <p class="coreCon">{{collectItem.achTitle}}</p>
+                        <p class="authorItem"><span class="authorTit">作者：</span><span class="authorName">{{collectItem.achAuthor?'':collectItem.achAuthor}}</span>
                         </p>
-                        <p class="abstractItem"><span class="abstractTit">摘要：</span><span class="abstractCon">三十功名尘与土，八千里路云和月。莫等闲白了少年头，空故今日之责任，不在他人而全在我少年。少年智则国智少年富则国富少年强则</span>
+                        <p class="abstractItem"><span class="abstractTit">摘要：</span><span class="abstractCon"></span>
                         </p>
-                        <p class="eachCitedNum">被引用次数：<span>3</span></p>
+                        <p class="eachCitedNum">被引用次数：<span></span></p>
                     </div>
                     <ul class="userBtns clrfix">
                         <li><span class="iconfont icon-remark"></span><span class="word">评论</span></li>
@@ -44,22 +44,14 @@
     export default {
         data () {
             return {
-                collectItems:{
-//                    achAuthor:'',
-//                    achName:'',
-//                    achType:'',
-//                    achTypeCode:'',
-//                    achUnique:'',
-//                    favoriteTime:'',
-//                    id:'',
-//                    userId:''
-                },
+                collectItems:[],
             }
         },
         computed: {
-//            ...mapGetters({
-//                userInfo: 'getUserInfo'
-//            })
+            ...mapGetters([
+                'getUserInfo',
+                'getDatatype'
+            ])
 
         },
         methods: {
@@ -100,24 +92,25 @@
                 document.getElementById('cancelCollectBox').style.display = 'none'
                 Vue.set(this.collectItems[num], 'collectActive', false)
             }
-        }
-        ,
+        },
         mounted(){
-            this.$axios.get('/v1/weChat/achFavorites',{
-                params: {
-                    userId: '58805440-b163-4b49-8ce2-6f9bbc6995d1',
-                }
-            }).then((res)=>{
-                this.collectItems = res.data.data.docs
-                console.log(this.collectItems)
-            })
-//            axios.get('../../../static/mock-data/userInfo.json')
-//                .then((response) => {
-//                    console.log(response.data)
-//                    // 先模拟用一个用户的信息
-//                    this.userInfo = response.data[0]
-//                    this.collectItems = this.userInfo.collect
-//                }).then((error) => console.log(error))
+//                console.log(this.getDatatype.type)
+                this.$axios.get('/v1/weChat/achFavorites',{
+                    params: {
+                        userId: '58805440-b163-4b49-8ce2-6f9bbc6995d1',
+                    }
+                }).then((res)=>{
+                    this.collectItems = res.data.data
+//                    let achArr = []
+//                    let achUniqueArr =  res.data.data
+//                    achUniqueArr.forEach((item) =>{
+//                        achArr.push(item.achUnique)
+//                    })
+//                    this.$axios.get('/v1/weChat/achievement',{params:{achUnique:achArr}}).then((res)=>{
+//                        console.log(res)
+//                    })
+
+                })
         }
     }
 

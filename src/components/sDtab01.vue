@@ -21,12 +21,24 @@
                     </li>
                     <li><span class="iconfont icon-share"></span>分享</li>
                     <li @click="collect(detailItem,index)" :class="{active:detailItem.isFavorite?detailItem.isFavorite:false}">
-                        <span class="iconfont icon-collect"></span>收藏
+                        <span class="iconfont icon-collect"></span>{{meassage}}
                     </li>
                 </ul>
+               <section id="cancelCollectBox" v-show="showFlag" style="background: rgba(0,0,0,0.1)" >
+                <div class="alertBox">
+                    <p class="tip">
+                        <span class="iconfont icon-warn"></span>
+                        <span class="tipWord">您确定要取消收藏吗?</span>
+                    </p>
+                    <div class="operate">
+                        <span class="cancel" @click="showFlag= false">取消</span>
+                        <span class="confirm" @click="confirm(detailItem)">确定</span>
+                    </div>
+                </div>
+             </section>
             </li>
         </ul>
-        <!--<loading-bar v-if="barFlag"></loading-bar>-->
+        <loading-bar v-if="barFlag"></loading-bar>
     </section>
 </template>
 
@@ -34,17 +46,19 @@
     import qs from 'querystring'
     import Vue from 'vue'
     import { mapGetters } from 'vuex'
-    //    import loadingBar from './loadingBar.vue'
+        import loadingBar from './loadingBar.vue'
     export default {
         data() {
             return {
                 detailItems: [],
                 pageNum: 1,
                 isLike: '',
+                showFlag:false,
+                meassage:'收藏'
             }
         },
         components:{
-//            loadingBar
+            loadingBar
         },
         computed:{
             ...mapGetters([
@@ -77,18 +91,33 @@
                 }
             },
             collect(item, index) {
-                this.$set(item,'isFavorite',true)
+                console.log(item,1)
+                if(item.isFavorite==true){  //取消收藏
+                    this.showFlag = true
+                }else{
+                    this.$set(item,'isFavorite',true)
+                    this.$axios({
+                        method: 'post',
+                        url: '/v1/weChat/achFavorite',
+                        data: {
+                            "achUnique": item.ach_unique,
+                            "title": item.title,
+                            "achType": item.ach_type,
+                        }
+                    })
+                }
+            },
+            confirm(item){
+                console.log(item)
                 this.$axios({
-                    method: 'post',
-                    url: '/v1/weChat/achFavorite',
+                    method: 'delete',
+                    url: '/v1/weChat/achFavorites',
                     data: {
-                        "achUnique": item.ach_unique,
-                        "title": item.title,
-                        "achType": item.ach_type,
-                        "dataType":this.getDatatype.type
+                        achUniques: [item.ach_unique],
                     }
-                }).then((res)=>{
-                    console.log(res)
+                }).then((res) => {
+                    this.showFlag = false
+                    this.$set(item,'isFavorite',false)
                 })
             },
             loadMore () {
@@ -197,6 +226,7 @@
             }
         },
         mounted() {
+
         }
     }
 </script>

@@ -45,13 +45,13 @@
 
             <h4 class="loadMore" @click="showMore" v-show="showFlag">点击加载更多</h4>
         </article>
-        <article class="originBox">
-            <h3>全部来源</h3>
-            <ul>
-                <li v-for="where in infos.allOrg" class="clrfix"><span
-                        class="iconfont icon-link"></span><span>{{where.eachOrg}}</span></li>
-            </ul>
-        </article>
+        <!--<article class="originBox">-->
+        <!--<h3>全部来源</h3>-->
+        <!--<ul>-->
+        <!--<li v-for="where in infos.allOrg" class="clrfix"><span-->
+        <!--class="iconfont icon-link"></span><span>{{where.eachOrg}}</span></li>-->
+        <!--</ul>-->
+        <!--</article>-->
         <article class="literature">
             <div class="tabBox">
                 <p @click='tabToggle(tab01Text)' :class="{active: activeName == tab01Text || activeFirst}">相似文献</p>
@@ -82,8 +82,10 @@
     import docuSimilar from './docuSimilar'
     import docuReference from './docuReference'
     import docuQuote from './docuQuote'
-    import { mapGetters } from 'vuex'
+    import {mapGetters} from 'vuex'
     import bouncedOut from './diaLog.vue'
+    import qs from 'querystring'
+    import Vue from 'vue'
     export default {
         name: 'bookDetail',
         data () {
@@ -167,7 +169,7 @@
                         url: '/v1/weChat/achLike',
                         data: {
                             achUnique: this.infos.ach_unique,
-                            dataType:this.getDatatype.type
+                            dataType: this.getDatatype.type
                         }
                     }).then((res) => {
                         this.remActive = true
@@ -177,25 +179,24 @@
             },
 //            收藏成果
             collect(){
-                this.$axios({
-                    method: 'post',
-                    url: '/v1/weChat/achFavorite',
-                    data: {
-                        "achUnique": this.infos.ach_unique,
-                        "title": this.infosList.title,
-                        "achType": this.infosList.ach_type,
-                        "dataType":this.getDatatype.type
-                    }
-                }).then((res) => {
-                    this.colActive = !this.colActive
-                    if (this.colActive) {
+                if (this.colActive == false) {
+                    this.$axios({
+                        method: 'post',
+                        url: '/v1/weChat/achFavorite',
+                        data: {
+                            "achUnique": this.infos.ach_unique,
+                            "title": this.infosList.title,
+                            "achType": this.infosList.ach_type,
+                            "dataType": this.getDatatype.type
+                        }
+                    }).then((res) => {
                         this.colActive = true
                         document.getElementsByClassName('collectWord')[0].innerHTML = '已收藏'
-                    }
-                    if (!this.colActive) {
-                        document.getElementById('cancelCollectBox').style.display = 'block'
-                    }
-                })
+                    })
+                } else {
+                    this.colActive = false
+                    document.getElementById('cancelCollectBox').style.display = 'block'
+                }
             },
             // 发表评论
             publishCommit () {
@@ -243,17 +244,16 @@
                 let achUniques = []
                 achUniques.push(this.infos.ach_unique)
                 this.$axios({
-                    method:'post',
-                    url:'/v1/weChat/userToAch',
-                    data:{
+                    method: 'post',
+                    url: '/v1/weChat/userToAch',
+                    data: {
                         achUniques: achUniques
                     }
-                }).then((res)=>{
-                    console.log(res)
+                }).then((res) => {
                     let isFavorite = res.data.data[0].isFavorite
                     let isLike = res.data.data[0].isLike
                     this.isLike = isLike
-                    if (isFavorite == 1) {
+                    if (isFavorite == 1) { //已收藏
                         this.colActive = true
                         document.getElementsByClassName('collectWord')[0].innerHTML = '已收藏'
                     } else {
@@ -281,31 +281,52 @@
             confirm () {
                 this.$axios({
                     method: 'delete',
-                    url: '/v1/weChat/achFavorite',
+                    url: '/v1/weChat/achFavorites',
                     data: {
                         achUniques: [this.infos.ach_unique],
-                        dataType:this.getDatatype.type
-                }
+                        dataType: this.getDatatype.type
+                    }
                 }).then((res) => {
+                    this.colActive = false
                     document.getElementById('cancelCollectBox').style.display = 'none'
                     document.getElementsByClassName('collectWord')[0].innerHTML = '收藏'
                 })
             },
         },
         mounted () {
-            if(this.getDatatype.type == "wd"){
+            if (this.getDatatype.type == "wd") {
                 this.index = localStorage.getItem('index')
                 let scholarList = this.$store.state.scholarsList[this.index]
                 this.infos = scholarList
-                let {title , author, ab,punishOrg,keywords_q,cite_count,ach_type} = this.infos;
+                let {title, author, ab, punishOrg, keywords_q, cite_count, ach_type} = this.infos;
                 author = author.join(',')
                 cite_count = cite_count.join(" ")
-                Object.assign(this.infosList, {title , author, ab,punishOrg,keywords_q,cite_count,ach_type})
-            }else{
+                Object.assign(this.infosList, {title, author, ab, punishOrg, keywords_q, cite_count, ach_type})
+                this.getContent()
+                this.collectionList()
+            } else {
                 //如果不是武大的库 就用solr查询 ，进这个方法
+                let ach_unique = this.getDatatype.scholarUnique
+//                        [{"ach_unique":ach_unique}],
+                let solrQuery = {
+                    "q": "ach_unique:" + ach_unique,
+                    "wt": "json",
+                    "fl": "",
+                    "indent": "on",
+                    "defType": "edismax",
+                    "mm": "75%",
+                    "sort": ''
+                }
+                this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery)).then((res) => {
+                    this.infos = res.data.response.docs[0]
+                    let {title, author, ab, punishOrg, keywords_q, cite_count, ach_type} = this.infos;
+                    author = author.join(',')
+                    cite_count = cite_count.join(" ")
+                    Object.assign(this.infosList, {title, author, ab, punishOrg, keywords_q, cite_count, ach_type})
+                    this.getContent()
+                    this.collectionList()
+                })
             }
-            this.getContent()
-            this.collectionList()
             if (this.$store.state.review) {
                 this.commentsFlag = true
             } else {

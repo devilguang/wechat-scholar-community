@@ -64,18 +64,6 @@
                 this.$router.push({
                     path: '/findBook/bookResult'
                 })
-//                axios.post('http://localhost/query/gatherAchs', qs.stringify({
-//                    p: '1',
-//                    title: that.bookName
-//                })).then((response) => {
-//                    console.log(response)
-//                    this.bookList = response.data
-//                    this.num = this.bookList.length
-//                    window.sessionStorage.setItem('data', JSON.stringify(response))
-//                    this.$router.push({
-//                        path: '/findBook/bookResult'
-//                    })
-//                }).then((error) => console.log(error))
             }
         },
         mounted () {

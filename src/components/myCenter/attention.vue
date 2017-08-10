@@ -1,16 +1,16 @@
 <template>
-    <div id="attention">
+    <div id="attention" style="padding-bottom: 50px">
         <ul class="attentionBox">
-            <li class="scholarItem clrfix" v-for="item in attentionList">
+            <li class="scholarItem clrfix" v-for="item in attentionList" @click="attention(item.scholarUnique)">
                 <div class="scholarHead"><img src="../../assets/img/img-scholar_1.png"></div>
                 <div class="scholarInfos">
                     <div class="scholarTitle">
-                        <span class="scholarName"></span>
-                        <span class="scholarStatus"></span>
+                        <span class="scholarName">{{item.scholarName}}</span>
+                        <!--<span class="scholarStatus"></span>  是否被认证过-->
                     </div>
-                    <p class="scholarPosition">中共浙江省委书记</p>
-                    <p class="scholarCited">被引数：100</p>
-                    <p class="scholarDir">研究方向：<span>中共党史</span></p>
+                    <p class="scholarPosition"></p>
+                    <p class="scholarCited">被引数：</p>
+                    <p class="scholarDir">研究方向：<span>{{item.area}}</span></p>
                 </div>
                 <span class="moreBtn iconfont icon-more"></span>
             </li>
@@ -31,6 +31,7 @@
     </div>
 </template>
 <script>
+    import { mapGetters } from 'vuex'
     export default {
         name: 'attention',
         data(){
@@ -38,14 +39,29 @@
             attentionList:[]
           }
         },
+        computed:{
+            ...mapGetters([
+                'getDatatype'
+            ])
+        },
         methods: {
-
+            attention(scholarUnique){
+                let q = {
+                    scholarUnique:scholarUnique,
+                    type:this.getDatatype.type
+                }
+                this.$store.dispatch('saveScholarInfo',q);
+                this.$router.push({
+                    name: 'detail'
+                })
+            }
         },
         mounted(){
             this.$axios.get('/v1/weChat/scholarAttentions',{params:{
-
+                pageIndex:1,
+                pageSize:10
             }}).then((res)=>{
-                console.log(res)
+                this.attentionList = res.data.data
             })
         }
     }

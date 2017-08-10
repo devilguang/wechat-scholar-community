@@ -198,7 +198,6 @@ const store = new Vuex.Store({
         userInfo: {}, //登录用户的信息
         token: '',
         review:null
-
     },
     mutations: {
         queryScholarBySolr (state, queryScholar) {

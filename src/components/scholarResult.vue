@@ -90,7 +90,6 @@
                     AREA: 'subject',
                     ACH_ALL_NUM: 'ach_all_num'
                 }
-                console.log(this.type)
                 if (this.type == 'wd') {
                     var q = '';
                     if (this.queryScholar.scholarName != '') {
@@ -103,7 +102,6 @@
                     solrQuery.start = (this.pageNum - 1) * 10;
                     this.$http.post('/indexWD/scholar/select', qs.stringify(solrQuery))
                         .then((result) => {
-                            console.log(result)
                             this.barFlag = false
                             var count = result.data.response.numFound
                             // console.log('count = ' + count)

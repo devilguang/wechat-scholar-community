@@ -129,7 +129,6 @@
             },
             // 加关注
             attention () {
-                    console.log(this.infos)
                     let attentionBtn = document.getElementById('attentionBtn')
                     if (attentionBtn.innerHTML === '已关注') {
                         document.getElementById('cancelAttentionBox').style.display = 'block'
