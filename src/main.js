@@ -197,7 +197,8 @@ const store = new Vuex.Store({
         queryAch: {},
         userInfo: {}, //登录用户的信息
         token: '',
-        review:null
+        review: null,
+        ach_unique: ''
     },
     mutations: {
         queryScholarBySolr (state, queryScholar) {
@@ -218,12 +219,16 @@ const store = new Vuex.Store({
         },
         SET_TOKEN(state, token){
             state.token = token
+            localStorage.setItem('token',token)
         },
-        SET_REVIEW(state,review){
-            state.review  = review
+        SET_REVIEW(state, review){
+            state.review = review
+        },
+        SET_ACHUNIQUE(state, ach_unique){  //成果唯一标识符
+            state.ach_unique = ach_unique
         }
     },
-    actions: {   //定义的全局的方法  每个页面都可以调用
+    actions:{   //定义的全局的方法  每个页面都可以调用
         saveQueryScholar: function (context, queryScholar) {
             context.commit('queryScholarBySolr', queryScholar)
         },
@@ -235,24 +240,29 @@ const store = new Vuex.Store({
         },
         saveScholarsList: function (context, scholarsList) {
             context.commit('SET_SCHOLARLIST', scholarsList)
-        },
-
+        }
     },
     getters: {
         getUserInfo(state){
             return state.userInfo || localStorage.getItem('userInfo')
         },
-        getDatatype: state =>{
+        getDatatype: state => {
             return state.scholarInfo
+        },
+        getAchunique: state => {
+            return state.ach_unique
+        },
+        getSholarlist: state => {
+            return state.scholarsList
         }
     }
 })
 //拦截器
 Vue.prototype.$axios.interceptors.request.use(
     config => {
-        if (store.state.token) {
+        if (localStorage.getItem('token')) {
             // 判断是否存在token，如果存在的话，则每个http header都加上token
-            config.headers.Authorization = 'Bearer ' + store.state.token;
+            config.headers.Authorization = 'Bearer ' + localStorage.getItem('token');
         }
         return config
     }, err => {
@@ -308,16 +318,5 @@ export default {
         }
     }
 }
-// // 判断是否登录
-// Vue.prototype.loginJudge = function () {
-//     if (!window.sessionStorage.getItem('userName')) {
-//         window.alert('请您先登录!')
-//         this.$router.push({
-//             path: '/mockLogin'
-//         })
-//         return true
-//     } else {
-//         return false
-//     }
-// }
+
 

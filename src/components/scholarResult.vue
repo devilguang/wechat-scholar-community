@@ -118,7 +118,6 @@
                                 solrQueryWechat.start = solrQuery.start
                                 this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
                                     .then((result) => {
-                                    console.log(result,1212213)
                                         var wechatSolrCount = result.data.response.numFound
                                         // console.log('wechatSolrCount = ' + wechatSolrCount)
                                         var server_docs = [];

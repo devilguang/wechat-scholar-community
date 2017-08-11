@@ -14,7 +14,7 @@
                </div>
                <div class="topMiddle">
                  <div class="imgBox">
-                   <img :src="userImg" alt="a">
+                   <img :src="userInfo.headPhotoUrl?userInfo.headPhotoUrl:userImg" alt="a">
                  </div>
                </div>
                <div class="topRight">
@@ -150,9 +150,7 @@ export default{
     },
     toDynamic: function () {
       this.$router.push({
-
         path: '/myCenter/dynamic'
-
       })
     },
     // 加关注按钮

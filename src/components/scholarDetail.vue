@@ -11,7 +11,7 @@
                         <div class="imgBox">
                             <img v-if="infos.headPhotoUrl && infos.headPhotoUrl.length > 0"
                                  :src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath=' + infos.headPhotoUrl">
-                            <!--<img v-else :src="baseImg" alt="">-->
+                            <img v-else :src="baseImg" alt="">
                         </div>
                     </div>
                     <div class="topRight">
@@ -117,7 +117,8 @@
         },
         computed:{
             ...mapGetters([
-                'getDatatype'
+                'getDatatype',
+                'getAchunique'
             ])
         },
         methods: {
@@ -172,7 +173,7 @@
                 attentionBtn.innerHTML = '已关注'
                 document.getElementById('cancelAttentionBox').style.display = 'none'
             },
-            confirm () { //取消关注
+            confirm () { //取消收藏
                 var attentionBtn = document.getElementById('attentionBtn')
                 attentionBtn.innerHTML = '+关注'
                 document.getElementById('cancelAttentionBox').style.display = 'none'

@@ -5,7 +5,8 @@
                 <li class="contentItem" v-for="(collectItem,index) in collectItems">
                     <div class="wordsCon">
                         <p class="coreCon">{{collectItem.achTitle}}</p>
-                        <p class="authorItem"><span class="authorTit">作者：</span><span class="authorName">{{collectItem.achAuthor?'':collectItem.achAuthor}}</span>
+                        <p class="authorItem"><span class="authorTit">作者：</span><span
+                                class="authorName">{{collectItem.achAuthor ? '' : collectItem.achAuthor}}</span>
                         </p>
                         <p class="abstractItem"><span class="abstractTit">摘要：</span><span class="abstractCon"></span>
                         </p>
@@ -19,21 +20,22 @@
                         <li @click="collect(collectItem,index)" class="active"><span
                                 class="iconfont icon-collect"></span><span class="collectWord word">已收藏</span></li>
                     </ul>
+                    <section id="cancelCollectBox" v-if="showFlag">
+                        <div class="alertBox">
+                            <p class="tip">
+                                <span class="iconfont icon-warn"></span>
+                                <span class="tipWord">您确定要取消收藏吗?</span>
+                            </p>
+                            <div class="operate">
+                                <span class="cancel" @click="cancel">取消</span>
+                                <span class="confirm" @click="confirm(collectItem)">确定</span>
+                            </div>
+                        </div>
+                    </section>
                 </li>
             </ul>
         </section>
-        <section id="cancelCollectBox" style="display:none">
-            <div class="alertBox">
-                <p class="tip">
-                    <span class="iconfont icon-warn"></span>
-                    <span class="tipWord">您确定要取消收藏吗?</span>
-                </p>
-                <div class="operate">
-                    <span class="cancel" @click="cancel">取消</span>
-                    <span class="confirm" @click="confirm">确定</span>
-                </div>
-            </div>
-        </section>
+
     </div>
 </template>
 <script>
@@ -44,7 +46,8 @@
     export default {
         data () {
             return {
-                collectItems:[],
+                collectItems: [],
+                showFlag:false,
             }
         },
         computed: {
@@ -55,65 +58,63 @@
 
         },
         methods: {
-            recommend: function (item, index) {
-                if ((typeof item.recommendActive) === 'undefined') {
-                    Vue.set(this.collectItems[index], 'recommendActive', true)
-                } else {
-                    item.recommendActive = !item.recommendActive
-                }
-            }
-            ,
-            collect: function (item, index) {
-                num = index
-                if ((typeof item.collectActive) === 'undefined') {
-                    Vue.set(this.collectItems[index], 'collectActive', true)
-                } else {
-                    item.collectActive = !item.collectActive
-                }
-                if (item.collectActive === true) {
-                    // item.innerHTML = '已收藏'
-                    console.log(item)
-                    document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
-                }
-                if (item.collectActive === false) {
-                    document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
-                    document.getElementById('cancelCollectBox').style.display = 'block'
-                }
-            }
-            ,
+            //点赞接口
+            recommend (item, index) {
+            },
+            //收藏
+            collect(item, index) {
+                this.showFlag = true
+
+            },
             // 取消收藏弹框按钮
             cancel: function () {
-                document.getElementById('cancelCollectBox').style.display = 'none'
-                Vue.set(this.collectItems[num], 'collectActive', true)
-                document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
-            }
-            ,
-            confirm: function () {
-                document.getElementById('cancelCollectBox').style.display = 'none'
-                Vue.set(this.collectItems[num], 'collectActive', false)
+                this.showFlag = false
+            },
+            // 点击确定
+            confirm (item){
+                this.showFlag = false
+                this.$axios({
+                    method:'delete',
+                    url:'/v1/weChat/achFavorites',
+                    data:{
+                        achUniques:[item.achUnique]
+                    }
+                }).then((res)=>{
+                    this.collectList()
+                })
+            },
+            //查看是否有点赞
+            thumbUp(){
+                let achUnique = []
+                this.collectItems.forEach((item)=> {
+                    achUnique.push(item.achUnique)
+                })
+                this.$axios({
+                    method: 'post',
+                    url: '/v1/weChat/userToAch',
+                    data: {
+                        achUniques:achUnique
+                    }
+                }).then((res)=>{
+//                    console.log(res)
+                })
+            },
+            collectList(){
+                let userId = JSON.parse(localStorage.getItem('userInfo')).id
+                this.$axios.get('/v1/weChat/achFavorites', {
+                    params: {
+                        userId: userId,
+                    }
+                }).then((res) => {
+                    this.collectItems = res.data.data
+                    this.thumbUp()
+                })
             }
         },
         mounted(){
-//                console.log(this.getDatatype.type)
-                this.$axios.get('/v1/weChat/achFavorites',{
-                    params: {
-                        userId: '58805440-b163-4b49-8ce2-6f9bbc6995d1',
-                    }
-                }).then((res)=>{
-                    this.collectItems = res.data.data
-//                    let achArr = []
-//                    let achUniqueArr =  res.data.data
-//                    achUniqueArr.forEach((item) =>{
-//                        achArr.push(item.achUnique)
-//                    })
-//                    this.$axios.get('/v1/weChat/achievement',{params:{achUnique:achArr}}).then((res)=>{
-//                        console.log(res)
-//                    })
-
-                })
+            this.collectList()
         }
     }
-
 </script>
 <style>
     #collect .collectBox {

@@ -144,6 +144,7 @@
                     this.bookList.forEach((item) => {
                         collectIndex.forEach((index) => {
                             this.$set(this.bookList[index], 'isFavorite', true)
+                            document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
                         })
                     })
                 })
@@ -165,12 +166,9 @@
                 this.activeWay = way
             },
             // 进入文献详情
-            showMinute(scholar_unique, index) {
-                let scholarInfo = {
-                    type: 'server',
-                    scholarUnique: scholar_unique
-                }
-                this.$store.dispatch('saveScholarInfo', scholarInfo)
+            showMinute(ach_unique, index) {
+                localStorage.setItem('typeof','文献')
+                this.$store.commit('SET_ACHUNIQUE',ach_unique)
                 localStorage.setItem('index', index)
                 if (localStorage.getItem('openId')) {
                     this.$store.commit('SET_SCHOLARLIST', this.bookList)
@@ -204,35 +202,32 @@
                     })
                 }
             },
-            collect (item, index) {
-                if(item.isFavorite==true){
-                    this.$set(item,'isFavorite',false)
-
+            collect (item, index) { //收藏
+                if(item.isFavorite){  //
+                    document.getElementById('cancelCollectBox').style.display = 'block'
+                }else{
+                    this.$axios({    //收藏
+                        method: 'post',
+                        url: '/v1/weChat/achFavorite',
+                        data: {
+                            "achUnique": item.ach_unique,
+                            "title": item.title,
+                            "achType": item.ach_type,
+                            "dataType":"server"
+                        }
+                    }).then((res)=>{
+                        document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
+                        this.$set(this.bookList[index], 'isFavorite', true)
+                    })
                 }
-                this.$axios({
-                    method: 'post',
-                    url: '/v1/weChat/achFavorite',
-                    data: {
-                        "achUnique": item.ach_unique,
-                        "title": item.title,
-                        "achType": item.ach_type,
-                        "dataType":"server"
-                    }
-                }).then((res)=>{
-                    console.log(res)
-                })
-                document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
-                document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
-                document.getElementById('cancelCollectBox').style.display = 'block'
             },
 
             // 取消收藏弹框按钮
             cancel: function () {
                 document.getElementById('cancelCollectBox').style.display = 'none'
-                Vue.set(this.bookList[num], 'collectActive', true)
-                document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
+//                document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
             },
-//        点击确定
+//        点击确定取消收藏
             confirm(bookListItem,index) {
                 this.$axios({
                     method: 'delete',
@@ -242,6 +237,7 @@
                         dataType: "server"
                     }
                 }).then((res) => {
+                    document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
                     document.getElementById('cancelCollectBox').style.display = 'none'
                     this.$set(this.bookList[index], 'isFavorite', false)
                 })

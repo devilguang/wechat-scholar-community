@@ -1,7 +1,7 @@
 <template>
     <div id="attention" style="padding-bottom: 50px">
         <ul class="attentionBox">
-            <li class="scholarItem clrfix" v-for="item in attentionList" @click="attention(item.scholarUnique)">
+            <li class="scholarItem clrfix" v-for="item in attentionList" @click="attention(item)">
                 <div class="scholarHead"><img src="../../assets/img/img-scholar_1.png"></div>
                 <div class="scholarInfos">
                     <div class="scholarTitle">
@@ -45,10 +45,11 @@
             ])
         },
         methods: {
-            attention(scholarUnique){
+
+            attention(item){
                 let q = {
-                    scholarUnique:scholarUnique,
-                    type:this.getDatatype.type
+                    type:item.dataType,
+                    scholarUnique:item.scholarUnique
                 }
                 this.$store.dispatch('saveScholarInfo',q);
                 this.$router.push({

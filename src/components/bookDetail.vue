@@ -1,7 +1,8 @@
 <template>
     <div id="bookDetail" style="height:100%;background:#fff">
         <article class="bookContent">
-            <p class="bookTitle">{{infosList.title}}{{$route.params.bookID}}</p>
+            <!--//{{$route.params.bookID}}-->
+            <p class="bookTitle">{{infosList.title}}</p>
             <p class="bookOrigin"><span
                     class="iconfont icon-link"></span><span>来源 — — </span><span>{{infosList.author}}</span></p>
             <p class="bookBrief">
@@ -45,13 +46,13 @@
 
             <h4 class="loadMore" @click="showMore" v-show="showFlag">点击加载更多</h4>
         </article>
-        <!--<article class="originBox">-->
-        <!--<h3>全部来源</h3>-->
-        <!--<ul>-->
-        <!--<li v-for="where in infos.allOrg" class="clrfix"><span-->
-        <!--class="iconfont icon-link"></span><span>{{where.eachOrg}}</span></li>-->
-        <!--</ul>-->
-        <!--</article>-->
+        <article class="originBox">
+            <h3>全部来源</h3>
+            <ul>
+                <li class="clrfix"><span
+                        class="iconfont icon-link"></span><span></span></li>
+            </ul>
+        </article>
         <article class="literature">
             <div class="tabBox">
                 <p @click='tabToggle(tab01Text)' :class="{active: activeName == tab01Text || activeFirst}">相似文献</p>
@@ -98,6 +99,7 @@
                     keywords_q: '',
                     cite_count: '',
                     ach_type: '',
+                    ach_unique:''
                 },
                 infos: [],
                 remActive: false,
@@ -124,7 +126,9 @@
                 return this.commitItems.slice(0, this.showNumber)
             },
             ...mapGetters([
-                'getDatatype'
+                'getDatatype',
+                'getAchunique',   //获取到标识符查看详情
+                'getSholarlist'
             ])
         },
         components: {
@@ -156,7 +160,7 @@
                         method: 'delete',
                         url: '/v1/weChat/achLikes',
                         data: {
-                            achUniques: [this.infos.ach_unique],
+                            achUniques: [this.infosList.ach_unique],
                             dataType: this.getDatatype.type
                         }
                     }).then((res) => {
@@ -168,7 +172,7 @@
                         method: 'post',
                         url: '/v1/weChat/achLike',
                         data: {
-                            achUnique: this.infos.ach_unique,
+                            achUnique: this.infosList.ach_unique,
                             dataType: this.getDatatype.type
                         }
                     }).then((res) => {
@@ -184,7 +188,7 @@
                         method: 'post',
                         url: '/v1/weChat/achFavorite',
                         data: {
-                            "achUnique": this.infos.ach_unique,
+                            "achUnique": this.infosList.ach_unique,
                             "title": this.infosList.title,
                             "achType": this.infosList.ach_type,
                             "dataType": this.getDatatype.type
@@ -211,8 +215,8 @@
                         method: 'post',
                         url: '/v1/weChat/achComment',
                         data: {
-                            achUnique: this.infos.ach_unique,
-                            achTitle: this.infos.title,
+                            achUnique: this.infosList.ach_unique,
+                            achTitle: this.infosList.title,
                             content: this.clearItem,
                         }
                     }).then((res) => {
@@ -228,7 +232,7 @@
                 this.$axios.get('/v1/weChat/achComments', {
                     params: {
                         'field[]': 'achUnique',
-                        'value[]': this.infos.ach_unique,
+                        'value[]': this.infosList.ach_unique,
                     }
                 }).then((res) => {
                     this.commitItems = res.data.data
@@ -242,7 +246,7 @@
             //查看是否有收藏 和点赞
             collectionList(){
                 let achUniques = []
-                achUniques.push(this.infos.ach_unique)
+                achUniques.push(this.infosList.ach_unique)
                 this.$axios({
                     method: 'post',
                     url: '/v1/weChat/userToAch',
@@ -283,7 +287,7 @@
                     method: 'delete',
                     url: '/v1/weChat/achFavorites',
                     data: {
-                        achUniques: [this.infos.ach_unique],
+                        achUniques: [this.infosList.ach_unique],
                         dataType: this.getDatatype.type
                     }
                 }).then((res) => {
@@ -292,24 +296,10 @@
                     document.getElementsByClassName('collectWord')[0].innerHTML = '收藏'
                 })
             },
-        },
-        mounted () {
-            if (this.getDatatype.type == "wd") {
-                this.index = localStorage.getItem('index')
-                let scholarList = this.$store.state.scholarsList[this.index]
-                this.infos = scholarList
-                let {title, author, ab, punishOrg, keywords_q, cite_count, ach_type} = this.infos;
-                author = author.join(',')
-                cite_count = cite_count.join(" ")
-                Object.assign(this.infosList, {title, author, ab, punishOrg, keywords_q, cite_count, ach_type})
-                this.getContent()
-                this.collectionList()
-            } else {
-                //如果不是武大的库 就用solr查询 ，进这个方法
-                let ach_unique = this.getDatatype.scholarUnique
-//                        [{"ach_unique":ach_unique}],
+            getAxios(url){
+                let ach_unique = this.getAchunique
                 let solrQuery = {
-                    "q": "ach_unique:" + ach_unique,
+                    "q": "ACH_UNIQUE:" + '318ce659-536c-4135-9719-7eff97864999',
                     "wt": "json",
                     "fl": "",
                     "indent": "on",
@@ -317,15 +307,62 @@
                     "mm": "75%",
                     "sort": ''
                 }
-                this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery)).then((res) => {
+                this.$http.post(url, qs.stringify(solrQuery)).then((res) => {
                     this.infos = res.data.response.docs[0]
-                    let {title, author, ab, punishOrg, keywords_q, cite_count, ach_type} = this.infos;
-                    author = author.join(',')
-                    cite_count = cite_count.join(" ")
-                    Object.assign(this.infosList, {title, author, ab, punishOrg, keywords_q, cite_count, ach_type})
+                    this.infosList.title = this.infos.TITLE
+                    this.infosList.author = this.infos.GROUP_AU
+                    this.infosList.ab = ''
+                    this.infosList.punishOrg = ''
+                    this.infosList.keywords_q = ''
+                    this.infosList.cite_count = this.infos.CITE_COUNT
+                    this.infosList.ach_type = ''
+                    this.infosList.ach_unique =this.infos.ACH_UNIQUE
                     this.getContent()
                     this.collectionList()
                 })
+            }
+        },
+        mounted () {
+            if (this.getDatatype.type == "wd") {
+                this.index = localStorage.getItem('index')
+                let scholarList = this.$store.state.scholarsList[this.index]
+                this.infosList.title = scholarList.title
+                this.infosList.author = scholarList.author.join(';')
+                this.infosList.ab = scholarList.ab
+                this.infosList.punishOrg = scholarList.punishOrg
+                this.infosList.keywords_q =scholarList.keywords_q
+                this.infosList.cite_count = scholarList.cite_count.join(" ")
+                this.infosList.ach_type =scholarList.ach_type
+                this.infosList.ach_unique =scholarList.ach_unique
+                this.getContent()
+                this.collectionList()
+            } else {
+                let genre = localStorage.getItem('typeof')
+                //如果不是武大的库 就用solr查询 ，进这个方法
+                if (genre == '找人') {
+                    this.getAxios('/indexServer/scholar_paper/select')
+                } else {
+                    let ach_unique = this.getAchunique
+                    let solrQuery = {
+                        "q": "ach_unique:" + ach_unique,
+                        "wt": "json",
+                        "fl": "",
+                        "indent": "on",
+                        "defType": "edismax",
+                        "mm": "75%",
+                        "sort": ''
+                    }
+                    this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery)).then((res) => {
+
+                        this.infos = res.data.response.docs[0]
+                        let {title, author, ab, punishOrg, keywords_q, cite_count, ach_type} = this.infos;
+                        author = author.join(',')
+                        cite_count = cite_count.join(" ")
+                        Object.assign(this.infosList, {title, author, ab, punishOrg, keywords_q, cite_count, ach_type})
+                        this.getContent()
+                        this.collectionList()
+                    })
+                }
             }
             if (this.$store.state.review) {
                 this.commentsFlag = true

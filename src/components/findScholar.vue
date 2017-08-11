@@ -35,8 +35,12 @@
                 insName: "",
                 scholarList: [],
                 infos: {},
-                dataFlag: false
+                dataFlag: false,
+                nextPage:''
             }
+        },
+        computed:{
+
         },
         components: {
             bouncedOut
@@ -74,26 +78,28 @@
             }
         },
         mounted () {
+//            let nextPage = window.location.href.split('http://mobile.subject.net.cn')[1]
             let openId = this.local('openId')
-            this.$axios.get('/v1/weChat/token/' + openId).then((res) => {
-                let token = res.data.token
-                this.$store.commit('SET_TOKEN', token)
-            })
             let code = this.getQueryString('code')
+//            this.$axios.get('/v1/weChat/token/' + openId).then((res) => {
+//                let token = res.data.token
+//                this.$store.dispatch('saveToken',token)
+//            })
             if (openId) return
-//            if (code) {
-//                this.$axios.get('/v1/weChat/userInfo/' + code).then((res) => {
-//                    let openId = res.data.data.openId
-//                    this.local('openId', openId)
-//                    this.$store.commit('SET_USERINFO', res.data.data)
-////                    this.$axios.get('/v1/weChat/token/' + openId).then((res) => {
-////                        let token = res.data.token
-////                        this.$store.commit('SET_TOKEN', token)
-////                    })
-//                })
-//            } else {
-//                window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8115bea15b8d7d1a&redirect_uri=http://mobile.subject.net.cn&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
-//            }
+            if (code) {
+                this.$axios.get('/v1/weChat/userInfo/' + code).then((res) => {
+                    let openId = res.data.data.openId
+                    this.local('openId', openId)
+                    this.$store.commit('SET_USERINFO', res.data.data)
+                    this.$axios.get('/v1/weChat/token/' + openId).then((res) => {
+                        let token = res.data.token
+                        this.$store.dispatch('saveToken',token)
+                        localStorage.setItem('token',token)
+                    })
+                })
+            } else {
+                window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8115bea15b8d7d1a&redirect_uri=http://mobile.subject.net.cn&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
+            }
         }
     }
 </script>

@@ -8,14 +8,14 @@
         <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
             class="contentMain">
             <li class="contentItem" v-for="(detailItem,index) in detailItems" >
-                <div class="wordsCon" @click="showDetails(index)">
+                <div class="wordsCon" @click="showDetails(detailItem,index)">
                     <p class="coreCon">{{detailItem.title}}</p>
                     <p class="authorItem">{{detailItem.pub_name}} {{detailItem.yvip || detailItem.py}}</p>
                     <!-- <p class="authorItem">{{detailItem.author.length > 0 ? detailItem.author.join(';').substring(0, 45) + '...' : ''}}</p> -->
-                    <p class="eachCitedNum">被引次数：{{detailItem.cite_count.length > 0 ? detailItem.cite_count[0] : '-'}}</p>
+                    <p class="eachCitedNum">被引次数：{{detailItem.cite_count||CITE_COUNT.length > 0 ? detailItem.cite_count[0] : '-'}}</p>
                 </div>
                 <ul class="userBtns clrfix">
-                    <li @click="discuss(index)"><span class="iconfont icon-remark" ></span>评论</li>
+                    <li @click="discuss(detailItem,index)"><span class="iconfont icon-remark" ></span>评论</li>
                     <li @click="recommend(detailItem,index)" :class="{active:detailItem.isLike?detailItem.isLike:false}">
                         <span class="iconfont icon-recommendBtn"></span>推荐
                     </li>
@@ -24,7 +24,10 @@
                         <span class="iconfont icon-collect"></span>{{meassage}}
                     </li>
                 </ul>
-               <section id="cancelCollectBox" v-show="showFlag" style="background: rgba(0,0,0,0.1)" >
+
+            </li>
+        </ul>
+        <section id="cancelCollectBox" v-show="showFlag" style="background: rgba(0,0,0,0.1)" >
                 <div class="alertBox">
                     <p class="tip">
                         <span class="iconfont icon-warn"></span>
@@ -32,12 +35,10 @@
                     </p>
                     <div class="operate">
                         <span class="cancel" @click="showFlag= false">取消</span>
-                        <span class="confirm" @click="confirm(detailItem)">确定</span>
+                        <span class="confirm" @click="confirm()">确定</span>
                     </div>
                 </div>
              </section>
-            </li>
-        </ul>
         <loading-bar v-if="barFlag"></loading-bar>
     </section>
 </template>
@@ -54,7 +55,9 @@
                 pageNum: 1,
                 isLike: '',
                 showFlag:false,
-                meassage:'收藏'
+                meassage:'收藏',
+                ach_unique:'',
+                index:''
             }
         },
         components:{
@@ -66,8 +69,7 @@
             ])
         },
         methods: {
-            // 推荐和收藏高亮
-            recommend(item, index) {
+            recommend(item, index) { // 点赞
                 if(item.isLike == true){
                     this.$set(item,'isLike',false)
                     this.$axios({
@@ -90,12 +92,14 @@
                     })
                 }
             },
+            // 收藏
             collect(item, index) {
-                console.log(item,1)
-                if(item.isFavorite==true){  //取消收藏
+                this.index = index
+                this.ach_unique = item.ach_unique
+                this.$store.commit('SET_ACHUNIQUE',item.ach_unique)
+                if(item.isFavorite){  //取消收藏
                     this.showFlag = true
                 }else{
-                    this.$set(item,'isFavorite',true)
                     this.$axios({
                         method: 'post',
                         url: '/v1/weChat/achFavorite',
@@ -103,21 +107,23 @@
                             "achUnique": item.ach_unique,
                             "title": item.title,
                             "achType": item.ach_type,
-                        }
+                             }
+                        }).then((res)=>{
+                        this.$set(item,'isFavorite',true)
+                        this.showFlag = false
                     })
                 }
             },
-            confirm(item){
-                console.log(item)
+            confirm(){  //取消收藏
                 this.$axios({
                     method: 'delete',
                     url: '/v1/weChat/achFavorites',
                     data: {
-                        achUniques: [item.ach_unique],
+                        achUniques: [this.ach_unique],
                     }
                 }).then((res) => {
                     this.showFlag = false
-                    this.$set(item,'isFavorite',false)
+                    this.$set(this.detailItems[this.index],'isFavorite',false)
                 })
             },
             loadMore () {
@@ -139,9 +145,83 @@
                             this.pageNum++
                             this.busy = false
                             let arr = []
+//                            this.$store.
                             this.detailItems.forEach((item,index) =>{
                                 arr.push(item.ach_unique)
                             })
+                            //  用户对成果的操作记录
+                            this.$axios({
+                                method:'post',
+                                url:'/v1/weChat/userToAch',
+                                data:{
+                                    achUniques:arr
+                                }
+                            }).then((res)=>{
+                                let array = res.data.data
+                                let userIndex = []
+                                let collectIndex = []
+                                array.forEach((item,index)=> {
+                                    if(item.isLike ===1){
+                                        userIndex.push(index)
+                                    }
+                                    if(item.isFavorite ===1){
+                                        collectIndex.push(index)
+                                    }
+                                })
+                                this.detailItems.forEach((item)=>{
+                                    userIndex.forEach((index)=> {
+                                        this.$set(this.detailItems[index],'isLike',true)
+                                    })
+                                })
+                                this.detailItems.forEach((item)=>{
+                                    collectIndex.forEach((index)=> {
+                                        this.$set(this.detailItems[index],'isFavorite',true)
+                                    })
+                                })
+                            })
+
+                        })
+                } else {
+                    let solrQueryWechat = {
+                        "q": "*:*",
+                        "wt": "json",
+                        "fl": "TITLE,PUB_NAME_CH,CITE_COUNT,PY,GROUP_AU,ACH_UNIQUE",   //，
+                        "indent": "off",
+                        "rows": 10,
+                        "start": 0
+                    }
+                    let keymap = {
+                        TITLE: 'title',
+                        PUB_NAME_CH: 'pub_name',
+                        CITE_COUNT: 'cite_count',
+                        PY: 'py',
+                        GROUP_AU: 'author',
+                        ACH_UNIQUE:'ach_unique'
+                    }
+                    solrQueryWechat.start = (this.pageNum - 1) * 10;
+                    solrQueryWechat.q = 'scholar_info_id:"' + this.$store.state.scholarInfo.scholarUnique + '"';
+                    this.$http.post('/indexServer/scholar_paper/select', qs.stringify(solrQueryWechat))
+                        .then((result) => {
+                            var server_docs = []
+                            _(result.data.response.docs).forEach(function (doc) {
+                                doc = _.mapKeys(doc, function (value, key) {
+                                    return keymap[key]
+                                })
+                                var cite_count = []
+                                if (doc['cite_count']){
+                                    cite_count.push(doc['cite_count'])
+                                }
+                                doc['cite_count'] = cite_count
+                                server_docs.push(doc)
+                            })
+                            this.detailItems.push(...server_docs)
+                            this.pageNum++
+                            this.busy = false
+                            let arr = []
+                            this.detailItems.forEach((item,index) =>{
+                                arr.push(item.ach_unique)
+                            })
+                            //  用户对成果的操作记录
                             this.$axios({
                                 method:'post',
                                 url:'/v1/weChat/userToAch',
@@ -172,53 +252,22 @@
                                 })
                             })
                         })
-                } else {
-                    let solrQueryWechat = {
-                        "q": "*:*",
-                        "wt": "json",
-                        "fl": "TITLE,PUB_NAME_CH,CITE_COUNT,PY,GROUP_AU",
-                        "indent": "off",
-                        "rows": 10,
-                        "start": 0
-                    }
-                    let keymap = {
-                        TITLE: 'title',
-                        PUB_NAME_CH: 'pub_name',
-                        CITE_COUNT: 'cite_count',
-                        PY: 'py',
-                        GROUP_AU: 'author'
-                    }
-                    solrQueryWechat.start = (this.pageNum - 1) * 10;
-                    solrQueryWechat.q = 'scholar_info_id:"' + this.$store.state.scholarInfo.scholarUnique + '"';
-                    this.$http.post('/indexServer/scholar_paper/select', qs.stringify(solrQueryWechat))
-                        .then((result) => {
-                            var server_docs = []
-                            _(result.data.response.docs).forEach(function (doc) {
-                                doc = _.mapKeys(doc, function (value, key) {
-                                    return keymap[key]
-                                })
-                                var cite_count = []
-                                if (doc['cite_count']){
-                                    cite_count.push(doc['cite_count'])
-                                }
-                                doc['cite_count'] = cite_count
-                                server_docs.push(doc)
-                            })
-                            this.detailItems.push(...server_docs)
-                            this.pageNum++
-                            this.busy = false
-                        }).then((error) => {
-                    })
                 }
             },
-            showDetails(index){
+            //进入文献详情
+            showDetails(item,index){
                 localStorage.setItem('index',index)
+                localStorage.setItem('typeof','找人')
                 this.$store.commit('SET_SCHOLARLIST',this.detailItems)
+                this.$store.commit('SET_ACHUNIQUE',item.ach_unique)
                 this.$router.push({
                     path:'/findBook/bookResult/bookDetail'
                 })
             },
             discuss(index){
+                localStorage.setItem('typeof','找人')
+                this.$store.commit('SET_SCHOLARLIST',this.detailItems)
+                this.$store.commit('SET_ACHUNIQUE',item.ach_unique)
                 this.$store.commit('SET_REVIEW',true)
                 this.$router.push({
                     path:'/findBook/bookResult/bookDetail'
