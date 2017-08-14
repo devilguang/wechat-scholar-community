@@ -14,7 +14,7 @@
                </div>
                <div class="topMiddle">
                  <div class="imgBox">
-                   <img :src="userInfo.headPhotoUrl?userInfo.headPhotoUrl:userImg" alt="a">
+                   <img :src="getUserInfo.headPhotoUrl?getUserInfo.headPhotoUrl:userImg" alt="a">
                  </div>
                </div>
                <div class="topRight">
@@ -22,7 +22,7 @@
                </div>
              </div>
 
-           <p class="scholarAbout clrfix">{{userInfo.name}}<span class="scholarUniverse" v-show="userInfo.college?true:false">{{userInfo.college}}</span></p>
+           <p class="scholarAbout clrfix">{{getUserInfo.name}}<span class="scholarUniverse" v-show="getUserInfo.college?true:false">{{getUserInfo.college}}</span></p>
              <p class="scholarMarjor">领域方向：<span></span></p>
            </div>
 
@@ -100,7 +100,7 @@
   </div>
 </template>
 <script>
-  import {mapGetters} from 'vuex';
+    import {mapGetters} from 'vuex'
 export default{
   data () {
     return {
@@ -111,9 +111,9 @@ export default{
     }
   },
   computed:{
-    ...mapGetters({
-          userInfo:'getUserInfo'
-      })
+    ...mapGetters([
+        'getUserInfo'
+    ])
   },
   methods: {
     toConfirm() {
@@ -127,7 +127,6 @@ export default{
       })
     },
     toMyFruit: function () {
-      console.log(this.isComfirm)
       if (this.isComfirm) {
         this.$router.push({
           path: '/myCenter/hasNotConfirm'
@@ -175,8 +174,9 @@ export default{
     }
   },
   mounted () {
-    let scholarUnique = this.userInfo.scholarUnique
-    let userType = this.userInfo.userType
+      console.log(this.getUserInfo)
+    let scholarUnique = this.getUserInfo.scholarUnique
+    let userType = this.getUserInfo.userType
     if(!scholarUnique||userType===1){
       this.approve = true
     }else{

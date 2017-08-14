@@ -55,10 +55,10 @@ import sendemail from './components/myCenter/sendemail.vue'
 // 创建一个路由器实例
 // 并且配置路由规则
 var router = new VueRouter({
-    mode: 'history',
-    base: __dirname,
-    history: false,
-    hashbang: true,
+    // mode: 'history',
+    // base: __dirname,
+    // history: false,
+    // hashbang: true,
     routes: [
         {
             path: '/',
@@ -212,7 +212,7 @@ const store = new Vuex.Store({
         },
         SET_USERINFO(state, data){
             state.userInfo = data
-            localStorage.setItem('userInfo', JSON.stringify(data))
+            localStorage.setItem('userInfo',JSON.stringify(data))
         },
         SET_SCHOLARLIST(state, data){
             state.scholarsList = data
@@ -243,8 +243,8 @@ const store = new Vuex.Store({
         }
     },
     getters: {
-        getUserInfo(state){
-            return state.userInfo || localStorage.getItem('userInfo')
+        getUserInfo:state=>{
+            return (state.userInfo && state.userInfo.id) ? state.userInfo : JSON.parse(localStorage.getItem('userInfo'))
         },
         getDatatype: state => {
             return state.scholarInfo
