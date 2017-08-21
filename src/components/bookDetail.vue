@@ -326,13 +326,14 @@
             if (this.getDatatype.type == "wd") {
                 this.index = localStorage.getItem('index')
                 let scholarList = this.$store.state.scholarsList[this.index]
-                this.infosList.title = scholarList.title
+                console.log(scholarList)
+                this.infosList.title = scholarList.title|| scholarList.achTitle
+                this.infosList.ach_type =scholarList.ach_type||scholarList.achType
                 this.infosList.author = scholarList.author.join(';')
                 this.infosList.ab = scholarList.ab
                 this.infosList.punishOrg = scholarList.punishOrg
                 this.infosList.keywords_q =scholarList.keywords_q
                 this.infosList.cite_count = scholarList.cite_count.join(" ")
-                this.infosList.ach_type =scholarList.ach_type
                 this.infosList.ach_unique =scholarList.ach_unique
                 this.getContent()
                 this.collectionList()

@@ -75,7 +75,7 @@
                     <span class="tipWord">您确定要取消关注吗?</span>
                 </p>
                 <div class="operate">
-                    <span class="cancel"  @click="cancel">取消</span>
+                    <span class="cancel" @click="cancel">取消</span>
                     <span class="confirm" @click="confirm">确定</span>
                 </div>
             </div>
@@ -89,7 +89,7 @@
     import sDtab02 from './sDtab02'
     import sDtab03 from './sDtab03'
     import qs from 'querystring'
-    import { mapGetters } from 'vuex'
+    import {mapGetters} from 'vuex'
     import loadingBar from './loadingBar.vue'
     export default {
         name: 'scholarDetail',
@@ -105,8 +105,8 @@
                 detailItems: [],
                 partnerItems: [],
                 instituteItems: [],
-                baseImg:'../../static/img/img-scholar_1.png',
-                barFlag:true
+                baseImg: '../../static/img/img-scholar_1.png',
+                barFlag: true
             }
         },
         components: {
@@ -115,7 +115,7 @@
             sDtab03,
             loadingBar
         },
-        computed:{
+        computed: {
             ...mapGetters([
                 'getDatatype',
                 'getAchunique'
@@ -130,43 +130,29 @@
             },
             // 加关注
             attention () {
-                    let attentionBtn = document.getElementById('attentionBtn')
-                    if (attentionBtn.innerHTML === '已关注') {
-                        document.getElementById('cancelAttentionBox').style.display = 'block'
-                    } else {
-                        window.alert('关注成功')
-                        attentionBtn.innerHTML = '已关注'
-                        this.$axios({
-                            method:'post',
-                            url:'/v1/weChat/scholarAttention',
-                            data:{
-                                'scholarUnique':this.infos.scholarUnique,
-                                'scholarName':this.infos.scholarName,
-                                'area':this.infos.area,
-                                'dataType':this.getDatatype.type
-                            }
-                        })
-                    }
+                let attentionBtn = document.getElementById('attentionBtn')
+                if (attentionBtn.innerHTML === '已关注') {
+                    document.getElementById('cancelAttentionBox').style.display = 'block'
+                } else {
+                    window.alert('关注成功')
+                    attentionBtn.innerHTML = '已关注'
+                    this.$axios({
+                        method: 'post',
+                        url: '/v1/weChat/scholarAttention',
+                        data: {
+                            'scholarUnique': this.infos.scholarUnique,
+                            'scholarName': this.infos.scholarName,
+                            'area': this.infos.area,
+                            'dataType': this.getDatatype.type
+                        }
+                    })
+                }
             },
             approve () {
-                if (!this.loginJudge()) {
-                    // 已登录未完善
-                    if (!window.localStorage.getItem('myData')) {
-                        // window.confirm('请先完善资料')
-                        if (window.confirm('请先完善资料')) {
-                            this.$router.push({
-                                path: '../../../myCenter/myInfo'
-                            })
-                        }
-                    } else {
-                        // 已登录已完善
-                        this.$router.push({
-                            path: '../../../myCenter/Iwillconfirm'
-                        })
-                    }
-                } else {
-                    return
-                }
+                // 已登录已完善
+                this.$router.push({
+                    path: '../../../myCenter/Iwillconfirm'
+                })
             },
             cancel () {
                 let attentionBtn = document.getElementById('attentionBtn')
@@ -178,21 +164,22 @@
                 attentionBtn.innerHTML = '+关注'
                 document.getElementById('cancelAttentionBox').style.display = 'none'
                 this.$axios({
-                    method:'delete',
-                    url:'/v1/weChat/scholarAttentions',
-                    data:{
-                        scholarUniques:[this.infos.scholarUnique]
+                    method: 'delete',
+                    url: '/v1/weChat/scholarAttentions',
+                    data: {
+                        scholarUniques: [this.infos.scholarUnique]
                     }
                 })
             },
             pullScholarFromWD() {
                 this.$http.get('/v1/scholar/' + this.$store.state.scholarInfo.scholarUnique, {})
                     .then((response) => {
-                    this.infos = response.data.data.scholar
-                    // this.detailItems = response.data.scholar.cnkiDetailLists
-                    this.partnerItems = response.data.data.cooperatorslist.slice(0, 10)
-                    // this.instituteItems = response.scholar.cnkiOrgansList
-                }).then((error) => {})
+                        console.log(response)
+                        this.infos = response.data.data.scholar
+                        // this.detailItems = response.data.scholar.cnkiDetailLists
+                        this.partnerItems = response.data.data.cooperatorslist.slice(0, 10)
+                        // this.instituteItems = response.scholar.cnkiOrgansList
+                    })
             },
             pullScholarFromServer() {
                 let solrQueryWechat = {
@@ -215,14 +202,15 @@
                 solrQueryWechat.q = 'SCHOLAR_UNIQUE:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                 this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
                     .then((response) => {
-                    this.barFlag = false
-                    this.infos = _.mapKeys(response.data.response.docs[0], function (value, key) {
-                        return keymap[key]
-                    })
-                    // this.detailItems = response.data.scholar.cnkiDetailLists
-                    // this.partnerItems = response.data.cooperatorslist.slice(0, 10)
-                    // this.instituteItems = response.scholar.cnkiOrgansList
-                }).then((error) => {})
+                        this.barFlag = false
+                        this.infos = _.mapKeys(response.data.response.docs[0], function (value, key) {
+                            return keymap[key]
+                        })
+                        // this.detailItems = response.data.scholar.cnkiDetailLists
+                        // this.partnerItems = response.data.cooperatorslist.slice(0, 10)
+                        // this.instituteItems = response.scholar.cnkiOrgansList
+                    }).then((error) => {
+                })
             },
             pullCoper() {
                 let solrQueryCoper = {
@@ -249,7 +237,8 @@
                         // this.detailItems = response.data.scholar.cnkiDetailLists
                         this.partnerItems = server_docs.slice(0, 10)
                         // this.instituteItems = response.scholar.cnkiOrgansList
-                    }).then((error) => {})
+                    }).then((error) => {
+                })
             },
             pullCoorgan() {
                 let solrQueryCoorgan = {
@@ -275,13 +264,14 @@
                             }))
                         })
                         this.instituteItems = server_docs.slice(0, 10)
-                    }).then((error) => {})
+                    }).then((error) => {
+                })
             }
         },
         mounted() {
-            if (this.$store.state.scholarInfo.type == 'wd'){
+            if (this.$store.state.scholarInfo.type == 'wd') {
                 this.pullScholarFromWD()
-            }else {
+            } else {
                 this.pullScholarFromServer()
                 this.pullCoper()
                 this.pullCoorgan()
@@ -291,10 +281,11 @@
 
 </script>
 <style>
-    #zxq{
+    #zxq {
         display: flex;
     }
-    #zxq li{
-        flex:1
+
+    #zxq li {
+        flex: 1
     }
 </style>

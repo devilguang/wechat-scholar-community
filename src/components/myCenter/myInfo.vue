@@ -9,23 +9,22 @@
           <div class="scholarHeader">
              <div class="headerTop clrfix">
                <div class="topLeft">
-                 <span class="scholarStatus" @click="toConfirm" v-show="approve">未认证</span>
-                 <span class="scholarStatus" v-show="!approve">已认证</span>
+                 <span class="scholarStatus" @click="toConfirm" v-if="!userInfo.isAuth">未认证</span>
+                 <span class="scholarStatus" v-else>已认证</span>
                </div>
                <div class="topMiddle">
                  <div class="imgBox">
-                   <img :src="getUserInfo.headPhotoUrl?getUserInfo.headPhotoUrl:userImg" alt="a">
+                   <img  v-if="userInfo.headPhotoUrl&&userInfo.headPhotoUrl.length>0" :src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath='+userInfo.headPhotoUrl">
+                   <img  v-else :src="userImg">
                  </div>
                </div>
                <div class="topRight">
                  <span class="attention" id="attentionBtn" @click="attention()">+关注</span>
                </div>
              </div>
-
-           <p class="scholarAbout clrfix">{{getUserInfo.name}}<span class="scholarUniverse" v-show="getUserInfo.college?true:false">{{getUserInfo.college}}</span></p>
-             <p class="scholarMarjor">领域方向：<span></span></p>
+           <p class="scholarAbout clrfix">{{userInfo.nickName}}<span class="scholarUniverse" v-show="userInfo.orgName?true:false">{{userInfo.orgName}}</span></p>
+             <p class="scholarMarjor">领域方向：<span>{{userInfo.area}}</span></p>
            </div>
-
            <!-- 详情数字部分 -->
            <div class="numBox" v-show="true">
              <ul class="clrfix" >
@@ -105,15 +104,15 @@ export default{
   data () {
     return {
     // 控制是否认证切换页面
-      isComfirm: true,
+      isComfirm: false,
       userImg:'../../../static/img/img-scholar_1.png',
-      approve:false,   //是否认证
+      userInfo:[]
     }
   },
   computed:{
-    ...mapGetters([
-        'getUserInfo'
-    ])
+//    ...mapGetters([
+//        'getUserInfo'
+//    ])
   },
   methods: {
     toConfirm() {
@@ -171,17 +170,17 @@ export default{
       var attentionBtn = document.getElementById('attentionBtn')
       attentionBtn.innerHTML = '+关注'
       document.getElementById('cancelAttentionBox').style.display = 'none'
-    }
+    },
+//      获取关联的学者信息
+      getUserInformation(){
+        this.$axios.get('/v1/weChat/userInfo').then((res)=>{
+            console.log(res)
+            this.userInfo = res.data.data
+        })
+      }
   },
   mounted () {
-      console.log(this.getUserInfo)
-    let scholarUnique = this.getUserInfo.scholarUnique
-    let userType = this.getUserInfo.userType
-    if(!scholarUnique||userType===1){
-      this.approve = true
-    }else{
-      this.approve = false
-    }
+        this.getUserInformation()
   }
 }
 </script>

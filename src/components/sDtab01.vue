@@ -15,16 +15,15 @@
                     <p class="eachCitedNum">被引次数：{{detailItem.cite_count||CITE_COUNT.length > 0 ? detailItem.cite_count[0] : '-'}}</p>
                 </div>
                 <ul class="userBtns clrfix">
-                    <li @click="discuss(detailItem,index)"><span class="iconfont icon-remark" ></span>评论</li>
-                    <li @click="recommend(detailItem,index)" :class="{active:detailItem.isLike?detailItem.isLike:false}">
-                        <span class="iconfont icon-recommendBtn"></span>推荐
+                    <li style="font-size:0.23rem" @click="discuss(detailItem,index)"><span class="iconfont icon-remark" style="font-size: 0.35rem"></span>评论</li>
+                    <li style="font-size:0.23rem" @click="recommend(detailItem,index)" :class="{active:detailItem.isLike?detailItem.isLike:false}">
+                        <span class="iconfont icon-recommendBtn" style="font-size: 0.35rem"></span>推荐
                     </li>
-                    <li><span class="iconfont icon-share"></span>分享</li>
-                    <li @click="collect(detailItem,index)" :class="{active:detailItem.isFavorite?detailItem.isFavorite:false}">
-                        <span class="iconfont icon-collect"></span>{{meassage}}
+                    <li style="font-size:0.23rem"><span class="iconfont icon-share" style="font-size: 0.35rem"></span>分享</li>
+                    <li style="font-size:0.23rem" @click="collect(detailItem,index)" :class="{active:detailItem.isFavorite?detailItem.isFavorite:false}">
+                        <span class="iconfont icon-collect" style="font-size: 0.35rem"></span>{{detailItem.isFavorite? '已收藏':'收藏'}}
                     </li>
                 </ul>
-
             </li>
         </ul>
         <section id="cancelCollectBox" v-show="showFlag" style="background: rgba(0,0,0,0.1)" >
@@ -47,7 +46,7 @@
     import qs from 'querystring'
     import Vue from 'vue'
     import { mapGetters } from 'vuex'
-        import loadingBar from './loadingBar.vue'
+    import loadingBar from './loadingBar.vue'
     export default {
         data() {
             return {
@@ -149,6 +148,7 @@
                             this.detailItems.forEach((item,index) =>{
                                 arr.push(item.ach_unique)
                             })
+
                             //  用户对成果的操作记录
                             this.$axios({
                                 method:'post',
@@ -248,6 +248,7 @@
                                 this.detailItems.forEach((item)=>{
                                     collectIndex.forEach((index)=> {
                                         this.$set(this.detailItems[index],'isFavorite',true)
+
                                     })
                                 })
                             })
@@ -275,7 +276,6 @@
             }
         },
         mounted() {
-
         }
     }
 </script>

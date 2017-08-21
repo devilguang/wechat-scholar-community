@@ -7,8 +7,7 @@
                 <!-- <router-link :to="{ path: 'scholarResult/scholarDetail', query: { ID: item.userID }}"> -->
                 <!-- <router-link :to="{ name: 'detail', params: { link: item.link }}"> -->
                 <div class="scholarHead">
-                    <img v-if="item.head_photo_url && item.head_photo_url.length > 0"
-                         :src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath=' + item.head_photo_url">
+                    <img v-if="item.head_photo_url && item.head_photo_url.length > 0":src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath=' + item.head_photo_url">
                     <img v-else :src="baseImg" alt="">
                 </div>
                 <div class="scholarInfos">

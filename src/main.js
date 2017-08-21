@@ -6,7 +6,7 @@ import infiniteScroll from 'vue-infinite-scroll'
 import Vuex from 'vuex'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash/dist/vue-lodash.min'
-
+import { VueAuthenticate } from 'vue-authenticate'
 Vue.use(VueLodash, lodash)
 Vue.use(Vuex)
 // 开启debug模式
@@ -240,7 +240,8 @@ const store = new Vuex.Store({
         },
         saveScholarsList: function (context, scholarsList) {
             context.commit('SET_SCHOLARLIST', scholarsList)
-        }
+        },
+
     },
     getters: {
         getUserInfo:state=>{
@@ -257,12 +258,33 @@ const store = new Vuex.Store({
         }
     }
 })
+
+// Vue.use(VueAuthenticate, {
+//     bindRequestInterceptor: function () {
+//         Vue.prototype.$axios.interceptors.request.use((config) => {
+//             if (this.isAuthenticated()) {
+//                 config.headers['Authorization'] = [
+//                     this.options.tokenType, this.getToken()
+//                 ].join(' ')
+//             } else {
+//                 delete config.headers['Authorization']
+//             }
+//             return config
+//         })
+//     },
+//     bindResponseInterceptor: function () {
+//         Vue.prototype.$axios.interceptors.response.use((response) => {
+//             this.setToken(response)
+//             return response
+//         })
+//     }
+// })
 //拦截器
 Vue.prototype.$axios.interceptors.request.use(
     config => {
-        if (localStorage.getItem('token')) {
+        if (store.state.token) {
             // 判断是否存在token，如果存在的话，则每个http header都加上token
-            config.headers.Authorization = 'Bearer ' + localStorage.getItem('token');
+            config.headers.Authorization = 'Bearer ' + store.state.token;
         }
         return config
     }, err => {
@@ -273,6 +295,7 @@ const app = new Vue({
     router,
     render: h => h(App)
 }).$mount('#app')
+
 
 var num = 0
 export default {
@@ -316,7 +339,14 @@ export default {
             document.getElementById('cancelCollectBox').style.display = 'none'
             Vue.set(this.collectItems[num], 'collectActive', false)
         }
-    }
+    },
+    // mounted(){
+    //     this.$axios.get('/v1/weChat/token/' + openId).then((res) => {
+    //         let token = res.data.token
+    //         this.$store.dispatch('saveToken',token)
+    //         localStorage.setItem('token',token)
+    //     })
+    // }
 }
 
 

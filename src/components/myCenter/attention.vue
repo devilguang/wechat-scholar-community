@@ -45,7 +45,6 @@
             ])
         },
         methods: {
-
             attention(item){
                 let q = {
                     type:item.dataType,
@@ -62,6 +61,7 @@
                 pageIndex:1,
                 pageSize:10
             }}).then((res)=>{
+                console.log(res.data.data)
                 this.attentionList = res.data.data
             })
         }

@@ -2,101 +2,111 @@
   <div id="editMe">
     <form class="editBox">
         <section class="imgBox eachBox clrfix">
-          <p><img src="../../assets/img/img-scholar_1.png" alt=""></p>
+          <p>
+            <img  v-if="momentInfo.headPhotoUrl&&momentInfo.headPhotoUrl.length>0" :src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath='+momentInfo.headPhotoUrl">
+            <img  v-else :src="defaultImg">
+          </p>
           <span class="resend">重新上传></span>
         </section>
-        <section class="weixinBox eachBox clrfix">
-          <p>微信号</p>
-            <input  v-model="weixinname" type="text" v-bind:value="weixinname" size="30">
-          </section>
+        <section class="weixinBox eachBox clrfix" style="background:gainsboro">
+            <p>微信号</p>
+            <input  v-model="momentInfo.nickName" type="text"  size="30" disabled="disabled" style="background:gainsboro">
+        </section>
+
         <section class="nameBox eachBox clrfix">
-          <p>学者名*</p>
-          <input  v-model="selfname" type="text"  v-bind:value="selfname" size="30">
-       </section>
+           <p>学者名*</p>
+          <input  v-model="momentInfo.scholarName" type="text" size="30">
+        </section>
+
         <section class="instituteBox eachBox clrfix">
           <p>机构*</p>
-          <input  v-model="insititute" type="text"  v-bind:value="insititute" size="30">
+          <input  v-model="momentInfo.orgName" type="text"   size="30">
         </section>
+
         <section class="dirBox eachBox clrfix">
           <p>领域方向*</p>
-          <input v-model="dir" type="text"  :value="dir" size="30">
+          <input v-model="momentInfo.area" type="text"   size="30">
         </section>
-        <section class="statusBox eachBox clrfix">
+
+        <section class="statusBox eachBox clrfix" style="background:gainsboro">
           <p>认证状态</p>
-          <span>{{status}}</span>
+          <span>{{momentInfo.status}}</span>
         </section>
+
         <section class="emailBox eachBox clrfix">
           <p>邮箱</p>
-          <input v-model="email" type="text" :value="email" size="30">
+          <input v-model="momentInfo.main" type="text"  size="30" >
         </section>
+
         <section class="telBox eachBox clrfix">
           <p>手机号</p>
-          <input v-model="tel" type="text"  :value="tel" size="30">
-        </section>  </form>
+          <input v-model="momentInfo.phone" type="text" size="30">
+        </section>
+
+        </form>
     <article class="btnBox clrfix">
       <button type="button" name="button" class="back" @click="back()">返回</button>
-
       <button type="button" name="button" class="confirmChange" @click="confirmChange()">确认修改</button>
     </article>
-
   </div>
 </template>
 <script>
 export default {
   data () {
     return {
-      weixinname: '麦达',
-      selfname: '',
-      insititute: '',
-      dir: '',
-      status: '',
-      email: '',
-      tel: '',
-      momentInfo: []
+        momentInfo: {
+            nickName:'',
+            scholarName:'',
+            orgName:'',
+            area:'',
+            status:'',
+            mail:'',
+            phone:'',
+            headPhotoUrl:''
+        },
+        defaultImg:'../../static/img/img-scholar_1.png',
+        dataFlag:false
     }
   },
   methods: {
-    confirmChange: function () {
-      console.log('微信名：' + this.weixinname)
-      console.log('学者名:' + this.selfname)
-      console.log('机构:' + this.insititute)
-      console.log('研究方向:' + this.dir)
-      console.log('状态:' + this.status)
-      console.log('邮件:' + this.email)
-      console.log('手机：' + this.tel)
-      if (this.selfname && this.insititute && this.dir) {
-        window.localStorage.setItem('myData', JSON.stringify({selfname: this.selfname, insititute: this.insititute, dir: this.dir}))
-        // 提交表单内容
-        this.$router.push({
-          path: './myInfo'
+    confirmChange () {
+        if(!this.momentInfo.scholarName||!this.momentInfo.orgName||!this.momentInfo.area){
+            window.alert('带星号的不能为空')
+            return
+        }else{
+            this.$axios({
+                method:'patch',
+                url:'/v1/weChat/userInfo',
+                data:{
+                    "phone": this.momentInfo.phone,
+                    "mail":this.momentInfo.mail,
+                    "scholarName": this.momentInfo.scholarName,
+                    "orgName": this.momentInfo.orgName,
+                    "area":this.momentInfo.area
+                }
+            }).then((res)=>{
+            })
+        }
+    },
+    getUserInformation(){
+        this.$axios.get('/v1/weChat/userInfo').then((res)=>{
+            let {nickName,scholarName,orgName,area,status,mail,phone,headPhotoUrl} = res.data.data;
+            Object.assign(this.momentInfo,{nickName,scholarName,orgName,area,status,mail,phone,headPhotoUrl})
+            if(this.momentInfo.isAuth){
+                this.momentInfo.status ='已认证'
+            }else{
+                this.momentInfo.status ='未认证'
+            }
         })
-      } else {
-        window.alert('带星号的是必填项')
-      }
     },
     back: function () {
-      window.localStorage.setItem('moment', JSON.stringify({selfname: this.selfname, insititute: this.insititute, dir: this.dir, email: this.email, tel: this.tel}))
-      console.log(window.localStorage.getItem('moment'))
       this.$router.push({
         path: './myInfo'
       })
     }
   },
-  mounted: function () {
-    // 获取未确认修改时的信息
-    var that = null
-    if (window.localStorage.getItem('myData')) {
-      that = JSON.parse(window.localStorage.getItem('myData'))
-    } else {
-      that = JSON.parse(window.localStorage.getItem('moment'))
-    }
-    this.selfname = that.selfname
-    this.insititute = that.insititute
-    this.dir = that.dir
-    this.email = that.email
-    this.tel = that.tel
-    console.log(this.weixinname)
-    console.log(that)
+  mounted () {
+    this.getUserInformation()
   }
 }
 </script>
@@ -173,5 +183,8 @@ export default {
 }
 #editMe .btnBox .confirmChange{
   float: right;
+}
+.active{
+    border-color:#36d7b6
 }
 </style>
