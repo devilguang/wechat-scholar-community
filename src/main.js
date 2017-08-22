@@ -6,7 +6,8 @@ import infiniteScroll from 'vue-infinite-scroll'
 import Vuex from 'vuex'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash/dist/vue-lodash.min'
-import { VueAuthenticate } from 'vue-authenticate'
+import VueAuthenticate  from 'vue-authenticate'
+
 Vue.use(VueLodash, lodash)
 Vue.use(Vuex)
 // 开启debug模式
@@ -15,10 +16,11 @@ Vue.config.productionTip = false
 // 调用VueRouter
 Vue.use(VueRouter)
 Vue.use(infiniteScroll)
+console.log(VueAuthenticate)
 Vue.prototype.$axios = axios.create({baseURL: 'http://120.55.191.189:9000'});
 Vue.prototype.$http = axios;
-// const FETCH_DATA_PREFIX_URL = 'http://localhost/'
 
+// const FETCH_DATA_PREFIX_URL = 'http://localhost/'
 // 定义组件, 也可以像教程之前教的方法从别的文件引入
 import findScholar from './components/findScholar.vue'
 import findBook from './components/findBook.vue'
@@ -54,7 +56,7 @@ import sendemail from './components/myCenter/sendemail.vue'
 
 // 创建一个路由器实例
 // 并且配置路由规则
-var router = new VueRouter({
+const router = new VueRouter({
     // mode: 'history',
     // base: __dirname,
     // history: false,
@@ -75,7 +77,10 @@ var router = new VueRouter({
         {
             name: 'detail',
             path: '/findScholar/scholarResult/scholarDetail',
-            component: scholarDetail
+            component: scholarDetail,
+            meta: {
+                requireAuth: true,
+            }
         },
         {
             path: '/findBook',
@@ -83,12 +88,16 @@ var router = new VueRouter({
         },
         {
             path: '/findBook/bookResult',
-            component: bookResult
+            component: bookResult,
+
         },
         {
             name: 'bookDetail',
             path: '/findBook/bookResult/bookDetail',
-            component: bookDetail
+            component: bookDetail,
+            meta: {
+                requireAuth: true,
+            }
         },
         {
             path: '/recommend',
@@ -124,7 +133,10 @@ var router = new VueRouter({
         },
         {
             path: '/myCenter/myInfo',
-            component: myInfo
+            component: myInfo,
+            meta: {
+                requireAuth: true,
+            }
         },
         {
             path: '/myCenter/hasNotConfirm',
@@ -198,7 +210,7 @@ const store = new Vuex.Store({
         userInfo: {}, //登录用户的信息
         token: '',
         review: null,
-        ach_unique: ''
+        ach_unique: '',
     },
     mutations: {
         queryScholarBySolr (state, queryScholar) {
@@ -241,6 +253,9 @@ const store = new Vuex.Store({
         saveScholarsList: function (context, scholarsList) {
             context.commit('SET_SCHOLARLIST', scholarsList)
         },
+        useAxiosGetToken(){
+
+        }
 
     },
     getters: {
@@ -255,12 +270,49 @@ const store = new Vuex.Store({
         },
         getSholarlist: state => {
             return state.scholarsList
-        }
+        },
     }
 })
 
+// const authUser = Vue.prototype.$auth = new VueAuthenticate(axios,{
+//
+//     baseUrl: 'http://120.55.191.189:9000',  //默认地址
+//     tokenType: 'Bearer',                      //token 类型，会与 token 一同放在 http 头字段中发送
+//     tokenHeader:'Authorization',             //请求时，携带 token 的http头字段
+//     responseDataKey:'data',                  //接收 token 时，response 中存放 token 的地方
+//     tokenName : 'token',                      //接收 token 时，response 中指向 token 的名字
+//     //请求拦截器
+//     bindRequestInterceptor (){
+//         console.log("我是请求拦截器")
+//         this.$http.interceptors.request.use((config) => {
+//             if (this.isAuthenticated()) {
+//                 config.headers['Authorization'] = [
+//                     this.options.tokenType, this.getToken()
+//                 ].join(' ')
+//             } else {
+//                 delete config.headers['Authorization']
+//             }
+//             return config
+//         })
+//     },
+//     //应答拦截器
+//     bindResponseInterceptor(){
+//         console.log("我是应答拦截器")
+//         this.$http.interceptors.response.use((response) => {
+//             console.log(response,111)
+//             let {errno,token} = response.data
+//             if(errno==0&&token){
+//                 this.setToken(response)
+//             }
+//             return response
+//         })
+//     }
+// })
+
+console.log(Vue)
 // Vue.use(VueAuthenticate, {
 //     bindRequestInterceptor: function () {
+//         console.log(12312323213)
 //         Vue.prototype.$axios.interceptors.request.use((config) => {
 //             if (this.isAuthenticated()) {
 //                 config.headers['Authorization'] = [
@@ -273,12 +325,14 @@ const store = new Vuex.Store({
 //         })
 //     },
 //     bindResponseInterceptor: function () {
+//         console.log(1010101010101010)
 //         Vue.prototype.$axios.interceptors.response.use((response) => {
 //             this.setToken(response)
 //             return response
 //         })
 //     }
 // })
+
 //拦截器
 Vue.prototype.$axios.interceptors.request.use(
     config => {
@@ -290,9 +344,31 @@ Vue.prototype.$axios.interceptors.request.use(
     }, err => {
         return Promise.reject(err);
     })
+Vue.prototype.$axios.interceptors.response.use(
+    response => {
+        if(response.data.errno===6){
+            let openId = localStorage.getItem('openId')
+            Vue.prototype.$axios.get('/v1/weChat/token/' + openId).then((response) => {
+                let token = response.data.token
+                store.commit('SET_TOKEN',token)
+            })
+        }
+        return response;
+    },
+    error => {
+        if (error.response) {
+            switch (error.response.status) {
+                case 401:
+                    // 返回 401 清除token信息并跳转到登录页面
+
+            }
+        }
+        return Promise.reject(error.response.data)   // 返回接口返回的错误信息
+    });
 const app = new Vue({
     store,
     router,
+    //authUser,
     render: h => h(App)
 }).$mount('#app')
 
@@ -339,14 +415,7 @@ export default {
             document.getElementById('cancelCollectBox').style.display = 'none'
             Vue.set(this.collectItems[num], 'collectActive', false)
         }
-    },
-    // mounted(){
-    //     this.$axios.get('/v1/weChat/token/' + openId).then((res) => {
-    //         let token = res.data.token
-    //         this.$store.dispatch('saveToken',token)
-    //         localStorage.setItem('token',token)
-    //     })
-    // }
+    }
 }
 
 

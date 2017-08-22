@@ -22,7 +22,7 @@
                  <span class="attention" id="attentionBtn" @click="attention()">+关注</span>
                </div>
              </div>
-           <p class="scholarAbout clrfix">{{userInfo.nickName}}<span class="scholarUniverse" v-show="userInfo.orgName?true:false">{{userInfo.orgName}}</span></p>
+           <p class="scholarAbout clrfix">{{userInfo.scholarName?userInfo.scholarName:userInfo.nickName}}<span class="scholarUniverse" v-show="userInfo.orgName?true:false">{{userInfo.orgName}}</span></p>
              <p class="scholarMarjor">领域方向：<span>{{userInfo.area}}</span></p>
            </div>
            <!-- 详情数字部分 -->
@@ -171,16 +171,15 @@ export default{
       attentionBtn.innerHTML = '+关注'
       document.getElementById('cancelAttentionBox').style.display = 'none'
     },
-//      获取关联的学者信息
+    // 获取关联的学者信息
       getUserInformation(){
-        this.$axios.get('/v1/weChat/userInfo').then((res)=>{
-            console.log(res)
-            this.userInfo = res.data.data
+        this.$axios.get('/v1/weChat/userInfo').then((response)=>{
+            this.userInfo = response.data.data
         })
       }
   },
   mounted () {
-        this.getUserInformation()
+      this.getUserInformation()
   }
 }
 </script>

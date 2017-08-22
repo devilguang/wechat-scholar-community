@@ -38,9 +38,7 @@
                 dataFlag: false,
             }
         },
-        computed:{
-
-        },
+        computed: {},
         components: {
             bouncedOut
         },
@@ -77,12 +75,10 @@
             }
         },
         mounted () {
-            let nextPage = window.location.href.split('http://mobile.subject.net.cn')[1]
+            this.$axios.get('/v1/weChat/token/' + 'obZo-v2o7yef7tqYIYveKwNKySok').then((response)=>{console.log(response)})
             let openId = this.local('openId')
             let code = this.getQueryString('code')
             if (openId) return
-            let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ3d3cubWV0YWRhdGEubmV0LmNuIiwiZXhwIjoxNTAzMzEyMjQyLCJpYXQiOjE1MDMzMDUwNDIsInN1YiI6IioiLCJhdWQiOiIqIiwibmJmIjoxNTAzMzA1MDQyLCJqdGkiOiI0YjVkZDQyMS0wMWQwLTQ0NzQtOGY2NS02OGU0NTE2ODQ5N2EiLCJyb2xlIjoxLCJzY2hvbGFyVW5pcXVlIjoiIiwib3BlbklkIjoib2Jaby12Mm83eWVmN3RxWUlZdmVLd05LeVNvayIsInJvbGVUeXBlIjoiZnJvbnQiLCJ1c2VySWQiOiI1ODgwNTQ0MC1iMTYzLTRiNDktOGNlMi02ZjliYmM2OTk1ZDEiLCJ1c2VybmFtZSI6IuS4k-Wxnu-9gOaIkeeahGRldmlsIn0.SLmeZE4n7lJbblnwIqfyKoX7W8z4ygy5BHd9WBbdVS8'
-            this.$store.commit('SET_TOKEN',token)
 //            if (code) {
 //                this.$axios.get('/v1/weChat/userInfo/' + code).then((res) => {
 //                    let openId = res.data.data.openId
@@ -94,7 +90,7 @@
 //                    })
 //                })
 //            }
-//           else {
+//            else {
 //                window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8115bea15b8d7d1a&redirect_uri=http://mobile.subject.net.cn&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
 //            }
         }

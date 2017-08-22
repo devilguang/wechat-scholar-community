@@ -85,6 +85,9 @@ export default {
                     "area":this.momentInfo.area
                 }
             }).then((res)=>{
+                this.$router.push({
+                    path:'/myCenter/myInfo'
+                })
             })
         }
     },
@@ -92,7 +95,7 @@ export default {
         this.$axios.get('/v1/weChat/userInfo').then((res)=>{
             let {nickName,scholarName,orgName,area,status,mail,phone,headPhotoUrl} = res.data.data;
             Object.assign(this.momentInfo,{nickName,scholarName,orgName,area,status,mail,phone,headPhotoUrl})
-            if(this.momentInfo.isAuth){
+            if(res.data.data.isAuth){
                 this.momentInfo.status ='已认证'
             }else{
                 this.momentInfo.status ='未认证'
