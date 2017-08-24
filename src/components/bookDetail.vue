@@ -43,14 +43,14 @@
                     <p class="mainContent">{{commitItem.content}}</p>
                 </li>
             </ul>
-
             <h4 class="loadMore" @click="showMore" v-show="showFlag">点击加载更多</h4>
         </article>
         <article class="originBox">
             <h3>全部来源</h3>
             <ul>
-                <li class="clrfix"><span
-                        class="iconfont icon-link"></span><span></span></li>
+                <li class="clrfix">
+                    <span class="iconfont icon-link"></span><span></span>
+                </li>
             </ul>
         </article>
         <article class="literature">
@@ -299,7 +299,7 @@
             getAxios(url){
                 let ach_unique = this.getAchunique
                 let solrQuery = {
-                    "q": "ACH_UNIQUE:" + '318ce659-536c-4135-9719-7eff97864999',
+                    "q": "ACH_UNIQUE:" + this.getAchunique,
                     "wt": "json",
                     "fl": "",
                     "indent": "on",
@@ -326,7 +326,6 @@
             if (this.getDatatype.type == "wd") {
                 this.index = localStorage.getItem('index')
                 let scholarList = this.$store.state.scholarsList[this.index]
-                console.log(scholarList)
                 this.infosList.title = scholarList.title|| scholarList.achTitle
                 this.infosList.ach_type =scholarList.ach_type||scholarList.achType
                 this.infosList.author = scholarList.author.join(';')
@@ -354,7 +353,6 @@
                         "sort": ''
                     }
                     this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery)).then((res) => {
-
                         this.infos = res.data.response.docs[0]
                         let {title, author, ab, punishOrg, keywords_q, cite_count, ach_type} = this.infos;
                         author = author.join(',')

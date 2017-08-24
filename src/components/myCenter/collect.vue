@@ -1,7 +1,8 @@
 <template>
     <div id="collect">
         <section class="collectBox">
-            <ul class="contentMain">
+            <ul class="contentMain" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy"
+                infinite-scroll-distance="10">
                 <li class="contentItem" v-for="(collectItem,index) in collectItems">
                     <div class="wordsCon" @click="gotoDetails(collectItem,index)">
                         <p class="coreCon">{{collectItem.achTitle}}</p>
@@ -13,7 +14,8 @@
                         <p class="eachCitedNum">被引用次数：<span></span></p>
                     </div>
                     <ul class="userBtns clrfix">
-                        <li @click="gotoDetails(collectItem,index)"><span class="iconfont icon-remark"></span><span class="word">评论</span></li>
+                        <li @click="gotoDetails(collectItem,index)"><span class="iconfont icon-remark"></span><span
+                                class="word">评论</span></li>
                         <li @click="recommend(collectItem,index)" :class="{active:collectItem.isLike}"><span
                                 class="iconfont icon-recommendBtn"></span><span class="word">推荐</span></li>
                         <li><span class="iconfont icon-share"></span><span class="word">分享</span></li>
@@ -47,6 +49,8 @@
             return {
                 collectItems: [],
                 showFlag: false,
+                pageNum: 1,
+                busy: false,
             }
         },
         computed: {
@@ -58,19 +62,18 @@
         methods: {
             //点赞接口
             recommend (item, index) {
-                console.log(item)
-                if(item.isLike == true){ //取消点赞
-                    this.$set(item,'isLike',false)
+                if (item.isLike == true) { //取消点赞
+                    this.$set(item, 'isLike', false)
                     this.$axios({
                         method: 'delete',
                         url: '/v1/weChat/achLikes',
                         data: {
                             achUniques: [item.achUnique],
-                            dataType:this.getDatatype.type
+                            dataType: this.getDatatype.type
                         }
                     })
-                }else{
-                    this.$set(item,'isLike',true)
+                } else {
+                    this.$set(item, 'isLike', true)
                     this.$axios({
                         method: 'post',
                         url: '/v1/weChat/achLike',
@@ -99,8 +102,6 @@
                     data: {
                         achUniques: [item.achUnique]
                     }
-                }).then((res) => {
-                    this.collectList()
                 })
             },
             //查看是否有点赞
@@ -139,32 +140,46 @@
                     })
                 })
             },
-            collectList(){
+            loadMore(){
+                this.busy = true
                 let userId = JSON.parse(localStorage.getItem('userInfo')).id
                 this.$axios.get('/v1/weChat/achFavorites', {
                     params: {
+                        pageIndex: this.pageNum,
+                        pageSize: 10,
                         userId: userId,
                     }
                 }).then((res) => {
-                    this.collectItems = res.data.data
-                    this.$store.commit('SET_SCHOLARLIST',res.data.data)
-                    this.thumbUp()
+                    let collectItems = res.data.data
+                    if (collectItems.length > 0) {
+                        collectItems.forEach((item, idnex) => {
+                            this.collectItems.push(item)
+                        })
+                        this.$store.commit('SET_SCHOLARLIST', res.data.data)
+                        this.thumbUp()
+                    } else {
+                        return
+                    }
+                    this.busy = false
+                    this.pageNum++;
                 })
             },
-            gotoDetails(item,index){ //跳转详情页
+
+            gotoDetails(item, index){ //跳转详情页
+                console.log(item.dataType)
                 let q = {
-                    type:item.dataType,
-                    scholarUnique:item.achUnique
+                    type: item.dataType,
+                    scholarUnique: item.achUnique
                 }
-                this.$store.dispatch('saveScholarInfo',q);
+                this.$store.dispatch('saveScholarInfo', q);
                 this.$router.push({
-                    path:'/findBook/bookResult/bookDetail'
+                    path: '/findBook/bookResult/bookDetail'
                 })
-                localStorage.setItem('index',index)
+                localStorage.setItem('index', index)
             }
         },
         mounted(){
-            this.collectList()
+
         }
     }
 </script>
@@ -172,6 +187,7 @@
     #collect .collectBox {
         margin-bottom: 0.9rem;
     }
+
     #collect .collectBox .contentMain .contentItem {
         padding-top: .17rem;
         box-sizing: border-box;

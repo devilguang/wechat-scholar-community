@@ -1,9 +1,9 @@
 <template>
     <div id="diaLog">
         <div class="dialog-wrap">
-            <div class="title">学术麦圈</div>
+            <div class="title">提示</div>
             <p class="meassgae">{{meassage}}</p>
-            <div class="dialog-footer" @click="confirm">确认</div>
+            <div class="dialog-footer" @click="confirm">确定</div>
         </div>
     </div>
 </template>
@@ -31,28 +31,29 @@
         align-items: center;
         justify-content: center;
     }
-
     .title {
         padding-top: 10px;
         font-size: 18px;
-        font-weight: bold;
-    }
+        font-weight: 700;
+        color: #333;
 
+    }
     .dialog-wrap {
-        width: 4.5rem;
-        height: 2rem;
+        width: 5rem;
+        height: 2.5rem;
         text-align: center;
         border-radius: 13px;
         background: #ffffff;
         position: relative;
     }
-
     .meassgae {
         padding-top: 10px;
         padding-bottom: 15px;
         font-family: "Microsoft Yahei", "Droid Sans Fallback", "Arial", "Helvetica", "sans-serif", "宋体";
+        color: #999;
+        font-size: 18px;
+        line-height:1rem;
     }
-
     .dialog-footer {
         width: 100%;
         height: 0.7rem;
@@ -61,16 +62,10 @@
         line-height: 0.7rem;
         color: #36d7b6;
         font-size: 17px;
-        font-weight: 600;
         position: absolute;
         bottom: 0;
         border-bottom-right-radius: 13px;
         border-bottom-left-radius: 13px;
-    }
-
-    .dialog-footer:active {
-        background: rgba(0, 0, 0, 0.2);
-        color: #ffffff;
     }
     .pointer {
         pointer-events: none;

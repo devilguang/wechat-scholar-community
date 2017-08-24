@@ -1,6 +1,7 @@
 <template>
     <div id="scholarResult">
         <h4>为您检索的结果如下：</h4>
+        <indicator-bar v-if="barFlag" style="margin-top: 80px"></indicator-bar>
         <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
             class="scholarList">
             <li class="scholarItem clrfix" v-for="item in items" @click="toDetail(item.scholar_unique)">
@@ -25,13 +26,12 @@
                 <!-- </router-link> -->
             </li>
         </ul>
-        <span class="noData" v-show="items.length>0?false:true">暂无数据...</span>
     </div>
 </template>
 
 <script>
     import qs from 'querystring'
-
+    import indicatorBar from '../views/indicator.vue'
     export default {
         name: 'scholarDetail',
         data() {
@@ -46,7 +46,7 @@
             }
         },
         components:{
-
+            indicatorBar
         },
         methods: {
             //  点击进学者详情页
@@ -177,9 +177,4 @@
     }
 </script>
 <style lang="css">
-    .noData{
-        display: block;
-        text-align: center;
-        margin-top:100px;
-    }
 </style>

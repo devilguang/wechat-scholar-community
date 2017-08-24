@@ -5,6 +5,7 @@
             <!--div class="allFruits">全部成果</div -->
             <!--p class="citedNum"><span>{{infos.cite ? '被引次数：' + infos.cite : ''}}</span></p-->
         <!-- /div -->
+        <indicator-bar v-if="barFlag" style="margin-top: 30px"></indicator-bar>
         <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
             class="contentMain">
             <li class="contentItem" v-for="(detailItem,index) in detailItems" >
@@ -38,15 +39,13 @@
                     </div>
                 </div>
              </section>
-        <loading-bar v-if="barFlag"></loading-bar>
     </section>
 </template>
-
 <script>
     import qs from 'querystring'
     import Vue from 'vue'
     import { mapGetters } from 'vuex'
-    import loadingBar from './loadingBar.vue'
+    import indicatorBar from '../views/indicator.vue'
     export default {
         data() {
             return {
@@ -56,11 +55,12 @@
                 showFlag:false,
                 meassage:'收藏',
                 ach_unique:'',
-                index:''
+                index:'',
+                barFlag:true
             }
         },
         components:{
-            loadingBar
+            indicatorBar
         },
         computed:{
             ...mapGetters([
@@ -106,6 +106,7 @@
                             "achUnique": item.ach_unique,
                             "title": item.title,
                             "achType": item.ach_type,
+                            "dataType":this.getDatatype.type
                              }
                         }).then((res)=>{
                         this.$set(item,'isFavorite',true)
@@ -140,6 +141,7 @@
                     solrQuery.q = 'claims:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                     this.$http.post('/indexWD/achievement/select', qs.stringify(solrQuery))
                         .then((response) => {
+                            this.barFlag = false
                             this.detailItems.push(...response.data.response.docs)
                             this.pageNum++
                             this.busy = false
@@ -202,6 +204,7 @@
                     solrQueryWechat.q = 'scholar_info_id:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                     this.$http.post('/indexServer/scholar_paper/select', qs.stringify(solrQueryWechat))
                         .then((result) => {
+                            this.barFlag = false
                             var server_docs = []
                             _(result.data.response.docs).forEach(function (doc) {
                                 doc = _.mapKeys(doc, function (value, key) {
@@ -257,6 +260,7 @@
             },
             //进入文献详情
             showDetails(item,index){
+                console.log(item)
                 localStorage.setItem('index',index)
                 localStorage.setItem('typeof','找人')
                 this.$store.commit('SET_SCHOLARLIST',this.detailItems)
@@ -276,6 +280,7 @@
             }
         },
         mounted() {
+            console.log(this.getDatatype)
         }
     }
 </script>

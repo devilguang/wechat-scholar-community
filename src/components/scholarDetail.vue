@@ -15,7 +15,9 @@
                         </div>
                     </div>
                     <div class="topRight">
-                        <span class="attention" id="attentionBtn" @click="attention()">+关注</span>
+                        <span class="attention" id="attentionBtn" @click="attention()"
+                              v-if="this.isAttention!==1">+关注</span>
+                        <span class="attention" @click="metFlag=true" v-else>已关注</span>
                     </div>
                 </div>
                 <p class="scholarAbout clrfix">{{infos.scholarName}}
@@ -24,6 +26,7 @@
                 <p class="scholarMarjor">领域方向：
                     <span>{{infos.area}}</span>
                 </p>
+                <!--<show-meassge v-if="true" meassage="关注成功" v-on:listenToChild="showMsgChild"></show-meassge>-->
             </div>
 
             <!-- 详情数字部分 -->
@@ -68,19 +71,18 @@
             <component :is='currentView' keep-alive :infos="infos" :partnerItems="partnerItems"
                        :instituteItems="instituteItems"></component>
         </article>
-        <section id="cancelAttentionBox" style="display:none">
+        <section id="cancelAttentionBox" v-show="metFlag">
             <div class="alertBox">
                 <p class="tip">
                     <span class="iconfont icon-warn"></span>
                     <span class="tipWord">您确定要取消关注吗?</span>
                 </p>
                 <div class="operate">
-                    <span class="cancel" @click="cancel">取消</span>
-                    <span class="confirm" @click="confirm">确定</span>
+                    <span class="cancel"    @click="cancel">取消</span>
+                    <span class="confirm"   @click="confirm">确定</span>
                 </div>
             </div>
         </section>
-        <loading-bar v-if="false"></loading-bar>
     </div>
 </template>
 <script>
@@ -90,7 +92,6 @@
     import sDtab03 from './sDtab03'
     import qs from 'querystring'
     import {mapGetters} from 'vuex'
-    import loadingBar from './loadingBar.vue'
     export default {
         name: 'scholarDetail',
         data() {
@@ -106,14 +107,15 @@
                 partnerItems: [],
                 instituteItems: [],
                 baseImg: '../../static/img/img-scholar_1.png',
-                barFlag: true
+                barFlag: true,
+                isAttention: '',
+                metFlag: false
             }
         },
         components: {
             sDtab01,
             sDtab02,
             sDtab03,
-            loadingBar
         },
         computed: {
             ...mapGetters([
@@ -122,6 +124,13 @@
             ])
         },
         methods: {
+            //查询学者是否被关注
+            userToScholarUnique(){
+                this.$axios.get('/v1/weChat/userToScholarUnique/' + this.infos.scholarUnique).then((res) => {
+                    this.isAttention = res.data.data.isAttention
+                })
+            },
+
             // 选项卡切换
             tabToggle: function (tabText) {
                 this.currentView = tabText
@@ -130,23 +139,18 @@
             },
             // 加关注
             attention () {
-                let attentionBtn = document.getElementById('attentionBtn')
-                if (attentionBtn.innerHTML === '已关注') {
-                    document.getElementById('cancelAttentionBox').style.display = 'block'
-                } else {
-                    window.alert('关注成功')
-                    attentionBtn.innerHTML = '已关注'
-                    this.$axios({
-                        method: 'post',
-                        url: '/v1/weChat/scholarAttention',
-                        data: {
-                            'scholarUnique': this.infos.scholarUnique,
-                            'scholarName': this.infos.scholarName,
-                            'area': this.infos.area,
-                            'dataType': this.getDatatype.type
-                        }
-                    })
-                }
+                this.$axios({
+                    method: 'post',
+                    url: '/v1/weChat/scholarAttention',
+                    data: {
+                        'scholarUnique': this.infos.scholarUnique,
+                        'scholarName': this.infos.scholarName,
+                        'area': this.infos.area,
+                        'dataType': this.getDatatype.type
+                    }
+                }).then((res)=>{
+                    this.isAttention = 1
+                })
             },
             approve () {
                 // 已登录已完善
@@ -159,26 +163,28 @@
                 attentionBtn.innerHTML = '已关注'
                 document.getElementById('cancelAttentionBox').style.display = 'none'
             },
-            confirm () { //取消收藏
-                var attentionBtn = document.getElementById('attentionBtn')
-                attentionBtn.innerHTML = '+关注'
-                document.getElementById('cancelAttentionBox').style.display = 'none'
+            confirm (){ //取消关注
                 this.$axios({
                     method: 'delete',
                     url: '/v1/weChat/scholarAttentions',
                     data: {
                         scholarUniques: [this.infos.scholarUnique]
                     }
+                }).then((res) => {
+                    if (res.data.errno == 0) {
+                        this.isAttention = 0
+                        this.metFlag = false
+                    }
                 })
             },
             pullScholarFromWD() {
                 this.$http.get('/v1/scholar/' + this.$store.state.scholarInfo.scholarUnique, {})
                     .then((response) => {
-                        console.log(response)
                         this.infos = response.data.data.scholar
+                        this.userToScholarUnique()
                         // this.detailItems = response.data.scholar.cnkiDetailLists
                         this.partnerItems = response.data.data.cooperatorslist.slice(0, 10)
-                        // this.instituteItems = response.scholar.cnkiOrgansList
+//                         this.instituteItems = response.scholar.cnkiOrgansList
                     })
             },
             pullScholarFromServer() {
@@ -206,6 +212,7 @@
                         this.infos = _.mapKeys(response.data.response.docs[0], function (value, key) {
                             return keymap[key]
                         })
+                        this.userToScholarUnique()
                         // this.detailItems = response.data.scholar.cnkiDetailLists
                         // this.partnerItems = response.data.cooperatorslist.slice(0, 10)
                         // this.instituteItems = response.scholar.cnkiOrgansList
@@ -264,18 +271,20 @@
                             }))
                         })
                         this.instituteItems = server_docs.slice(0, 10)
-                    }).then((error) => {
-                })
+                    })
             }
         },
         mounted() {
+            console.log(this.getDatatype)
             if (this.$store.state.scholarInfo.type == 'wd') {
                 this.pullScholarFromWD()
             } else {
                 this.pullScholarFromServer()
                 this.pullCoper()
                 this.pullCoorgan()
+
             }
+
         }
     }
 

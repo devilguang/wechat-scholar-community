@@ -1,6 +1,6 @@
 <template>
     <div id="attention" style="padding-bottom: 50px">
-        <ul class="attentionBox">
+        <ul class="attentionBox" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
             <li class="scholarItem clrfix" v-for="item in attentionList" @click="attention(item)">
                 <div class="scholarHead"><img src="../../assets/img/img-scholar_1.png"></div>
                 <div class="scholarInfos">
@@ -10,24 +10,12 @@
                     </div>
                     <p class="scholarPosition"></p>
                     <p class="scholarCited">被引数：</p>
-                    <p class="scholarDir">研究方向：<span>{{item.area}}</span></p>
+                    <p class="scholarDir">研究方向：<span>{{item.area=='null'? '':item.area}}</span></p>
                 </div>
                 <span class="moreBtn iconfont icon-more"></span>
             </li>
-            <!--<li class="scholarItem clrfix">-->
-                <!--<div class="scholarHead"><img src="../../assets/img/img-scholar_1.png"></div>-->
-                <!--<div class="scholarInfos">-->
-                    <!--<div class="scholarTitle">-->
-                        <!--<span class="scholarName">习近平</span>-->
-                        <!--<span class="scholarStatus">未认证</span>-->
-                    <!--</div>-->
-                    <!--<p class="scholarPosition">中共浙江省委书记</p>-->
-                    <!--<p class="scholarCited">被引数：100</p>-->
-                    <!--<p class="scholarDir">研究方向：<span>中共党史</span></p>-->
-                <!--</div>-->
-                <!--<span class="moreBtn iconfont icon-more"></span>-->
-            <!--</li>-->
         </ul>
+        <div  style="text-align: center;margin-top: 40%" v-show="showFlag">您还没添加任何关注哦</div>
     </div>
 </template>
 <script>
@@ -36,7 +24,10 @@
         name: 'attention',
         data(){
           return{
-            attentionList:[]
+            attentionList:[],
+            showFlag:false,
+            busy:false,
+            pageNum:1
           }
         },
         computed:{
@@ -54,16 +45,29 @@
                 this.$router.push({
                     name: 'detail'
                 })
+            },
+            loadMore(){
+                this.busy = true
+                this.$axios.get('/v1/weChat/scholarAttentions',{params:{
+                    pageIndex:this.pageNum,
+                    pageSize:10
+                }}).then((res)=>{
+                    let attentionList = res.data.data
+                    if(attentionList.length > 0){
+                        attentionList.forEach((item,index)=> {
+                            this.attentionList.push(item)
+                        })
+                    }else{
+                        return
+                    }
+                    this.busy = false
+                    this.pageNum++
+                })
             }
+
         },
         mounted(){
-            this.$axios.get('/v1/weChat/scholarAttentions',{params:{
-                pageIndex:1,
-                pageSize:10
-            }}).then((res)=>{
-                console.log(res.data.data)
-                this.attentionList = res.data.data
-            })
+
         }
     }
 </script>

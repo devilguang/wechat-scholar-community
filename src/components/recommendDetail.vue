@@ -112,7 +112,6 @@
                 }
                 if (item.collectActive === true) {
                     // item.innerHTML = '已收藏'
-                    console.log(item)
                     document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
                 }
                 if (item.collectActive === false) {
@@ -134,11 +133,11 @@
         mounted () {
             axios.get('../../../static/mock-data/userInfo.json')
                 .then((response) => {
-                    console.log(response.data)
                     // 先模拟用一个用户的信息
                     this.userInfo = response.data[0]
                     this.recommendItems = this.userInfo.collect
-                }).then((error) => console.log(error))
+                })
+
         }
     }
 </script>

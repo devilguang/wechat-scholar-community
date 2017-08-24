@@ -16,7 +16,6 @@ Vue.config.productionTip = false
 // 调用VueRouter
 Vue.use(VueRouter)
 Vue.use(infiniteScroll)
-console.log(VueAuthenticate)
 Vue.prototype.$axios = axios.create({baseURL: 'http://120.55.191.189:9000'});
 Vue.prototype.$http = axios;
 
@@ -193,13 +192,6 @@ const router = new VueRouter({
 
     ]
 })
-
-// const irsback = 'http://120.55.191.189:9000/v1';
-// ajax传data编码问题
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-// 现在我们可以启动应用了！
-// 路由器会创建一个 App 实例，并且挂载到选择符 #app 匹配的元素上。
-
 // 全局状态管理器
 const store = new Vuex.Store({
     state: {
@@ -224,14 +216,14 @@ const store = new Vuex.Store({
         },
         SET_USERINFO(state, data){
             state.userInfo = data
-            localStorage.setItem('userInfo',JSON.stringify(data))
+            localStorage.setItem('userInfo', JSON.stringify(data))
         },
         SET_SCHOLARLIST(state, data){
             state.scholarsList = data
         },
         SET_TOKEN(state, token){
             state.token = token
-            localStorage.setItem('token',token)
+            localStorage.setItem('token', token)
         },
         SET_REVIEW(state, review){
             state.review = review
@@ -240,7 +232,7 @@ const store = new Vuex.Store({
             state.ach_unique = ach_unique
         }
     },
-    actions:{   //定义的全局的方法  每个页面都可以调用
+    actions: {   //定义的全局的方法  每个页面都可以调用
         saveQueryScholar: function (context, queryScholar) {
             context.commit('queryScholarBySolr', queryScholar)
         },
@@ -259,7 +251,7 @@ const store = new Vuex.Store({
 
     },
     getters: {
-        getUserInfo:state=>{
+        getUserInfo: state => {
             return (state.userInfo && state.userInfo.id) ? state.userInfo : JSON.parse(localStorage.getItem('userInfo'))
         },
         getDatatype: state => {
@@ -274,97 +266,61 @@ const store = new Vuex.Store({
     }
 })
 
-// const authUser = Vue.prototype.$auth = new VueAuthenticate(axios,{
-//
-//     baseUrl: 'http://120.55.191.189:9000',  //默认地址
-//     tokenType: 'Bearer',                      //token 类型，会与 token 一同放在 http 头字段中发送
-//     tokenHeader:'Authorization',             //请求时，携带 token 的http头字段
-//     responseDataKey:'data',                  //接收 token 时，response 中存放 token 的地方
-//     tokenName : 'token',                      //接收 token 时，response 中指向 token 的名字
-//     //请求拦截器
-//     bindRequestInterceptor (){
-//         console.log("我是请求拦截器")
-//         this.$http.interceptors.request.use((config) => {
-//             if (this.isAuthenticated()) {
-//                 config.headers['Authorization'] = [
-//                     this.options.tokenType, this.getToken()
-//                 ].join(' ')
-//             } else {
-//                 delete config.headers['Authorization']
-//             }
-//             return config
-//         })
-//     },
-//     //应答拦截器
-//     bindResponseInterceptor(){
-//         console.log("我是应答拦截器")
-//         this.$http.interceptors.response.use((response) => {
-//             console.log(response,111)
-//             let {errno,token} = response.data
-//             if(errno==0&&token){
-//                 this.setToken(response)
-//             }
-//             return response
-//         })
-//     }
-// })
-
-console.log(Vue)
-// Vue.use(VueAuthenticate, {
-//     bindRequestInterceptor: function () {
-//         console.log(12312323213)
-//         Vue.prototype.$axios.interceptors.request.use((config) => {
-//             if (this.isAuthenticated()) {
-//                 config.headers['Authorization'] = [
-//                     this.options.tokenType, this.getToken()
-//                 ].join(' ')
-//             } else {
-//                 delete config.headers['Authorization']
-//             }
-//             return config
-//         })
-//     },
-//     bindResponseInterceptor: function () {
-//         console.log(1010101010101010)
-//         Vue.prototype.$axios.interceptors.response.use((response) => {
-//             this.setToken(response)
-//             return response
-//         })
-//     }
-// })
-
-//拦截器
-Vue.prototype.$axios.interceptors.request.use(
-    config => {
-        if (store.state.token) {
-            // 判断是否存在token，如果存在的话，则每个http header都加上token
-            config.headers.Authorization = 'Bearer ' + store.state.token;
-        }
-        return config
-    }, err => {
-        return Promise.reject(err);
-    })
-Vue.prototype.$axios.interceptors.response.use(
-    response => {
-        if(response.data.errno===6){
-            let openId = localStorage.getItem('openId')
-            Vue.prototype.$axios.get('/v1/weChat/token/' + openId).then((response) => {
-                let token = response.data.token
-                store.commit('SET_TOKEN',token)
-            })
-        }
-        return response;
-    },
-    error => {
-        if (error.response) {
-            switch (error.response.status) {
-                case 401:
-                    // 返回 401 清除token信息并跳转到登录页面
-
+Vue.use(VueAuthenticate, {
+    loginUrl: '/findScholar', //http://mobile.subject.net.cn/#/findScholar
+    baseUrl: 'http://120.55.191.189:9000',
+    tokenType: 'Bearer',
+    tokenName: 'token',
+    responseDataKey: 'data',
+    bindRequestInterceptor () {
+        Vue.prototype.$axios.interceptors.request.use((config) => {
+            if (this.isAuthenticated()) {
+                config.headers['Authorization'] = [this.options.tokenType, this.getToken()].join(' ')
+            } else {
+                delete config.headers['Authorization']
             }
-        }
-        return Promise.reject(error.response.data)   // 返回接口返回的错误信息
-    });
+            return config
+        })
+    },
+    bindResponseInterceptor () {
+        Vue.prototype.$axios.interceptors.response.use((response) => {
+            this.setToken(response)
+            return response
+        })
+    }
+})
+//拦截器
+// Vue.prototype.$axios.interceptors.request.use(
+//     config => {
+//         if (store.state.token) {
+//             // 判断是否存在token，如果存在的话，则每个http header都加上token
+//             config.headers.Authorization = 'Bearer ' + store.state.token;
+//         }
+//         return config
+//     }, err => {
+//         return Promise.reject(err);
+//     })
+// Vue.prototype.$axios.interceptors.response.use(
+//     response => {
+//         if(response.data.errno===6){
+//             let openId = localStorage.getItem('openId')
+//             Vue.prototype.$axios.get('/v1/weChat/token/' + openId).then((response) => {
+//                 let token = response.data.token
+//                 store.commit('SET_TOKEN',token)
+//             })
+//         }
+//         return response;
+//     },
+//     error => {
+//         if (error.response) {
+//             switch (error.response.status) {
+//                 case 401:
+//                     // 返回 401 清除token信息并跳转到登录页面
+//
+//             }
+//         }
+//         return Promise.reject(error.response.data)   // 返回接口返回的错误信息
+//     });
 const app = new Vue({
     store,
     router,

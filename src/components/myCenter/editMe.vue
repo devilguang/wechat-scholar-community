@@ -6,26 +6,26 @@
             <img  v-if="momentInfo.headPhotoUrl&&momentInfo.headPhotoUrl.length>0" :src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath='+momentInfo.headPhotoUrl">
             <img  v-else :src="defaultImg">
           </p>
-          <span class="resend">重新上传></span>
+          <span class="resend" style="color: #36d7b6">重新上传></span>
         </section>
-        <section class="weixinBox eachBox clrfix" style="background:gainsboro">
+        <section class="weixinBox eachBox clrfix" style="background:gainsboro" >
             <p>微信号</p>
             <input  v-model="momentInfo.nickName" type="text"  size="30" disabled="disabled" style="background:gainsboro">
         </section>
 
-        <section class="nameBox eachBox clrfix">
+        <section class="nameBox eachBox clrfix" :style="{'border-bottom-color':activeColor1}">
            <p>学者名*</p>
-          <input  v-model="momentInfo.scholarName" type="text" size="30">
+          <input  v-model="momentInfo.scholarName" type="text" size="30" @focus="activeColor1 = '#36d7b6'" @blur="activeColor1=''">
         </section>
 
-        <section class="instituteBox eachBox clrfix">
+        <section class="instituteBox eachBox clrfix" :style="{'border-bottom-color':activeColor2}">
           <p>机构*</p>
-          <input  v-model="momentInfo.orgName" type="text"   size="30">
+          <input  v-model="momentInfo.orgName" type="text"   size="30" @focus="activeColor2 = '#36d7b6'" @blur="activeColor2=''">
         </section>
 
-        <section class="dirBox eachBox clrfix">
+        <section class="dirBox eachBox clrfix" :style="{'border-bottom-color':activeColor3}">
           <p>领域方向*</p>
-          <input v-model="momentInfo.area" type="text"   size="30">
+          <input v-model="momentInfo.area" type="text"   size="30" @focus="activeColor3 = '#36d7b6'"  @blur="activeColor3=''">
         </section>
 
         <section class="statusBox eachBox clrfix" style="background:gainsboro">
@@ -33,14 +33,14 @@
           <span>{{momentInfo.status}}</span>
         </section>
 
-        <section class="emailBox eachBox clrfix">
+        <section class="emailBox eachBox clrfix" :style="{'border-bottom-color': activeColor4}">
           <p>邮箱</p>
-          <input v-model="momentInfo.main" type="text"  size="30" >
+          <input v-model="momentInfo.main" type="text"  size="30" @focus="activeColor4 = '#36d7b6'"  @blur="activeColor4=''">
         </section>
 
-        <section class="telBox eachBox clrfix">
+        <section class="telBox eachBox clrfix" :style="{'border-bottom-color':activeColor5}">
           <p>手机号</p>
-          <input v-model="momentInfo.phone" type="text" size="30">
+          <input v-model="momentInfo.phone" type="text" size="30" @focus="activeColor5 = '#36d7b6'"  @blur="activeColor5=''">
         </section>
 
         </form>
@@ -48,9 +48,11 @@
       <button type="button" name="button" class="back" @click="back()">返回</button>
       <button type="button" name="button" class="confirmChange" @click="confirmChange()">确认修改</button>
     </article>
+    <message-box v-if="showFlag" meassage="带*号的为必填项" v-on:listenToChild="showMsgChild"></message-box>
   </div>
 </template>
 <script>
+import messageBox from '../diaLog.vue'
 export default {
   data () {
     return {
@@ -65,13 +67,25 @@ export default {
             headPhotoUrl:''
         },
         defaultImg:'../../static/img/img-scholar_1.png',
-        dataFlag:false
+        dataFlag:false,
+        activeColor1:'',
+        activeColor2:'',
+        activeColor3:'',
+        activeColor4:'',
+        activeColor5:'',
+        showFlag:false
     }
   },
+  components:{
+      messageBox
+  },
   methods: {
+   showMsgChild(){
+       this.showFlag = false
+   },
     confirmChange () {
         if(!this.momentInfo.scholarName||!this.momentInfo.orgName||!this.momentInfo.area){
-            window.alert('带星号的不能为空')
+            this.showFlag = true
             return
         }else{
             this.$axios({
@@ -102,7 +116,7 @@ export default {
             }
         })
     },
-    back: function () {
+    back () {
       this.$router.push({
         path: './myInfo'
       })
@@ -114,6 +128,9 @@ export default {
 }
 </script>
 <style>
+section{
+  border-bottom:1px solid #f5f5f5;
+}
 #editMe .editBox{
   margin-bottom: .9rem;
   padding-top:0.3rem;
@@ -142,12 +159,13 @@ export default {
 #editMe .editBox .imgBox{
   position: relative;
 }
+
 #editMe .editBox .imgBox .resend{
   float: right;
   bottom: 0;
   position: absolute;
   right: 0.3rem;
-   top:.8rem;
+    top:.8rem;
    color: #000;
    font-size: .26rem;
 }

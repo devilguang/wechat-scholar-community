@@ -1,5 +1,6 @@
 <template>
     <div id="bookResult">
+        <indicator-bar v-if="showFlag" style="position: absolute;left:50%;top:50%"></indicator-bar>
         <article class="searchTop">
             <input type="text" name="" value="" placehoder="请输入搜索内容" v-model="queryAch.achTitle"
                    :value="queryAch.achTitle">
@@ -74,14 +75,12 @@
 
             </ul>
         </article>
-
-        <!--<loading-bar v-if="showFlag"></loading-bar>-->
     </div>
 </template>
 <script>
     import Vue from 'vue'
     import qs from 'querystring'
-//    import loadingBar from './loadingBar.vue'
+    import indicatorBar from '../views/indicator.vue'
     var num = 0
     export default {
         name: 'scholarDetail',
@@ -108,7 +107,7 @@
         },
         computed: {},
         components: {
-//            loadingBar
+            indicatorBar
         },
 
         methods: {
