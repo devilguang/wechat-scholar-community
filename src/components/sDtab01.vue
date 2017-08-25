@@ -260,9 +260,8 @@
             },
             //进入文献详情
             showDetails(item,index){
-                console.log(item)
                 localStorage.setItem('index',index)
-                localStorage.setItem('typeof','找人')
+//                localStorage.setItem('typeof','找人')
                 this.$store.commit('SET_SCHOLARLIST',this.detailItems)
                 this.$store.commit('SET_ACHUNIQUE',item.ach_unique)
                 this.$router.push({
@@ -270,7 +269,7 @@
                 })
             },
             discuss(index){
-                localStorage.setItem('typeof','找人')
+//                localStorage.setItem('typeof','找人')
                 this.$store.commit('SET_SCHOLARLIST',this.detailItems)
                 this.$store.commit('SET_ACHUNIQUE',item.ach_unique)
                 this.$store.commit('SET_REVIEW',true)
@@ -280,7 +279,6 @@
             }
         },
         mounted() {
-            console.log(this.getDatatype)
         }
     }
 </script>

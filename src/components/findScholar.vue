@@ -72,15 +72,15 @@
                     return value;
                 }
                 localStorage.setItem(key, value);
-            }
+            },
+
         },
         mounted () {
+            this.$auth.login()
             let openId = this.local('openId')
             let code = this.getQueryString('code')
-            if (openId){
-                this.$axios.get('/v1/weChat/token/' + openId).then((res) => {
-                    this.$auth.login()
-                })
+            if (openId) {
+                this.$axios.get('/v1/weChat/token/' + openId,{params:{}}).then((response)=>{})
                 return
             }
             if (code) {
@@ -88,9 +88,7 @@
                     let openId = res.data.data.openId
                     this.local('openId', openId)
                     this.$store.commit('SET_USERINFO', res.data.data)
-                    this.$axios.get('/v1/weChat/token/' + openId).then((res) => {
-                        this.$auth.login()
-                    })
+                    this.$axios.get('/v1/weChat/token/' + openId).then((response)=>{})
                 })
             }
             else {
@@ -103,7 +101,6 @@
     .fade-enter-active, .fade-leave-active {
         transition: opacity .7s;
     }
-
     .fade-enter, .fade-leave-to {
         opacity: 0
     }

@@ -1,7 +1,7 @@
 <template>
     <div id="scholarResult">
         <h4>为您检索的结果如下：</h4>
-        <indicator-bar v-if="barFlag" style="margin-top: 80px"></indicator-bar>
+        <indicator-bar v-if="barFlag" style="margin-top: 4rem;"></indicator-bar>
         <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
             class="scholarList">
             <li class="scholarItem clrfix" v-for="item in items" @click="toDetail(item.scholar_unique)">
@@ -16,7 +16,7 @@
                         <span class="scholarName">{{item.scholar_name}}</span>
                         <span class="scholarStatus">未认证</span>
                     </div>
-                    <p class="scholarPosition">{{item.org_name}}</p>
+                    <p class="scholarPosition">{{item.org_name=='undefined'?item.org_name:''}}</p>
                     <p class="scholarCited">发文量：{{item.ach_all_num}}</p>
                     <p class="scholarDir">领域方向：
                         <span>{{item.subject ? item.subject.join(', ') : ''}}</span>
@@ -26,6 +26,7 @@
                 <!-- </router-link> -->
             </li>
         </ul>
+        <div  style="text-align: center;margin-top: 50%;" v-show="showFlag">暂无数据...</div>
     </div>
 </template>
 
@@ -42,7 +43,8 @@
                 q: '*:*',
                 type: 'wd',
                 baseImg:'../../static/img/img-scholar_1.png',
-                barFlag:true
+                barFlag:true,
+                showFlag:false
             }
         },
         components:{
@@ -103,7 +105,6 @@
                         .then((result) => {
                             this.barFlag = false
                             var count = result.data.response.numFound
-                            // console.log('count = ' + count)
                             if (count == 0) {
                                 this.type = 'server'
                                 q = ''
@@ -118,7 +119,6 @@
                                 this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
                                     .then((result) => {
                                         var wechatSolrCount = result.data.response.numFound
-                                        // console.log('wechatSolrCount = ' + wechatSolrCount)
                                         var server_docs = [];
                                         if (wechatSolrCount > 0) {
                                             _(result.data.response.docs).forEach(function (doc) {
@@ -131,6 +131,9 @@
                                         this.items.push(...server_docs)
                                         this.pageNum++
                                         this.busy = false
+                                        if(this.items.length <=0){
+                                            this.showFlag = true
+                                        }
                                     })
                             } else {
                                 _(result.data.response.docs).forEach(function (doc) {
@@ -154,19 +157,22 @@
                     this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
                         .then((result) => {
                             var wechatSolrCount = result.data.response.numFound
-                            // console.log('wechatSolrCount = ' + wechatSolrCount)
                             var server_docs = []
                             if (wechatSolrCount > 0) {
                                 _(result.data.response.docs).forEach(function (doc) {
                                     doc['AREA'] = doc.AREA.split('/')
                                     server_docs.push(_.mapKeys(doc, function (value, key) {
                                         return keymap[key]
+
                                     }))
                                 })
                             }
                             this.items.push(...server_docs)
                             this.pageNum++
                             this.busy = false
+                            if(this.items.length <=0){
+                                this.showFlag = true
+                            }
                         })
                 }
             }

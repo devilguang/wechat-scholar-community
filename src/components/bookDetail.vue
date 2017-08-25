@@ -4,7 +4,7 @@
             <!--//{{$route.params.bookID}}-->
             <p class="bookTitle">{{infosList.title}}</p>
             <p class="bookOrigin"><span
-                    class="iconfont icon-link"></span><span>来源 — — </span><span>{{infosList.author}}</span></p>
+                    class="iconfont icon-link"></span><span>来源 — — </span><span>{{infosList.PUB_NAME_CH?infosList.PUB_NAME_CH:infosList.pub_name}}</span></p>
             <p class="bookBrief">
                 <span>{{infosList.ach_type}}</span><span>— — 《期刊名》 — —</span><span>(刊号)</span></p>
             <p class="abstract">
@@ -49,7 +49,7 @@
             <h3>全部来源</h3>
             <ul>
                 <li class="clrfix">
-                    <span class="iconfont icon-link"></span><span></span>
+                    <span class="iconfont icon-link"></span><span>{{infosList.pub_name}}</span>
                 </li>
             </ul>
         </article>
@@ -99,7 +99,8 @@
                     keywords_q: '',
                     cite_count: '',
                     ach_type: '',
-                    ach_unique:''
+                    ach_unique: '',
+                    pub_name:''
                 },
                 infos: [],
                 remActive: false,
@@ -128,7 +129,7 @@
             ...mapGetters([
                 'getDatatype',
                 'getAchunique',   //获取到标识符查看详情
-                'getSholarlist'
+            //  'getAchunique'
             ])
         },
         components: {
@@ -181,9 +182,9 @@
                     })
                 }
             },
-//            收藏成果
+            // 收藏成果
             collect(){
-                if (this.colActive == false) {
+                if (this.colActive == false){
                     this.$axios({
                         method: 'post',
                         url: '/v1/weChat/achFavorite',
@@ -296,10 +297,28 @@
                     document.getElementsByClassName('collectWord')[0].innerHTML = '收藏'
                 })
             },
-            getAxios(url){
-                let ach_unique = this.getAchunique
-                let solrQuery = {
-                    "q": "ACH_UNIQUE:" + this.getAchunique,
+        },
+        mounted () {
+            if (this.getDatatype.type == "wd") {
+                this.index = localStorage.getItem('index')
+                let scholarList = this.$store.state.scholarsList[this.index]
+                console.log(scholarList)
+                this.infosList.title = scholarList.title || scholarList.achTitle
+                this.infosList.ach_type = scholarList.ach_type || scholarList.achType
+                this.infosList.author = scholarList.author.join(';')
+                this.infosList.ab = scholarList.ab
+                this.infosList.punishOrg = scholarList.punishOrg
+                this.infosList.keywords_q = scholarList.keywords_q
+                this.infosList.cite_count = scholarList.cite_count.join(" ")
+                this.infosList.ach_unique = scholarList.ach_unique
+                this.getContent()
+                this.collectionList()
+            } else {
+//                let ach_unique = this.getAchunique
+                let ach_unique = this.getDatatype.scholarUnique
+                console.log(ach_unique,1010)
+                let solrQuery1 = {
+                    "q": "ach_unique:"+ach_unique ,
                     "wt": "json",
                     "fl": "",
                     "indent": "on",
@@ -307,52 +326,18 @@
                     "mm": "75%",
                     "sort": ''
                 }
-                this.$http.post(url, qs.stringify(solrQuery)).then((res) => {
-                    this.infos = res.data.response.docs[0]
-                    this.infosList.title = this.infos.TITLE
-                    this.infosList.author = this.infos.GROUP_AU
-                    this.infosList.ab = ''
-                    this.infosList.punishOrg = ''
-                    this.infosList.keywords_q = ''
-                    this.infosList.cite_count = this.infos.CITE_COUNT
-                    this.infosList.ach_type = ''
-                    this.infosList.ach_unique =this.infos.ACH_UNIQUE
-                    this.getContent()
-                    this.collectionList()
-                })
-            }
-        },
-        mounted () {
-            if (this.getDatatype.type == "wd") {
-                this.index = localStorage.getItem('index')
-                let scholarList = this.$store.state.scholarsList[this.index]
-                this.infosList.title = scholarList.title|| scholarList.achTitle
-                this.infosList.ach_type =scholarList.ach_type||scholarList.achType
-                this.infosList.author = scholarList.author.join(';')
-                this.infosList.ab = scholarList.ab
-                this.infosList.punishOrg = scholarList.punishOrg
-                this.infosList.keywords_q =scholarList.keywords_q
-                this.infosList.cite_count = scholarList.cite_count.join(" ")
-                this.infosList.ach_unique =scholarList.ach_unique
-                this.getContent()
-                this.collectionList()
-            } else {
-                let genre = localStorage.getItem('typeof')
-                //如果不是武大的库 就用solr查询 ，进这个方法
-                if (genre == '找人') {
-                    this.getAxios('/indexServer/scholar_paper/select')
-                } else {
-                    let ach_unique = this.getAchunique
-                    let solrQuery = {
-                        "q": "ach_unique:" + ach_unique,
-                        "wt": "json",
-                        "fl": "",
-                        "indent": "on",
-                        "defType": "edismax",
-                        "mm": "75%",
-                        "sort": ''
-                    }
-                    this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery)).then((res) => {
+                let solrQuery2 = {
+                    "q": "ACH_UNIQUE:"+ach_unique,
+                    "wt": "json",
+                    "fl": "",
+                    "indent": "on",
+                    "defType": "edismax",
+                    "mm": "75%",
+                    "sort": ''
+                }
+                this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery1)).then((res) => {
+                    console.log(res,1)
+                    if (res.data.response.docs.length > 0) {
                         this.infos = res.data.response.docs[0]
                         let {title, author, ab, punishOrg, keywords_q, cite_count, ach_type} = this.infos;
                         author = author.join(',')
@@ -360,8 +345,24 @@
                         Object.assign(this.infosList, {title, author, ab, punishOrg, keywords_q, cite_count, ach_type})
                         this.getContent()
                         this.collectionList()
-                    })
-                }
+                    } else {
+                        this.$http.post('/indexServer/scholar_paper/select', qs.stringify(solrQuery2)).then((res) => {
+                            console.log(res,2)
+                            this.infos = res.data.response.docs[0]
+                            this.infosList.title = this.infos.TITLE
+                            this.infosList.author = this.infos.GROUP_AU
+                            this.infosList.ab = ''
+                            this.infosList.punishOrg = ''
+                            this.infosList.keywords_q = ''
+                            this.infosList.cite_count = this.infos.CITE_COUNT
+                            this.infosList.ach_type = ''
+                            this.infosList.ach_unique = this.infos.ACH_UNIQUE
+                            this.infosList.pub_name = this.infos.PUB_NAME_CH
+                            this.getContent()
+                            this.collectionList()
+                        })
+                    }
+                })
             }
             if (this.$store.state.review) {
                 this.commentsFlag = true

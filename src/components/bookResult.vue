@@ -220,11 +220,9 @@
                     })
                 }
             },
-
             // 取消收藏弹框按钮
             cancel: function () {
                 document.getElementById('cancelCollectBox').style.display = 'none'
-//                document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
             },
 //        点击确定取消收藏
             confirm(bookListItem,index) {

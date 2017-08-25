@@ -167,6 +167,7 @@
 
             gotoDetails(item, index){ //跳转详情页
                 console.log(item.dataType)
+//                console.log(item.achUnique)
                 let q = {
                     type: item.dataType,
                     scholarUnique: item.achUnique
@@ -179,7 +180,6 @@
             }
         },
         mounted(){
-
         }
     }
 </script>

@@ -36,7 +36,6 @@
         font-size: 18px;
         font-weight: 700;
         color: #333;
-
     }
     .dialog-wrap {
         width: 5rem;

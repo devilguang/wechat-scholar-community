@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <p class="scholarAbout clrfix">{{infos.scholarName}}
-                    <span class="scholarUniverse">{{infos.orgName}}</span>
+                    <span class="scholarUniverse" v-show="infos.orgName">{{infos.orgName}}</span>
                 </p>
                 <p class="scholarMarjor">领域方向：
                     <span>{{infos.area}}</span>
@@ -275,16 +275,13 @@
             }
         },
         mounted() {
-            console.log(this.getDatatype)
             if (this.$store.state.scholarInfo.type == 'wd') {
                 this.pullScholarFromWD()
             } else {
                 this.pullScholarFromServer()
                 this.pullCoper()
                 this.pullCoorgan()
-
             }
-
         }
     }
 

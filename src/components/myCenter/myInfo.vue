@@ -37,7 +37,6 @@
         </article>
       </div>
 
-
       <!-- 未完善资料时 -->
       <div id="notcomplete" style="display:none">
         <div class="imgBox">
@@ -91,8 +90,8 @@
               <span class="tipWord">您确定要取消关注吗?</span>
             </p>
             <div class="operate">
-              <span class="cancel" @click="cancel">取消</span>
-              <span class="confirm"@click="confirm">确定</span>
+              <span class="cancel"  @click="cancel">取消</span>
+              <span class="confirm" @click="confirm">确定</span>
             </div>
          </div>
     </section>

@@ -246,9 +246,7 @@ const store = new Vuex.Store({
             context.commit('SET_SCHOLARLIST', scholarsList)
         },
         useAxiosGetToken(){
-
         }
-
     },
     getters: {
         getUserInfo: state => {
@@ -267,7 +265,7 @@ const store = new Vuex.Store({
 })
 
 Vue.use(VueAuthenticate, {
-    loginUrl: '/findScholar', //http://mobile.subject.net.cn/#/findScholar
+    loginUrl: '/', //http://mobile.subject.net.cn/#/findScholar
     baseUrl: 'http://120.55.191.189:9000',
     tokenType: 'Bearer',
     tokenName: 'token',

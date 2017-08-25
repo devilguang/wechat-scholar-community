@@ -12,36 +12,6 @@
             </fieldset>
         </form>
     </div>
-    <!-- <div id="findBook">
-      <article class="searchTop">
-        <input type="text" name="" value="" placehoder="请输入搜索内容" :value="bookName" v-model="bookName">
-        <span class="searchBtn iconfont icon-searchBtn" @click="searchBook"></span>
-      </article>
-      <article class="findTip clrfix">
-        <div class="findLogo">
-          <span class="iconfont icon-flower" ></span>
-        </div>
-        <p>找到与"{{bookName}}"相关的文献共{{num}}条</p>
-      </article>
-      <article class="bookList">
-        <ul class="clrfix">
-          <li class="bookListItem" v-for="bookListItem in bookList"> -->
-    <!-- <router-link :to="{ name: 'bookDetail', params: { bookID: bookListItem.bookID }}"> -->
-    <!-- <p class="bookTitle">{{bookListItem.title}}</p>
-    <p class="bookBrief"><span class="author">{{bookListItem.docAuthors}}</span><span> —{{bookListItem.qikanName}}— </span><span>{{bookListItem.ym}}(刊号)</span></p>
-    <p class="abstract"><span>摘要:</span><span>{{bookListItem.ab}}</span></p> -->
-    <!-- </router-link> -->
-    <!-- <ul class="userBtns clrfix">
-       <li class="clrfix"><span class="iconfont icon-remark" v-on:click="test(bookList[index])"></span><span class="word">评论</span></li>
-       <li><span class="iconfont icon-recommendBtn"></span><span class="word">推荐</span></li>
-       <li class="clrfix"><span class="iconfont icon-share"></span><span class="word">分享</span></li>
-       <li ><span class="iconfont icon-collect"></span><span class="word">收藏</span></li>
-    </ul>
-  </li>
-</ul>
-</article>
-
-</div> -->
 </template>
 <script>
     import axios from 'axios'
@@ -59,7 +29,6 @@
             searchBook: function () {
                 var that = this
                 let queryAch = {achTitle: this.bookName, isNewQuery: true}
-//                console.log('fuck' + queryAch.achTitle, queryAch.isNewQuery)
                 this.$store.dispatch('saveSearchAchQuery', queryAch)
                 this.$router.push({
                     path: '/findBook/bookResult'
@@ -67,6 +36,7 @@
             }
         },
         mounted () {
+
         }
     }
 

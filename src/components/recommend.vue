@@ -24,7 +24,7 @@
      </ul>
    </div>
    <router-link to="chooseField">
-   <p class="nextBtn">定制我的推荐</p>
+   <p class="nextBtn" style="margin-bottom: 1.5rem">定制我的推荐</p>
  </router-link>
  </div>
 </template>
