@@ -8,7 +8,8 @@
                 <!-- <router-link :to="{ path: 'scholarResult/scholarDetail', query: { ID: item.userID }}"> -->
                 <!-- <router-link :to="{ name: 'detail', params: { link: item.link }}"> -->
                 <div class="scholarHead">
-                    <img v-if="item.head_photo_url && item.head_photo_url.length > 0":src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath=' + item.head_photo_url">
+                    <img v-if="item.head_photo_url && item.head_photo_url.length > 0"
+                         :src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath=' + item.head_photo_url">
                     <img v-else :src="baseImg" alt="">
                 </div>
                 <div class="scholarInfos">
@@ -16,7 +17,7 @@
                         <span class="scholarName">{{item.scholar_name}}</span>
                         <span class="scholarStatus">未认证</span>
                     </div>
-                    <p class="scholarPosition">{{item.org_name=='undefined'?item.org_name:''}}</p>
+                    <p class="scholarPosition">{{item.org_name == 'undefined' ? item.org_name : ''}}</p>
                     <p class="scholarCited">发文量：{{item.ach_all_num}}</p>
                     <p class="scholarDir">领域方向：
                         <span>{{item.subject ? item.subject.join(', ') : ''}}</span>
@@ -26,7 +27,7 @@
                 <!-- </router-link> -->
             </li>
         </ul>
-        <div  style="text-align: center;margin-top: 50%;" v-show="showFlag">暂无数据...</div>
+        <div style="text-align: center;margin-top: 50%;" v-show="showFlag">暂无数据...</div>
     </div>
 </template>
 
@@ -42,12 +43,13 @@
                 queryScholar: {},
                 q: '*:*',
                 type: 'wd',
-                baseImg:'../../static/img/img-scholar_1.png',
-                barFlag:true,
-                showFlag:false
+                baseImg: '../../static/img/img-scholar_1.png',
+                barFlag: true,
+                showFlag: false
+
             }
         },
-        components:{
+        components: {
             indicatorBar
         },
         methods: {
@@ -131,7 +133,7 @@
                                         this.items.push(...server_docs)
                                         this.pageNum++
                                         this.busy = false
-                                        if(this.items.length <=0){
+                                        if (this.items.length <= 0) {
                                             this.showFlag = true
                                         }
                                     })
@@ -170,7 +172,7 @@
                             this.items.push(...server_docs)
                             this.pageNum++
                             this.busy = false
-                            if(this.items.length <=0){
+                            if (this.items.length <= 0) {
                                 this.showFlag = true
                             }
                         })

@@ -126,7 +126,8 @@
         methods: {
             //查询学者是否被关注
             userToScholarUnique(){
-                this.$axios.get('/v1/weChat/userToScholarUnique/' + this.infos.scholarUnique).then((res) => {
+                let scholarUnique = this.infos.scholar_unique?this.infos.scholar_unique:this.infos.scholarUnique
+                this.$axios.get('/v1/weChat/userToScholarUnique/' + scholarUnique).then((res) => {
                     this.isAttention = res.data.data.isAttention
                 })
             },
@@ -139,11 +140,12 @@
             },
             // 加关注
             attention () {
+                let scholarUnique = this.infos.scholar_unique ? this.infos.scholar_unique:this.infos.scholarUnique
                 this.$axios({
                     method: 'post',
                     url: '/v1/weChat/scholarAttention',
                     data: {
-                        'scholarUnique': this.infos.scholarUnique,
+                        'scholarUnique': scholarUnique,
                         'scholarName': this.infos.scholarName,
                         'area': this.infos.area,
                         'dataType': this.getDatatype.type
@@ -164,11 +166,12 @@
                 document.getElementById('cancelAttentionBox').style.display = 'none'
             },
             confirm (){ //取消关注
+                let scholarUnique = this.infos.scholarUnique?this.infos.scholarUnique:this.infos.scholar_unique
                 this.$axios({
                     method: 'delete',
                     url: '/v1/weChat/scholarAttentions',
                     data: {
-                        scholarUniques: [this.infos.scholarUnique]
+                        scholarUniques: [scholarUnique]
                     }
                 }).then((res) => {
                     if (res.data.errno == 0) {
@@ -181,10 +184,10 @@
                 this.$http.get('/v1/scholar/' + this.$store.state.scholarInfo.scholarUnique, {})
                     .then((response) => {
                         this.infos = response.data.data.scholar
-                        this.userToScholarUnique()
                         // this.detailItems = response.data.scholar.cnkiDetailLists
                         this.partnerItems = response.data.data.cooperatorslist.slice(0, 10)
 //                         this.instituteItems = response.scholar.cnkiOrgansList
+                        this.userToScholarUnique()
                     })
             },
             pullScholarFromServer() {
@@ -212,12 +215,11 @@
                         this.infos = _.mapKeys(response.data.response.docs[0], function (value, key) {
                             return keymap[key]
                         })
-                        this.userToScholarUnique()
                         // this.detailItems = response.data.scholar.cnkiDetailLists
                         // this.partnerItems = response.data.cooperatorslist.slice(0, 10)
                         // this.instituteItems = response.scholar.cnkiOrgansList
-                    }).then((error) => {
-                })
+                        this.userToScholarUnique()
+                    })
             },
             pullCoper() {
                 let solrQueryCoper = {
@@ -277,6 +279,7 @@
         mounted() {
             if (this.$store.state.scholarInfo.type == 'wd') {
                 this.pullScholarFromWD()
+                this.userToScholarUnique()
             } else {
                 this.pullScholarFromServer()
                 this.pullCoper()

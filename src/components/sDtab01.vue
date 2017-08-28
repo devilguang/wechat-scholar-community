@@ -187,7 +187,7 @@
                     let solrQueryWechat = {
                         "q": "*:*",
                         "wt": "json",
-                        "fl": "TITLE,PUB_NAME_CH,CITE_COUNT,PY,GROUP_AU,ACH_UNIQUE",   //，
+                        "fl": "TITLE,PUB_NAME_CH,CITE_COUNT,PY,GROUP_AU,ACH_UNIQUE",
                         "indent": "off",
                         "rows": 10,
                         "start": 0
@@ -251,7 +251,6 @@
                                 this.detailItems.forEach((item)=>{
                                     collectIndex.forEach((index)=> {
                                         this.$set(this.detailItems[index],'isFavorite',true)
-
                                     })
                                 })
                             })

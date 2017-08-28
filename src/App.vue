@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <footer>
-            <ul class="clrfix">
+            <ul class=" ">
                 <li  @click="navTab(nav01Text)" :class="{active: activeName == nav01Text || activeFirst}">
                     <router-link to="/findScholar">
                         <span class="iconfont icon-findS "></span>

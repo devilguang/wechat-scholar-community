@@ -7,7 +7,7 @@
                     <div class="wordsCon" @click="gotoDetails(collectItem,index)">
                         <p class="coreCon">{{collectItem.achTitle}}</p>
                         <p class="authorItem"><span class="authorTit">作者：</span><span
-                                class="authorName">{{collectItem.achAuthor ? '' : collectItem.achAuthor}}</span>
+                                class="authorName">{{collectItem.achAuthor ? collectItem.achAuthor:'' }}</span>
                         </p>
                         <p class="abstractItem"><span class="abstractTit">摘要：</span><span class="abstractCon"></span>
                         </p>
@@ -94,7 +94,6 @@
             },
             // 点击确定
             confirm (item){
-                console.log(item.achUnique)
                 this.showFlag = false
                 this.$axios({
                     method: 'delete',

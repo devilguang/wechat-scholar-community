@@ -336,7 +336,6 @@
                     "sort": ''
                 }
                 this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery1)).then((res) => {
-                    console.log(res,1)
                     if (res.data.response.docs.length > 0) {
                         this.infos = res.data.response.docs[0]
                         let {title, author, ab, punishOrg, keywords_q, cite_count, ach_type} = this.infos;
@@ -347,7 +346,6 @@
                         this.collectionList()
                     } else {
                         this.$http.post('/indexServer/scholar_paper/select', qs.stringify(solrQuery2)).then((res) => {
-                            console.log(res,2)
                             this.infos = res.data.response.docs[0]
                             this.infosList.title = this.infos.TITLE
                             this.infosList.author = this.infos.GROUP_AU
@@ -365,8 +363,11 @@
                 })
             }
             if (this.$store.state.review) {
+
                 this.commentsFlag = true
+
             } else {
+
                 this.commentsFlag = false
             }
         }
