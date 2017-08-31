@@ -83,7 +83,8 @@
                 this.$axios.get('/v1/weChat/token/' + openId,{params:{}}).then((response)=>{})
                 return
             }
-            if (code) {
+            // 微信拦截
+           /* if (code) {
                 this.$axios.get('/v1/weChat/userInfo/' + code).then((res) => {
                     let openId = res.data.data.openId
                     this.local('openId', openId)
@@ -93,7 +94,7 @@
             }
             else {
                 window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8115bea15b8d7d1a&redirect_uri=http://mobile.subject.net.cn&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
-            }
+            }*/
         }
     }
 </script>

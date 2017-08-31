@@ -69,7 +69,7 @@
             </ul>
             <!-- 选项卡部分页面在component体现  -->
             <component :is='currentView' keep-alive :infos="infos" :partnerItems="partnerItems"
-                       :instituteItems="instituteItems"></component>
+                       :instituteItems="instituteItems" :docItems="detailItems"></component>
         </article>
         <section id="cancelAttentionBox" v-show="metFlag">
             <div class="alertBox">
@@ -126,10 +126,11 @@
         methods: {
             //查询学者是否被关注
             userToScholarUnique(){
-                let scholarUnique = this.infos.scholar_unique?this.infos.scholar_unique:this.infos.scholarUnique
-                this.$axios.get('/v1/weChat/userToScholarUnique/' + scholarUnique).then((res) => {
+                // let scholarUnique = this.infos.scholar_unique?this.infos.scholar_unique:this.infos.scholarUnique
+                // 需要解决
+                /*this.$axios.get('/v1/weChat/userToScholarUnique/' + scholarUnique).then((res) => {
                     this.isAttention = res.data.data.isAttention
-                })
+                })*/
             },
 
             // 选项卡切换
@@ -188,6 +189,34 @@
                         this.partnerItems = response.data.data.cooperatorslist.slice(0, 10)
 //                         this.instituteItems = response.scholar.cnkiOrgansList
                         this.userToScholarUnique()
+                    })
+            },
+            pullFromBDServer() {
+                let keymap = {
+                    scholar_unique: 'scholar_unique',
+                    scholarName: 'scholarName',
+                    organName: 'orgName',
+                    research: 'area',
+                    achCount: 'achAllNum',
+                    cite: 'allCitedNum',
+                    h: 'h'
+                }
+                let scholar_unique = this.$store.state.scholarInfo.link.substring(this.$store.state.scholarInfo.link.lastIndexOf('/') + 1, this.$store.state.scholarInfo.link.length)
+                this.$http.post('/bdSchoalrServer/query/gatherScholarDetail', qs.stringify({link: this.$store.state.scholarInfo.link}))
+                    .then((response) => {
+                        response.data['scholar_unique'] = scholar_unique
+                        this.infos = _.mapKeys(response.data, function (value, key) {
+                            return keymap[key]
+                        })
+                        this.userToScholarUnique()
+                        for (let i = 0; i < response.data.cnkiAuthorsList.length; i++) {
+                            let a_partner = {};
+                            a_partner['cooperatorName'] = response.data.cnkiAuthorsList[i].author
+                            a_partner['cooperOrgName'] = response.data.cnkiAuthorsList[i].organName
+                            this.partnerItems.push(a_partner)
+                        }
+                        this.instituteItems = response.data.cnkiOrgansList
+                        this.detailItems = response.data.cnkiDetailLists
                     })
             },
             pullScholarFromServer() {
@@ -281,9 +310,10 @@
                 this.pullScholarFromWD()
                 this.userToScholarUnique()
             } else {
-                this.pullScholarFromServer()
+                this.pullFromBDServer()
+                /*this.pullScholarFromServer()
                 this.pullCoper()
-                this.pullCoorgan()
+                this.pullCoorgan()*/
             }
         }
     }
