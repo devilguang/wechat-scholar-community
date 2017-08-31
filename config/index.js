@@ -43,6 +43,13 @@ module.exports = {
                     '^/indexServer': '/solr'
                 }
             },
+            '/bdSchoalrServer': {
+                target: 'http://www.subject.net.cn:86/',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/bdSchoalrServer': '/'
+                }
+            },
             '/indexPaperServer': {
                 target: 'http://114.55.24.210:8983/',
                 changeOrigin: true,
