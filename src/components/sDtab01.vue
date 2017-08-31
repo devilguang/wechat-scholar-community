@@ -36,12 +36,12 @@
                     <p class="eachCitedNum">被引次数：{{detailItem.cites}}</p>
                 </div>
                 <ul class="userBtns clrfix">
-                    <li style="font-size:0.23rem" @click="discuss(detailItem,index)"><span class="iconfont icon-remark" style="font-size: 0.35rem"></span>评论</li>
+                    <li style="font-size:0.23rem" ><span class="iconfont icon-remark" style="font-size: 0.35rem"></span>评论</li>
                     <li style="font-size:0.23rem" @click="recommend(detailItem,index)" :class="{active:detailItem.isLike?detailItem.isLike:false}">
                         <span class="iconfont icon-recommendBtn" style="font-size: 0.35rem"></span>推荐
                     </li>
                     <li style="font-size:0.23rem"><span class="iconfont icon-share" style="font-size: 0.35rem"></span>分享</li>
-                    <li style="font-size:0.23rem" @click="collect(detailItem,index)" :class="{active:detailItem.isFavorite?detailItem.isFavorite:false}">
+                    <li style="font-size:0.23rem" :class="{active:detailItem.isFavorite?detailItem.isFavorite:false}">
                         <span class="iconfont icon-collect" style="font-size: 0.35rem"></span>{{detailItem.isFavorite? '已收藏':'收藏'}}
                     </li>
                 </ul>
