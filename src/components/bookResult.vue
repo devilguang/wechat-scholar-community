@@ -1,5 +1,6 @@
 <template>
     <div id="bookResult">
+        <indicator-bar v-if="showFlag" style="position: absolute;left:50%;top:50%"></indicator-bar>
         <article class="searchTop">
             <input type="text" name="" value="" placehoder="请输入搜索内容" v-model="queryAch.achTitle"
                    :value="queryAch.achTitle">
@@ -35,44 +36,51 @@
         <article class="bookList">
             <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
                 class="clrfix">
-                <li class="bookListItem" v-for="(bookListItem,index) in bookList" @click="toBookDetail()">
+                <li class="bookListItem" v-for="(bookListItem,index) in bookList">
                     <!-- <router-link :to="{ name: 'bookDetail', params: { bookID: bookListItem.bookID }}"> -->
-                    <p class="bookTitle">{{bookListItem.title}}</p>
-                    <p class="bookBrief"><span class="author">{{bookListItem.author && bookListItem.author.length > 0 ? bookListItem.author.join(',') : ''}}</span><span> —{{bookListItem.yvip}}</span><span></span>
+                    <div @click="showMinute(bookListItem.ach_unique,index)">
+                        <p class="bookTitle">{{bookListItem.title}}</p>
+                        <p class="bookBrief"><span
+                                class="author">{{bookListItem.author && bookListItem.author.length > 0 ? bookListItem.author.join(',') : ''}}</span><span> —{{bookListItem.yvip}}</span><span></span>
+                        </p>
+                    </div>
+                    <p v-if="bookListItem.ab" class="abstract">
+                        <span>摘要:</span><span>{{bookListItem.ab.length > 200 ? bookListItem.ab.substring(0, 190) + '...' : bookListItem.ab}}</span>
                     </p>
-                    <p v-if="bookListItem.ab" class="abstract"><span>摘要:</span><span>{{bookListItem.ab.length > 200 ? bookListItem.ab.substring(0, 190) + '...' : bookListItem.ab}}</span></p>
                     <!-- </router-link> -->
                     <ul class="userBtns clrfix">
-                        <li class="clrfix"><span class="iconfont icon-remark"></span><span class="word">评论</span></li>
-                        <li @click="recommend(bookListItem,index)" :class="{active:bookListItem.recommendActive}"><span
+                        <li class="clrfix"><span class="iconfont icon-remark"></span><span
+                                class="word" @click="showMinute(bookListItem.ach_unique,index)">评论</span></li>
+                        <li @click="recommend(bookListItem,index)"
+                            :class="{active:bookListItem.isLike?bookListItem.isLike:false}"><span
                                 class="iconfont icon-recommendBtn"></span><span class="word">推荐</span></li>
                         <li class="clrfix"><span class="iconfont icon-share"></span><span class="word">分享</span></li>
-                        <li @click="collect(bookListItem,index)" :class="{active:bookListItem.collectActive}"><span
+                        <li @click="collect(bookListItem,index)"
+                            :class="{active:bookListItem.isFavorite?bookListItem.isFavorite:false}"><span
                                 class="iconfont icon-collect"></span><span class="collectWord word">收藏</span></li>
                     </ul>
+                    <section id="cancelCollectBox" style="display:none">
+                        <div class="alertBox">
+                            <p class="tip">
+                                <span class="iconfont icon-warn"></span>
+                                <span class="tipWord">您确定要取消收藏吗?</span>
+                            </p>
+                            <div class="operate">
+                                <span class="cancel" @click="cancel">取消</span>
+                                <span class="confirm" @click="confirm(bookListItem,index)">确定</span>
+                            </div>
+                        </div>
+                    </section>
                 </li>
+
             </ul>
         </article>
-        <section id="cancelCollectBox" style="display:none">
-            <div class="alertBox">
-                <p class="tip">
-                    <span class="iconfont icon-warn"></span>
-                    <span class="tipWord">您确定要取消收藏吗?</span>
-                </p>
-                <div class="operate">
-                    <span class="cancel" @click="cancel">取消</span>
-                    <span class="confirm" @click="confirm">确定</span>
-                </div>
-            </div>
-        </section>
     </div>
 </template>
-
-
 <script>
     import Vue from 'vue'
     import qs from 'querystring'
-
+    import indicatorBar from '../views/indicator.vue'
     var num = 0
     export default {
         name: 'scholarDetail',
@@ -93,10 +101,53 @@
                 activeWay: '',
                 pageNum: 1,
                 normal: '',
-                queryAch: {}
+                queryAch: {},
+                showFlag: true
             }
         },
+        computed: {},
+        components: {
+            indicatorBar
+        },
+
         methods: {
+//            查看是否有收藏和点赞
+            collectionList(){
+                let achUniques = []
+                this.bookList.forEach((item) => {
+                    achUniques.push(item.ach_unique)
+                })
+                this.$axios({
+                    method: 'post',
+                    url: '/v1/weChat/userToAch',
+                    data: {
+                        achUniques: achUniques
+                    }
+                }).then((res) => {
+                    let array = res.data.data
+                    let userIndex = []
+                    let collectIndex = []
+                    array.forEach((item, index) => {
+                        if (item.isLike === 1) {
+                            userIndex.push(index)
+                        }
+                        if (item.isFavorite === 1) {
+                            collectIndex.push(index)
+                        }
+                    })
+                    this.bookList.forEach((item) => {
+                        userIndex.forEach((index) => {
+                            this.$set(this.bookList[index], 'isLike', true)
+                        })
+                    })
+                    this.bookList.forEach((item) => {
+                        collectIndex.forEach((index) => {
+                            this.$set(this.bookList[index], 'isFavorite', true)
+                            document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
+                        })
+                    })
+                })
+            },
             searchBook: function () {
                 this.bookList = []
                 this.queryAch.isNewQuery = true;
@@ -114,51 +165,81 @@
                 this.activeWay = way
             },
             // 进入文献详情
-            toBookDetail: function () {
-                if (!this.loginJudge()) {
+            showMinute(ach_unique, index) {
+                localStorage.setItem('typeof','文献')
+                this.$store.commit('SET_ACHUNIQUE',ach_unique)
+                localStorage.setItem('index', index)
+                if (localStorage.getItem('openId')) {
+                    this.$store.commit('SET_SCHOLARLIST', this.bookList)
                     this.$router.push({
-                        path: '/findBook/bookResult/bookDetail/1'
+                        path: '/findBook/bookResult/bookDetail'
                     })
                 } else {
                     return
                 }
             },
-            recommend: function (item, index) {
-                // set设置数据相应 增加data里面的 一个recommendActive属性可以控制高亮
-                if ((typeof item.recommendActive) === 'undefined') {
-                    Vue.set(this.bookList[index], 'recommendActive', true)
+            recommend (item, index) {
+                if (item.isLike == true) {
+                    this.$set(item, 'isLike', false)
+                    this.$axios({
+                        method: 'delete',
+                        url: '/v1/weChat/achLikes',
+                        data: {
+                            achUniques: [item.ach_unique],
+                            dataType: "server"
+                        }
+                    })
                 } else {
-                    item.recommendActive = !item.recommendActive
+                    this.$set(item, 'isLike', true)
+                    this.$axios({
+                        method: 'post',
+                        url: '/v1/weChat/achLike',
+                        data: {
+                            achUnique: item.ach_unique,
+                            dataType: "server"
+                        }
+                    })
                 }
             },
-            collect: function (item, index) {
-                num = index
-                if ((typeof item.collectActive) === 'undefined') {
-                    Vue.set(this.bookList[index], 'collectActive', true)
-                } else {
-                    item.collectActive = !item.collectActive
-                }
-                if (item.collectActive === true) {
-                    // item.innerHTML = '已收藏'
-                    console.log(item)
-                    document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
-                }
-                if (item.collectActive === false) {
-                    document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
+            collect (item, index) { //收藏
+                if(item.isFavorite){  //
                     document.getElementById('cancelCollectBox').style.display = 'block'
+                }else{
+                    this.$axios({    //收藏
+                        method: 'post',
+                        url: '/v1/weChat/achFavorite',
+                        data: {
+                            "achUnique": item.ach_unique,
+                            "title": item.title,
+                            "achType": item.ach_type,
+                            "dataType":"server"
+                        }
+                    }).then((res)=>{
+                        document.getElementsByClassName('collectWord')[index].innerHTML = '已收藏'
+                        this.$set(this.bookList[index], 'isFavorite', true)
+                    })
                 }
             },
             // 取消收藏弹框按钮
             cancel: function () {
                 document.getElementById('cancelCollectBox').style.display = 'none'
-                Vue.set(this.bookList[num], 'collectActive', true)
-                document.getElementsByClassName('collectWord')[num].innerHTML = '已收藏'
             },
-            confirm: function () {
-                document.getElementById('cancelCollectBox').style.display = 'none'
-                Vue.set(this.bookList[num], 'collectActive', false)
+//        点击确定取消收藏
+            confirm(bookListItem,index) {
+                this.$axios({
+                    method: 'delete',
+                    url: '/v1/weChat/achFavorites',
+                    data: {
+                        achUniques: [bookListItem.ach_unique],
+                        dataType: "server"
+                    }
+                }).then((res) => {
+                    document.getElementsByClassName('collectWord')[index].innerHTML = '收藏'
+                    document.getElementById('cancelCollectBox').style.display = 'none'
+                    this.$set(this.bookList[index], 'isFavorite', false)
+                })
             },
-            loadMore: function () {
+            loadMore () {
                 let solrQuery = {
                     "q": "*:*",
                     "wt": "json",
@@ -175,20 +256,16 @@
                 } else {
                     solrQuery.q = '*:*'
                 }
-
                 if (this.activeTime != '') {
                     solrQuery.q += ' and py:[' + this.activeTime + ' TO *]'
                 }
-
                 if (this.activeWay && this.activeWay != '') {
                     solrQuery.sort = this.activeWay + ' asc'
                 }
-
                 solrQuery.start = (this.pageNum - 1) * 10
-
-                console.log(solrQuery)
                 this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery))
                     .then((result) => {
+                        this.showFlag = false
                         this.num = result.data.response.numFound
                         if (this.num > 0) {
                             if (this.queryAch.isNewQuery) {
@@ -201,11 +278,13 @@
                             this.pageNum++
                         }
                         this.busy = false
-                    }).then((error) => console.log(error))
+                        this.collectionList()  //用户操作记录
+                    })
             }
         },
         mounted () {
             this.queryAch = this.$store.state.queryAch
+
         }
     }
 </script>
@@ -217,5 +296,9 @@
         height: 100%;
         z-index: 3;
         background: rgba(0, 0, 0, 0.28);
+    }
+
+    .searchTop input {
+        background: #ffffff;
     }
 </style>

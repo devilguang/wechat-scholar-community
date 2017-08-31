@@ -10,20 +10,23 @@
                     <div class="topMiddle">
                         <div class="imgBox">
                             <img v-if="infos.headPhotoUrl && infos.headPhotoUrl.length > 0"
-                                 :src="'http://120.55.191.189:9000/v1/userInfo/headPhotoDownload?filePath=' + infos.headPhotoUrl">
-                            <img v-else src="../assets/img/img-scholar_1.png">
+                                 :src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath=' + infos.headPhotoUrl">
+                            <img v-else :src="baseImg" alt="">
                         </div>
                     </div>
                     <div class="topRight">
-                        <span class="attention" id="attentionBtn" @click="attention()">+关注</span>
+                        <span class="attention" id="attentionBtn" @click="attention()"
+                              v-if="this.isAttention!==1">+关注</span>
+                        <span class="attention" @click="metFlag=true" v-else>已关注</span>
                     </div>
                 </div>
                 <p class="scholarAbout clrfix">{{infos.scholarName}}
-                    <span class="scholarUniverse">{{infos.orgName}}</span>
+                    <span class="scholarUniverse" v-show="infos.orgName">{{infos.orgName}}</span>
                 </p>
                 <p class="scholarMarjor">领域方向：
                     <span>{{infos.area}}</span>
                 </p>
+                <!--<show-meassge v-if="true" meassage="关注成功" v-on:listenToChild="showMsgChild"></show-meassge>-->
             </div>
 
             <!-- 详情数字部分 -->
@@ -64,30 +67,31 @@
                     <span class="tabTitle">合作机构</span>
                 </li>
             </ul>
-            <!-- 选项卡部分页面在component体现 -->
+            <!-- 选项卡部分页面在component体现  -->
             <component :is='currentView' keep-alive :infos="infos" :partnerItems="partnerItems"
                        :instituteItems="instituteItems"></component>
         </article>
-        <section id="cancelAttentionBox" style="display:none">
+        <section id="cancelAttentionBox" v-show="metFlag">
             <div class="alertBox">
                 <p class="tip">
                     <span class="iconfont icon-warn"></span>
                     <span class="tipWord">您确定要取消关注吗?</span>
                 </p>
                 <div class="operate">
-                    <span class="cancel" @click="cancel">取消</span>
-                    <span class="confirm" @click="confirm">确定</span>
+                    <span class="cancel"    @click="cancel">取消</span>
+                    <span class="confirm"   @click="confirm">确定</span>
                 </div>
             </div>
         </section>
     </div>
 </template>
 <script>
+    import Vue from 'vue'
     import sDtab01 from './sDtab01'
     import sDtab02 from './sDtab02'
     import sDtab03 from './sDtab03'
     import qs from 'querystring'
-
+    import {mapGetters} from 'vuex'
     export default {
         name: 'scholarDetail',
         data() {
@@ -101,15 +105,33 @@
                 infos: [],
                 detailItems: [],
                 partnerItems: [],
-                instituteItems: []
+                instituteItems: [],
+                baseImg: '../../static/img/img-scholar_1.png',
+                barFlag: true,
+                isAttention: '',
+                metFlag: false
             }
         },
         components: {
-            sDtab01: sDtab01,
-            sDtab02: sDtab02,
-            sDtab03: sDtab03
+            sDtab01,
+            sDtab02,
+            sDtab03,
+        },
+        computed: {
+            ...mapGetters([
+                'getDatatype',
+                'getAchunique'
+            ])
         },
         methods: {
+            //查询学者是否被关注
+            userToScholarUnique(){
+                let scholarUnique = this.infos.scholar_unique?this.infos.scholar_unique:this.infos.scholarUnique
+                this.$axios.get('/v1/weChat/userToScholarUnique/' + scholarUnique).then((res) => {
+                    this.isAttention = res.data.data.isAttention
+                })
+            },
+
             // 选项卡切换
             tabToggle: function (tabText) {
                 this.currentView = tabText
@@ -117,61 +139,58 @@
                 this.activeName = tabText
             },
             // 加关注
-            attention: function () {
-                if (!this.loginJudge()) {
-                    // 已登录状态
-                    var attentionBtn = document.getElementById('attentionBtn')
-                    if (attentionBtn.innerHTML === '已关注') {
-                        document.getElementById('cancelAttentionBox').style.display = 'block'
-                    } else {
-                        window.alert('已关注')
-                        attentionBtn.innerHTML = '已关注'
+            attention () {
+                let scholarUnique = this.infos.scholar_unique ? this.infos.scholar_unique:this.infos.scholarUnique
+                this.$axios({
+                    method: 'post',
+                    url: '/v1/weChat/scholarAttention',
+                    data: {
+                        'scholarUnique': scholarUnique,
+                        'scholarName': this.infos.scholarName,
+                        'area': this.infos.area,
+                        'dataType': this.getDatatype.type
                     }
-                } else {
-                    return
-                }
+                }).then((res)=>{
+                    this.isAttention = 1
+                })
             },
-            approve: function () {
-                if (!this.loginJudge()) {
-                    // 已登录未完善
-                    if (!window.localStorage.getItem('myData')) {
-                        // window.confirm('请先完善资料')
-                        if (window.confirm('请先完善资料')) {
-                            this.$router.push({
-                                path: '../../../myCenter/myInfo'
-                            })
-                        }
-                    } else {
-                        // 已登录已完善
-                        this.$router.push({
-                            path: '../../../myCenter/Iwillconfirm'
-                        })
-                        console.log('yiwanshan')
-                    }
-                } else {
-                    return
-                }
+            approve () {
+                // 已登录已完善
+                this.$router.push({
+                    path: '../../../myCenter/Iwillconfirm'
+                })
             },
-            cancel: function () {
-                var attentionBtn = document.getElementById('attentionBtn')
+            cancel () {
+                let attentionBtn = document.getElementById('attentionBtn')
                 attentionBtn.innerHTML = '已关注'
                 document.getElementById('cancelAttentionBox').style.display = 'none'
             },
-            confirm: function () {
-                var attentionBtn = document.getElementById('attentionBtn')
-                attentionBtn.innerHTML = '+关注'
-                document.getElementById('cancelAttentionBox').style.display = 'none'
+            confirm (){ //取消关注
+                let scholarUnique = this.infos.scholarUnique?this.infos.scholarUnique:this.infos.scholar_unique
+                this.$axios({
+                    method: 'delete',
+                    url: '/v1/weChat/scholarAttentions',
+                    data: {
+                        scholarUniques: [scholarUnique]
+                    }
+                }).then((res) => {
+                    if (res.data.errno == 0) {
+                        this.isAttention = 0
+                        this.metFlag = false
+                    }
+                })
             },
-            pullScholarFromWD: function() {
+            pullScholarFromWD() {
                 this.$http.get('/v1/scholar/' + this.$store.state.scholarInfo.scholarUnique, {})
                     .then((response) => {
-                    this.infos = response.data.scholar
-                    // this.detailItems = response.data.scholar.cnkiDetailLists
-                    this.partnerItems = response.data.cooperatorslist.slice(0, 10)
-                    // this.instituteItems = response.scholar.cnkiOrgansList
-                }).then((error) => {})
+                        this.infos = response.data.data.scholar
+                        // this.detailItems = response.data.scholar.cnkiDetailLists
+                        this.partnerItems = response.data.data.cooperatorslist.slice(0, 10)
+//                         this.instituteItems = response.scholar.cnkiOrgansList
+                        this.userToScholarUnique()
+                    })
             },
-            pullScholarFromServer: function() {
+            pullScholarFromServer() {
                 let solrQueryWechat = {
                     "q": "*:*",
                     "wt": "json",
@@ -180,7 +199,6 @@
                     "rows": 1,
                     "start": 0
                 }
-
                 let keymap = {
                     SCHOLAR_UNIQUE: 'scholar_unique',
                     SCHOLAR_NAME: 'scholarName',
@@ -193,15 +211,17 @@
                 solrQueryWechat.q = 'SCHOLAR_UNIQUE:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                 this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
                     .then((response) => {
-                    this.infos = _.mapKeys(response.data.response.docs[0], function (value, key) {
-                        return keymap[key]
+                        this.barFlag = false
+                        this.infos = _.mapKeys(response.data.response.docs[0], function (value, key) {
+                            return keymap[key]
+                        })
+                        // this.detailItems = response.data.scholar.cnkiDetailLists
+                        // this.partnerItems = response.data.cooperatorslist.slice(0, 10)
+                        // this.instituteItems = response.scholar.cnkiOrgansList
+                        this.userToScholarUnique()
                     })
-                    // this.detailItems = response.data.scholar.cnkiDetailLists
-                    // this.partnerItems = response.data.cooperatorslist.slice(0, 10)
-                    // this.instituteItems = response.scholar.cnkiOrgansList
-                }).then((error) => {})
             },
-            pullCoper: function() {
+            pullCoper() {
                 let solrQueryCoper = {
                     "q": "*:*",
                     "wt": "json",
@@ -210,7 +230,6 @@
                     "rows": 10,
                     "start": 0
                 }
-
                 let keymapCoper = {
                     COOPERATOR_NAME: 'cooperatorName',
                     COOPER_ORG_NAME: 'cooperOrgName'
@@ -227,9 +246,10 @@
                         // this.detailItems = response.data.scholar.cnkiDetailLists
                         this.partnerItems = server_docs.slice(0, 10)
                         // this.instituteItems = response.scholar.cnkiOrgansList
-                    }).then((error) => {})
+                    }).then((error) => {
+                })
             },
-            pullCoorgan: function() {
+            pullCoorgan() {
                 let solrQueryCoorgan = {
                     "q": "*:*",
                     "wt": "json",
@@ -253,18 +273,28 @@
                             }))
                         })
                         this.instituteItems = server_docs.slice(0, 10)
-                    }).then((error) => {})
+                    })
             }
         },
         mounted() {
             if (this.$store.state.scholarInfo.type == 'wd') {
-                this.pullScholarFromWD();
+                this.pullScholarFromWD()
+                this.userToScholarUnique()
             } else {
-                this.pullScholarFromServer();
-                this.pullCoper();
-                this.pullCoorgan();
+                this.pullScholarFromServer()
+                this.pullCoper()
+                this.pullCoorgan()
             }
         }
     }
 
 </script>
+<style>
+    #zxq {
+        display: flex;
+    }
+
+    #zxq li {
+        flex: 1
+    }
+</style>

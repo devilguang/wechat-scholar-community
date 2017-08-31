@@ -1,4 +1,4 @@
-sD<template lang="html">
+<template lang="html">
  <section class="tabContent" id="sDtab03">
      <ul>
        <li class="instituteItem clrfix" v-for="instituteItem in instituteItems">

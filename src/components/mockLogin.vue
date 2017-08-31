@@ -3,7 +3,7 @@
     <h1>快速注册</h1>
     <article class="regBox">
       <form class="regMain" method="post">
-          <p><span>用户名</span><input type="text" name=""  placeholder="用户名" class="userName"></p>
+          <p><span>用户名</span><input type="text"  placeholder="用户名" v-model="userName"></p>
           <input type="button" name="" value="授权并登录" class="next" v-on:click="toLogin">
       </form>
     </article>
@@ -11,19 +11,18 @@
 </template>
 
 <script>
-var userName = document.getElementsByClassName('userName')
-// var userPsw = document.getElementsByClassName('userPsw')
-// import axios from 'axios'
 export default {
   data () {
     return {
-      message: ''
+      message: '',
+      userName:''
     }
   },
   methods: {
-    toLogin: function () {
-      window.sessionStorage.setItem('userName', userName[0].value)
-      this.$router.go(-1)
+    toLogin () {
+      this.$router.push({
+        path:'/codeInput'
+      })
     }
     // sendCode: function () {
     //   if (!(/^1[34578]\d{9}$/.test(userTel[0].value))) {

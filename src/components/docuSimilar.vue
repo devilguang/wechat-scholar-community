@@ -2,13 +2,14 @@
   <div id="docuSimilar">
     <div class="literatureCon">
       <ul>
-        <li>
-          <p class="literTitle">相似的</p>
-          <p class="literAuthor"><span>莫言</span><span>— — 《丰乳肥臀》 — —</span><span>2002(刊号)</span></p>
+        <li style="text-align: center;padding: 30px">
+            暂无数据
+          <!--<p class="literTitle">相似的</p>-->
+          <!--<p class="literAuthor"><span>莫言</span><span>— — 《丰乳肥臀》 — —</span><span>2002(刊号)</span></p>-->
         </li>
         <li>
-          <p class="literTitle">空间钢结构的应用和发展</p>
-          <p class="literAuthor"><span>莫言</span><span>— — 《丰乳肥臀》 — —</span><span>2002(刊号)</span></p>
+          <!--<p class="literTitle">空间钢结构的应用和发展</p>-->
+          <!--<p class="literAuthor"><span>莫言</span><span>— — 《丰乳肥臀》 — —</span><span>2002(刊号)</span></p>-->
         </li>
       </ul>
     </div>

@@ -13,9 +13,11 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "lodash": "^4.17.4",
     "querystring": "^0.2.0",
     "vue": "^2.4.1",
     "vue-infinite-scroll": "^2.0.1",
+    "vue-lodash": "^1.0.3",
     "vue-router": "^2.7.0"
   },
   "devDependencies": {

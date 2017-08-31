@@ -1,6 +1,7 @@
 <template>
     <div id="scholarResult">
         <h4>为您检索的结果如下：</h4>
+        <indicator-bar v-if="barFlag" style="margin-top: 4rem;"></indicator-bar>
         <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
             class="scholarList">
             <li class="scholarItem clrfix" v-for="item in items" @click="toDetail(item.scholar_unique)">
@@ -8,15 +9,15 @@
                 <!-- <router-link :to="{ name: 'detail', params: { link: item.link }}"> -->
                 <div class="scholarHead">
                     <img v-if="item.head_photo_url && item.head_photo_url.length > 0"
-                         :src="'http://120.55.191.189:9000/v1/userInfo/headPhotoDownload?filePath=' + item.head_photo_url">
-                    <img v-else src="../assets/img/img-scholar_1.png">
+                         :src="'http://120.55.191.189:9000/v1/userInfo/headPhoto?filePath=' + item.head_photo_url">
+                    <img v-else :src="baseImg" alt="">
                 </div>
                 <div class="scholarInfos">
                     <div class="scholarTitle">
                         <span class="scholarName">{{item.scholar_name}}</span>
                         <span class="scholarStatus">未认证</span>
                     </div>
-                    <p class="scholarPosition">{{item.org_name}}</p>
+                    <p class="scholarPosition">{{item.org_name == 'undefined' ? item.org_name : ''}}</p>
                     <p class="scholarCited">发文量：{{item.ach_all_num}}</p>
                     <p class="scholarDir">领域方向：
                         <span>{{item.subject ? item.subject.join(', ') : ''}}</span>
@@ -26,12 +27,13 @@
                 <!-- </router-link> -->
             </li>
         </ul>
+        <div style="text-align: center;margin-top: 50%;" v-show="showFlag">暂无数据...</div>
     </div>
 </template>
 
 <script>
     import qs from 'querystring'
-
+    import indicatorBar from '../views/indicator.vue'
     export default {
         name: 'scholarDetail',
         data() {
@@ -40,8 +42,15 @@
                 pageNum: 1,
                 queryScholar: {},
                 q: '*:*',
-                type: 'wd'
+                type: 'wd',
+                baseImg: '../../static/img/img-scholar_1.png',
+                barFlag: true,
+                showFlag: false
+
             }
+        },
+        components: {
+            indicatorBar
         },
         methods: {
             //  点击进学者详情页
@@ -67,7 +76,6 @@
                     "rows": 10,
                     "start": 0
                 }
-
                 let solrQueryWechat = {
                     "q": "*:*",
                     "wt": "json",
@@ -78,7 +86,6 @@
                     "rows": 10,
                     "start": 0
                 }
-
                 let keymap = {
                     SCHOLAR_UNIQUE: 'scholar_unique',
                     SCHOLAR_NAME: 'scholar_name',
@@ -86,9 +93,7 @@
                     AREA: 'subject',
                     ACH_ALL_NUM: 'ach_all_num'
                 }
-
                 if (this.type == 'wd') {
-                    console.log('type = ' + this.type);
                     var q = '';
                     if (this.queryScholar.scholarName != '') {
                         q += 'scholar_name:"' + this.queryScholar.scholarName + '"'
@@ -100,8 +105,8 @@
                     solrQuery.start = (this.pageNum - 1) * 10;
                     this.$http.post('/indexWD/scholar/select', qs.stringify(solrQuery))
                         .then((result) => {
+                            this.barFlag = false
                             var count = result.data.response.numFound
-                            // console.log('count = ' + count)
                             if (count == 0) {
                                 this.type = 'server'
                                 q = ''
@@ -116,7 +121,6 @@
                                 this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
                                     .then((result) => {
                                         var wechatSolrCount = result.data.response.numFound
-                                        // console.log('wechatSolrCount = ' + wechatSolrCount)
                                         var server_docs = [];
                                         if (wechatSolrCount > 0) {
                                             _(result.data.response.docs).forEach(function (doc) {
@@ -129,6 +133,9 @@
                                         this.items.push(...server_docs)
                                         this.pageNum++
                                         this.busy = false
+                                        if (this.items.length <= 0) {
+                                            this.showFlag = true
+                                        }
                                     })
                             } else {
                                 _(result.data.response.docs).forEach(function (doc) {
@@ -138,8 +145,6 @@
                                 this.pageNum++;
                                 this.busy = false;
                             }
-                        })
-                        .then((error) => {
                         })
                 } else {
                     q = ''
@@ -154,19 +159,22 @@
                     this.$http.post('/indexServer/scholar_info/select', qs.stringify(solrQueryWechat))
                         .then((result) => {
                             var wechatSolrCount = result.data.response.numFound
-                            // console.log('wechatSolrCount = ' + wechatSolrCount)
                             var server_docs = []
                             if (wechatSolrCount > 0) {
                                 _(result.data.response.docs).forEach(function (doc) {
                                     doc['AREA'] = doc.AREA.split('/')
                                     server_docs.push(_.mapKeys(doc, function (value, key) {
                                         return keymap[key]
+
                                     }))
                                 })
                             }
                             this.items.push(...server_docs)
                             this.pageNum++
                             this.busy = false
+                            if (this.items.length <= 0) {
+                                this.showFlag = true
+                            }
                         })
                 }
             }
@@ -176,3 +184,5 @@
         }
     }
 </script>
+<style lang="css">
+</style>
