@@ -1,666 +1,760 @@
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  }
- body,html{
-	background: #f5f5f5;
-  font-family: "微软雅黑";
- }
- /*取消收藏弹框*/
- #cancelCollectBox,#cancelAttentionBox{
-   position: fixed;
-   width: 100%;
-   height: 100%;
-   left: 0;
-   top:0;
-   z-index: 2;
-   background: rgba(0, 0, 0, 0.28);
- }
- #cancelCollectBox .alertBox,#cancelAttentionBox .alertBox{
-   position: absolute;
-   width: 80%;
-   height: 2.54rem;
-   background: #fff;
-   border-radius: .1rem;
-   position: absolute;
-   left: 10%;
-   top:30%;
- }
- #cancelCollectBox .alertBox .tip,#cancelAttentionBox .alertBox .tip{
- margin-top: .8rem;
- text-align: center;
- }
- #cancelCollectBox .alertBox .tip .iconfont,#cancelAttentionBox .alertBox .tip .iconfont{
- color: #f7b55e;
- }
- #cancelCollectBox .alertBox .tip .tipWord,#cancelAttentionBox .alertBox .tip .tipWord{
- font-size: .28rem;
- font-family: "微软雅黑";
- }
- #cancelCollectBox .alertBox .operate,#cancelAttentionBox .alertBox .operate{
- height: .9rem;
- position: absolute;
- bottom:0;
- border-top: 1px solid #eee;
- width: 100%;
- }
- #cancelCollectBox .alertBox .operate span,#cancelAttentionBox .alertBox .operate span{
- line-height: .9rem;
- color: #000;
- font-size: .28rem;
- font-family: "微软雅黑";
- text-align: center;
- display: block;
- float: left;
- width: 49.5%;
- }
- #cancelCollectBox .alertBox .operate .cancel,#cancelAttentionBox .alertBox .operate .cancel{
-  border-right: 1px solid #eee;
- }
-/*findScholar part*/
-#findScholar .searchImg{
-	width: 100%;
-	padding:0.5rem 15% 0.25rem;
-	box-sizing: border-box;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-#findScholar .searchImg img{
+
+body, html {
+    background: #f5f5f5;
+    font-family: "微软雅黑";
+}
+
+/*取消收藏弹框*/
+#cancelCollectBox, #cancelAttentionBox {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.28);
+}
+
+#cancelCollectBox .alertBox, #cancelAttentionBox .alertBox {
+    position: absolute;
+    width: 80%;
+    height: 2.54rem;
+    background: #fff;
+    border-radius: .1rem;
+    position: absolute;
+    left: 10%;
+    top: 30%;
+}
+
+#cancelCollectBox .alertBox .tip, #cancelAttentionBox .alertBox .tip {
+    margin-top: .8rem;
+    text-align: center;
+}
+
+#cancelCollectBox .alertBox .tip .iconfont, #cancelAttentionBox .alertBox .tip .iconfont {
+    color: #f7b55e;
+}
+
+#cancelCollectBox .alertBox .tip .tipWord, #cancelAttentionBox .alertBox .tip .tipWord {
+    font-size: .28rem;
+    font-family: "微软雅黑";
+}
+
+#cancelCollectBox .alertBox .operate, #cancelAttentionBox .alertBox .operate {
+    height: .9rem;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #eee;
+    width: 100%;
+}
+
+#cancelCollectBox .alertBox .operate span, #cancelAttentionBox .alertBox .operate span {
+    line-height: .9rem;
+    color: #000;
+    font-size: .28rem;
+    font-family: "微软雅黑";
+    text-align: center;
+    display: block;
+    float: left;
+    width: 49.5%;
+}
+
+#cancelCollectBox .alertBox .operate .cancel, #cancelAttentionBox .alertBox .operate .cancel {
+    border-right: 1px solid #eee;
+}
+
+/*findScholar part*/
+#findScholar .searchImg {
+    width: 100%;
+    padding: 0.5rem 15% 0.25rem;
+    box-sizing: border-box;
+}
+
+#findScholar .searchImg img {
     width: 100%;
     height: auto;
 }
-.searchForm{
-  padding: 0 0.5rem;
+
+.searchForm {
+    padding: 0 0.5rem;
 }
-.searchForm fieldset{
+
+.searchForm fieldset {
     border: none;
 }
-.searchForm fieldset legend{
-	display: none;
-}
-.searchFormGroup{
-	height: 1.2rem;
 
-	margin-bottom: 0.1rem;
+.searchForm fieldset legend {
+    display: none;
 }
-.searchFormGroup label{
-	font-size: 0.18rem;
-	margin: 0.1rem 0;
-	display: block;
+
+.searchFormGroup {
+    height: 1.2rem;
+
+    margin-bottom: 0.1rem;
 }
-.searchFormGroup input{
-	border:1px solid #36d7b6;
-	width: 100%;
-	border-radius: 0.08rem;
-	height: 0.7rem;
-	text-indent: 0.22rem;
+
+.searchFormGroup label {
+    font-size: 0.18rem;
+    margin: 0.1rem 0;
+    display: block;
 }
-.searchFormSubmit{
-	width: 100%;
-	height: 0.8rem;
-	background: #36d7b6;
-	border: none;
-	border-radius: 0.08rem;
-	color: #ffffff;
-  box-sizing: border-box;
-  text-align: center;
-  line-height: .8rem;
-  font-size: .28rem;
-  margin-top: 0.19rem;
+
+.searchFormGroup input {
+    border: 1px solid #36d7b6;
+    width: 100%;
+    border-radius: 0.08rem;
+    height: 0.7rem;
+    text-indent: 0.22rem;
+}
+
+.searchFormSubmit {
+    width: 100%;
+    height: 0.8rem;
+    background: #36d7b6;
+    border: none;
+    border-radius: 0.08rem;
+    color: #ffffff;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: .8rem;
+    font-size: .28rem;
+    margin-top: 0.19rem;
 }
 
 /*scholarResult part*/
-#scholarResult h4{
-  height: .84rem;
-  background: #f6f6f6;
-  font-size: .24rem;
-  line-height: .84rem;
-  font-family: "微软雅黑";
-  font-weight: normal;
-  padding-left: .3rem;
-  color: #000;
-  position: fixed;
-  top:0;
-  width: 100%;
-  z-index: 2;
-}
-#scholarResult .scholarList{
-  margin-top: .84rem;
-  margin-bottom: .93rem;
-}
-.scholarList .scholarItem,.attentionBox .scholarItem{
-	width: 100%;
-	border-top:1px solid #ddd;
-	border-bottom:1px solid #ddd;
-	padding-top: .28rem;
-	padding-left: .24rem;
-  padding-bottom: 0.4em;
-	box-sizing: border-box;
-	background: #fff;
-	margin-bottom: .3rem;
-	position: relative;
+#scholarResult h4 {
+    height: .84rem;
+    background: #f6f6f6;
+    font-size: .24rem;
+    line-height: .84rem;
+    font-family: "微软雅黑";
+    font-weight: normal;
+    padding-left: .3rem;
+    color: #000;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
 }
 
-.scholarList .scholarItem .scholarHead,.attentionBox .scholarItem .scholarHead{
-	width: 1.28rem;
-	float: left;
-	margin-right: .37rem;
+#scholarResult .scholarList {
+    margin-top: .84rem;
+    margin-bottom: .93rem;
+}
+
+.scholarList .scholarItem, .attentionBox .scholarItem {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding-top: .28rem;
+    padding-left: .24rem;
+    padding-bottom: 0.4em;
+    box-sizing: border-box;
+    background: #fff;
+    margin-bottom: .3rem;
+    position: relative;
+}
+
+.scholarList .scholarItem .scholarHead, .attentionBox .scholarItem .scholarHead {
+    width: 1.28rem;
+    float: left;
+    margin-right: .37rem;
 
 }
-.scholarList .scholarItem .scholarHead img,.attentionBox .scholarItem .scholarHead img{
-	width: 100%;
+
+.scholarList .scholarItem .scholarHead img, .attentionBox .scholarItem .scholarHead img {
+    width: 100%;
 }
 
 .scholarList .scholarItem .scholarHead img {
-  border-radius: 0px
+    border-radius: 0px
 }
 
-.scholarList .scholarItem .scholarInfos,.attentionBox .scholarItem .scholarInfos{
+.scholarList .scholarItem .scholarInfos, .attentionBox .scholarItem .scholarInfos {
     width: 60%;
-     float: left;
-     margin-top: -0.1rem;
-}
-.scholarList .scholarItem .scholarInfos .scholarTitle,.attentionBox .scholarItem .scholarInfos .scholarTitle{
-     height: .5rem;
+    float: left;
+    margin-top: -0.1rem;
 }
 
-.scholarList .scholarItem .scholarName,.attentionBox .scholarItem .scholarName{
-	font-size: .29rem;
-	color: #000;
-	font-weight: bold;
-	float: left;
-	margin-top: 0.1rem;
-}
-.attentionBox .scholarItem .scholarName{
-  margin-top: 0.14rem;
+.scholarList .scholarItem .scholarInfos .scholarTitle, .attentionBox .scholarItem .scholarInfos .scholarTitle {
+    height: .5rem;
 }
 
-.scholarList .scholarItem .scholarStatus,.attentionBox .scholarItem .scholarStatus,.detailTopBox .scholarBrief .scholarTitle .scholarStatus{
-	float: left;
-	color: #fff;
-	background: #9c9c9c;
-	display: block;
-	width: .82rem;
-	height: .36rem;
-	line-height: .36rem;
-	text-align: center;
-	border-radius: .08rem;
-	font-size: .16rem;
-	margin-left: .28rem;
-  margin-top: 0.1rem;
+.scholarList .scholarItem .scholarName, .attentionBox .scholarItem .scholarName {
+    font-size: .29rem;
+    color: #000;
+    font-weight: bold;
+    float: left;
+    margin-top: 0.1rem;
+}
+
+.attentionBox .scholarItem .scholarName {
+    margin-top: 0.14rem;
+}
+
+.scholarList .scholarItem .scholarStatus, .attentionBox .scholarItem .scholarStatus, .detailTopBox .scholarBrief .scholarTitle .scholarStatus {
+    float: left;
+    color: #fff;
+    background: #9c9c9c;
+    display: block;
+    width: .82rem;
+    height: .36rem;
+    line-height: .36rem;
+    text-align: center;
+    border-radius: .08rem;
+    font-size: .16rem;
+    margin-left: .28rem;
+    margin-top: 0.1rem;
 
 }
-.detailTopBox .scholarBrief .scholarTitle .scholarStatus{
-  margin-top: 0;
+
+.detailTopBox .scholarBrief .scholarTitle .scholarStatus {
+    margin-top: 0;
 }
-.scholarList .scholarItem .scholarPosition,.attentionBox .scholarItem .scholarPosition{
-	margin-top: 0.1rem;
+
+.scholarList .scholarItem .scholarPosition, .attentionBox .scholarItem .scholarPosition {
+    margin-top: 0.1rem;
 }
-.scholarList .scholarItem .scholarPosition,.attentionBox .scholarItem .scholarPosition,.scholarList .scholarItem .scholarCited,.attentionBox .scholarItem .scholarCited,.scholarList .scholarItem .scholarDir,.attentionBox
- .scholarItem .scholarDir{
-	font-size: .22rem;
-	color: #000;
-	line-height: .44rem;
+
+.scholarList .scholarItem .scholarPosition, .attentionBox .scholarItem .scholarPosition, .scholarList .scholarItem .scholarCited, .attentionBox .scholarItem .scholarCited, .scholarList .scholarItem .scholarDir, .attentionBox
+.scholarItem .scholarDir {
+    font-size: .22rem;
+    color: #000;
+    line-height: .44rem;
 }
-.scholarList .scholarItem .scholarDir,.attentionBox .scholarItem .scholarDir{
-  color: #888;
+
+.scholarList .scholarItem .scholarDir, .attentionBox .scholarItem .scholarDir {
+    color: #888;
 }
-.scholarList .scholarItem .scholarDir span,.attentionBox .scholarItem .scholarDir span{
-  color: #000;
-  font-size: .22rem;
+
+.scholarList .scholarItem .scholarDir span, .attentionBox .scholarItem .scholarDir span {
+    color: #000;
+    font-size: .22rem;
 }
 
 .moreBtn {
     position: absolute;
-    right:.32em;
-    top:.82rem;
+    right: .32em;
+    top: .82rem;
     font-size: 0.34rem;
 }
 
 /*recommend part*/
-#recommend .bannerBox{
-  width: 100%;
-  height: 2.35rem;
-}
-#recommend .bannerBox img{
-  width: 100%;
+#recommend .bannerBox {
+    width: 100%;
+    height: 2.35rem;
 }
 
-#recommend .recommendBox .recommendMain .recommendItem{
-   padding-top:.17rem;
-   box-sizing: border-box;
-   background: #fff;
-   margin-bottom: 0.2rem;
-   margin-top: .34rem;
-   border-top: 1px solid #e4e4e4;
-   border-bottom: 1px solid #e4e4e4;
+#recommend .bannerBox img {
+    width: 100%;
+}
+
+#recommend .recommendBox .recommendMain .recommendItem {
+    padding-top: .17rem;
+    box-sizing: border-box;
+    background: #fff;
+    margin-bottom: 0.2rem;
+    margin-top: .34rem;
+    border-top: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
     padding-bottom: 0.05rem;
 }
-#recommend .recommendBox .recommendMain .recommendItem .wordsCon{
-	  margin: 0 0.15rem;
-    padding: 0 .29rem ;
+
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon {
+    margin: 0 0.15rem;
+    padding: 0 .29rem;
     box-sizing: border-box;
 }
-#recommend .recommendBox .recommendMain .recommendItem .wordsCon .coreCon{
-   font-size: .28rem;
-   color: #000;
-   line-height: .4rem;
-   font-family: "微软雅黑";
+
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .coreCon {
+    font-size: .28rem;
+    color: #000;
+    line-height: .4rem;
+    font-family: "微软雅黑";
 }
-#recommend .recommendBox .recommendMain .recommendItem .wordsCon .eachCitedNum{
-   font-size: .18rem;
-   color: #858585;
-   line-height: .4rem;
-   margin-bottom: 0.1rem;
+
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .eachCitedNum {
+    font-size: .18rem;
+    color: #858585;
+    line-height: .4rem;
+    margin-bottom: 0.1rem;
 }
-#recommend .recommendBox .recommendMain .recommendItem .wordsCon .eachCitedNum span{
-   color: #ffb656;
+
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .eachCitedNum span {
+    color: #ffb656;
 }
-#recommend .recommendBox .recommendMain .recommendItem .wordsCon .authorItem{
-   font-size: .22rem;
-   color: #000;
-   line-height: .4rem;
-   margin-bottom: 0.04rem;
+
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .authorItem {
+    font-size: .22rem;
+    color: #000;
+    line-height: .4rem;
+    margin-bottom: 0.04rem;
 }
-#recommend .recommendBox .recommendMain .recommendItem .wordsCon .abstractItem{
-   font-size: .22rem;
-   color: #5c5c5c;
-   line-height: .4rem;
-   margin-bottom: 0.05rem;
+
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .abstractItem {
+    font-size: .22rem;
+    color: #5c5c5c;
+    line-height: .4rem;
+    margin-bottom: 0.05rem;
 }
-#recommend .recommendBox .recommendMain .recommendItem .wordsCon .authorItem .authorName{
-  color: #ffb656;
+
+#recommend .recommendBox .recommendMain .recommendItem .wordsCon .authorItem .authorName {
+    color: #ffb656;
 }
-#recommend .nextBtn{
-  height: .76rem;
-  background: #36d7b6;
-  color: #fff;
-  line-height: .76rem;
-  text-align: center;
-  width: 80%;
-  margin-left: 10%;
-  margin-top: .3rem;
-  font-size: .26rem;
-  border-radius: .1rem;
+
+#recommend .nextBtn {
+    height: .76rem;
+    background: #36d7b6;
+    color: #fff;
+    line-height: .76rem;
+    text-align: center;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: .3rem;
+    font-size: .26rem;
+    border-radius: .1rem;
 }
+
 /*scholarDetail part && myInfo头部*/
-#scholarDetail .detailTopBox,#myInfo .detailTopBox{
-  height: 3.94rem;
-  color: #f5f5f9;
-  position: relative;
-}
-#scholarDetail .detailTopBox .scholarHeader,#myInfo .detailTopBox .scholarHeader{
-  height: 3.35rem;
-  background:#36d7b6;
-  padding: .19rem .29rem 0 ;
-  box-sizing: border-box;
-}
-#scholarDetail .detailTopBox .scholarHeader .headerTop,#myInfo .detailTopBox .scholarHeader .headerTop{
-  position: relative;
-  height: 1.24rem;
-  padding:0 10%;
-}
-#scholarDetail .detailTopBox .scholarHeader .headerTop .topLeft,#myInfo .detailTopBox .scholarHeader .headerTop .topLeft{
-width: 33.33%;
-float: left;
-margin-top: .45rem;
-}
-#scholarDetail .detailTopBox .scholarHeader .headerTop .scholarStatus,#scholarDetail .detailTopBox .scholarHeader .headerTop .topRight .attention,#myInfo .detailTopBox .scholarHeader .headerTop .scholarStatus,#myInfo .detailTopBox .scholarHeader .headerTop .topRight .attention{
-float: right;
-width: .93rem;
-height: .34rem;
-border-radius: .17rem;
-background: #fff;
-color: #f7b55e;
-font-size: .18rem;
-text-align: center;
-line-height: .34rem;
-font-family: "微软雅黑"
-}
-#scholarDetail .detailTopBox .scholarHeader .headerTop .topMiddle,#myInfo .detailTopBox .scholarHeader .headerTop .topMiddle{
-width: 33.33%;
-float: left;
-height: 1.24rem;
-}
-#scholarDetail .detailTopBox .scholarHeader .headerTop .topMiddle .imgBox,#myInfo .detailTopBox .scholarHeader .headerTop .topMiddle .imgBox{
-width: 1.24rem;
-height: 1.24rem;
-position: absolute;
-left: 50%;
-margin-left: -.62rem;
-background: #fff;
-border-radius: 50%;
-
-}
-#scholarDetail .detailTopBox .scholarHeader .headerTop .imgBox img,#myInfo .detailTopBox .scholarHeader .headerTop .imgBox img{
-  width: 1.1rem;
-  height: 1.1rem;
-  display: block;
-  margin: .08rem 0.07rem 0 0.07rem;
-  border-radius: 50%;
-}
-#scholarDetail .detailTopBox .scholarHeader .headerTop .topRight,#myInfo .detailTopBox .scholarHeader .headerTop .topRight{
-width: 33.33%;
-float: left;
-margin-top: .45rem;
-}
-#scholarDetail .detailTopBox .scholarHeader .headerTop .topRight .attention,#myInfo .detailTopBox .scholarHeader .headerTop .topRight .attention{
-float: left;
+#scholarDetail .detailTopBox, #myInfo .detailTopBox {
+    height: 3.94rem;
+    color: #f5f5f9;
+    position: relative;
 }
 
-#scholarDetail .detailTopBox .scholarHeader .headerTop .attention,#myInfo .detailTopBox .scholarHeader .headerTop .attention{
-  float: left;
-}
-#scholarDetail .detailTopBox .scholarHeader .scholarAbout,#myInfo .detailTopBox .scholarHeader .scholarAbout{
-  box-sizing: border-box;
-  text-align: center;
-  height: .75rem;
-  line-height: .75rem;
+#scholarDetail .detailTopBox .scholarHeader, #myInfo .detailTopBox .scholarHeader {
+    height: 3.35rem;
+    background: #36d7b6;
+    padding: .19rem .29rem 0;
+    box-sizing: border-box;
 }
 
-#scholarDetail .detailTopBox .scholarHeader .scholarAbout .scholarUniverse,#myInfo .detailTopBox .scholarHeader .scholarAbout .scholarUniverse{
- display: inline-block;
-height: .32rem;
-  line-height: .32rem;
-  padding: 0 .09rem;
-  background: #2ead93;
-  border-radius: 0.05rem;
-  font-size: .22rem;
-  margin-left: 0.16rem
+#scholarDetail .detailTopBox .scholarHeader .headerTop, #myInfo .detailTopBox .scholarHeader .headerTop {
+    position: relative;
+    height: 1.24rem;
+    padding: 0 10%;
 }
-#scholarDetail .detailTopBox .scholarHeader .scholarMarjor,#myInfo .detailTopBox .scholarHeader .scholarMarjor{
- text-align: center;
- font-size: .23rem;
- margin-bottom: .1rem
+
+#scholarDetail .detailTopBox .scholarHeader .headerTop .topLeft, #myInfo .detailTopBox .scholarHeader .headerTop .topLeft {
+    width: 33.33%;
+    float: left;
+    margin-top: .45rem;
 }
-#scholarDetail .numBox,#myInfo .numBox{
-  position: absolute;
-  top: 2.6rem;
-	width: 90%;
-  margin-left: 5%;
-  border-radius: .1rem;
-	height: 1.04rem;
-	background: #fff;
-	padding-top: .12rem;
-	box-sizing: border-box;
-	border-bottom: 1px solid #ddddde;
-  box-shadow: 0 0.02rem 0.1rem #ddd;
+
+#scholarDetail .detailTopBox .scholarHeader .headerTop .scholarStatus, #scholarDetail .detailTopBox .scholarHeader .headerTop .topRight .attention, #myInfo .detailTopBox .scholarHeader .headerTop .scholarStatus, #myInfo .detailTopBox .scholarHeader .headerTop .topRight .attention {
+    float: right;
+    width: .93rem;
+    height: .34rem;
+    border-radius: .17rem;
+    background: #fff;
+    color: #f7b55e;
+    font-size: .18rem;
+    text-align: center;
+    line-height: .34rem;
+    font-family: "微软雅黑"
 }
-#scholarDetail .numBox ul li,#myInfo .numBox ul li{
-	width:24.5%;
-	height: .78rem;
-	float: left;
-	border-right: 1px solid #f8f8f8;
-	text-align: center;
+
+#scholarDetail .detailTopBox .scholarHeader .headerTop .topMiddle, #myInfo .detailTopBox .scholarHeader .headerTop .topMiddle {
+    width: 33.33%;
+    float: left;
+    height: 1.24rem;
+}
+
+#scholarDetail .detailTopBox .scholarHeader .headerTop .topMiddle .imgBox, #myInfo .detailTopBox .scholarHeader .headerTop .topMiddle .imgBox {
+    width: 1.24rem;
+    height: 1.24rem;
+    position: absolute;
+    left: 50%;
+    margin-left: -.62rem;
+    background: #fff;
+    border-radius: 50%;
 
 }
-#scholarDetail .numBox ul li span,#myInfo .numBox ul li span{
-	font-size: .28rem;
-	font-weight: bold;
-	color: #000;
-	line-height: .44rem;
+
+#scholarDetail .detailTopBox .scholarHeader .headerTop .imgBox img, #myInfo .detailTopBox .scholarHeader .headerTop .imgBox img {
+    width: 1.1rem;
+    height: 1.1rem;
+    display: block;
+    margin: .08rem 0.07rem 0 0.07rem;
+    border-radius: 50%;
+}
+
+#scholarDetail .detailTopBox .scholarHeader .headerTop .topRight, #myInfo .detailTopBox .scholarHeader .headerTop .topRight {
+    width: 33.33%;
+    float: left;
+    margin-top: .45rem;
+}
+
+#scholarDetail .detailTopBox .scholarHeader .headerTop .topRight .attention, #myInfo .detailTopBox .scholarHeader .headerTop .topRight .attention {
+    float: left;
+}
+
+#scholarDetail .detailTopBox .scholarHeader .headerTop .attention, #myInfo .detailTopBox .scholarHeader .headerTop .attention {
+    float: left;
+}
+
+#scholarDetail .detailTopBox .scholarHeader .scholarAbout, #myInfo .detailTopBox .scholarHeader .scholarAbout {
+    box-sizing: border-box;
+    text-align: center;
+    height: .75rem;
+    line-height: .75rem;
+}
+
+#scholarDetail .detailTopBox .scholarHeader .scholarAbout .scholarUniverse, #myInfo .detailTopBox .scholarHeader .scholarAbout .scholarUniverse {
+    display: inline-block;
+    height: .32rem;
+    line-height: .32rem;
+    padding: 0 .09rem;
+    background: #2ead93;
+    border-radius: 0.05rem;
+    font-size: .22rem;
+    margin-left: 0.16rem
+}
+
+#scholarDetail .detailTopBox .scholarHeader .scholarMarjor, #myInfo .detailTopBox .scholarHeader .scholarMarjor {
+    text-align: center;
+    font-size: .23rem;
+    margin-bottom: .1rem
+}
+
+#scholarDetail .numBox, #myInfo .numBox {
+    position: absolute;
+    top: 2.6rem;
+    width: 90%;
+    margin-left: 5%;
+    border-radius: .1rem;
+    height: 1.04rem;
+    background: #fff;
+    padding-top: .12rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ddddde;
+    box-shadow: 0 0.02rem 0.1rem #ddd;
+}
+
+#scholarDetail .numBox ul li, #myInfo .numBox ul li {
+    width: 24.5%;
+    height: .78rem;
+    float: left;
+    border-right: 1px solid #f8f8f8;
+    text-align: center;
 
 }
-#scholarDetail .numBox ul li p,#myInfo .numBox ul li p{
-	font-size: .18rem;
-	color: #949494;
+
+#scholarDetail .numBox ul li span, #myInfo .numBox ul li span {
+    font-size: .28rem;
+    font-weight: bold;
+    color: #000;
+    line-height: .44rem;
 
 }
-#scholarDetail .numBox ul .HN,#myInfo .numBox ul .HN{
-	border-right: none;
+
+#scholarDetail .numBox ul li p, #myInfo .numBox ul li p {
+    font-size: .18rem;
+    color: #949494;
+
 }
-#scholarDetail .tabBox .tabTop{
+
+#scholarDetail .numBox ul .HN, #myInfo .numBox ul .HN {
+    border-right: none;
+}
+
+#scholarDetail .tabBox .tabTop {
     height: .82rem;
     background: #fff;
     box-shadow: 0 0.07rem 0.1rem #e4e4e8;
 }
-#scholarDetail .tabBox .tabTop li{
-    height: 100%;
-    width: 23.3333%;
-    float: left;
-    text-align: center;
 
+#scholarDetail .tabBox .tabTop li {
+    height: 100%;
+    text-align: center;
     box-sizing: border-box;
-    margin:0 5%;
 }
-#scholarDetail .tabBox .tabTop li.active{
+
+#scholarDetail .tabBox .tabTop li.active {
     border-bottom: 0.04rem solid #ffc320;
 }
 
-#scholarDetail .tabBox .tabTop li span{
-     font-size: .36rem;
-     color: #f7b55e;
-     line-height: .82rem;
+#scholarDetail .tabBox .tabTop li span {
+    font-size: .36rem;
+    color: #f7b55e;
+    line-height: .82rem;
 }
-#scholarDetail .tabBox .tabTop li .tabTitle{
-     color: #000;
-     font-size: .24rem;
-     margin-left: .1rem;
+
+#scholarDetail .tabBox .tabTop li .tabTitle {
+    color: #000;
+    font-size: .24rem;
+    margin-left: .1rem;
 }
-#scholarDetail .tabBox .tabContent{
-	padding: 0.2rem .3rem 0;
-	box-sizing: border-box;
-  margin-bottom: 0.95rem;
+
+#scholarDetail .tabBox .tabContent {
+    padding: 0.2rem .3rem 0;
+    box-sizing: border-box;
+    margin-bottom: 0.95rem;
 }
-#scholarDetail .tabBox .tabContent .contentTop{
+
+#scholarDetail .tabBox .tabContent .contentTop {
     width: 100%;
     height: .82rem;
 }
+
 #scholarDetail .tabBox .tabContent .contentTop {
     width: 100%;
     height: .92rem;
 }
-#scholarDetail .tabBox .tabContent .contentTop .citedNum{
-   color:#9c9c9c;
-   font-size: .2rem;
-   float: right;
-   height: .68rem;
-   line-height: .68rem;
-}
-#scholarDetail .tabBox .tabContent .contentTop .allFruits{
-	float: left;
-	width: 1.66rem;
-	height: .54rem;
-	border:1px solid #a8a8a8;
-	border-radius: 0.05rem;
-	font-size: .24rem;
-	color: #000;
-	line-height: .54rem;
-	text-align: center;
-  margin-top: 0.04rem;
-}
-#scholarDetail .tabBox .tabContent .contentMain .contentItem{
-   padding-top: .17rem;
-   box-sizing: border-box;
-   background: #fff;
-   margin-bottom:0.3rem;
-}
-#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon{
-	  margin: 0 0.15rem;
-}
-#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon .coreCon{
-   font-size: .24rem;
-   color: #000;
-   line-height: .4rem;
 
-}
-#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon .eachCitedNum{
-   font-size: .18rem;
-   color: #949499;
-   line-height: .4rem;
-}
-#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon .authorItem{
-   font-size: .22rem;
-   color: #949499;
-   line-height: .4rem;
-   margin-bottom: 0.1rem;
-}
-#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns{
-  height: .6rem;
-  background: #fff;
-  border-top: 1px solid #ddd;
-}
-#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li{
-  width: 18.7%;
-  float: left;
-  font-size: .25rem;
-  line-height: .6rem;
-  padding: 0 3%;
-  border-right: 1px solid #ddd;
-}
-#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li.active{
-color: #36d7b6;
+#scholarDetail .tabBox .tabContent .contentTop .citedNum {
+    color: #9c9c9c;
+    font-size: .2rem;
+    float: right;
+    height: .68rem;
+    line-height: .68rem;
 }
 
-#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li:nth-of-type(4){
- border-right: none;
+#scholarDetail .tabBox .tabContent .contentTop .allFruits {
+    float: left;
+    width: 1.66rem;
+    height: .54rem;
+    border: 1px solid #a8a8a8;
+    border-radius: 0.05rem;
+    font-size: .24rem;
+    color: #000;
+    line-height: .54rem;
+    text-align: center;
+    margin-top: 0.04rem;
 }
-#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li span{
-	float: left;
-	font-size: .4rem;
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem {
+    padding-top: .17rem;
+    box-sizing: border-box;
+    background: #fff;
+    margin-bottom: 0.3rem;
 }
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon {
+    margin: 0 0.15rem;
+}
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon .coreCon {
+    font-size: .24rem;
+    color: #000;
+    line-height: .4rem;
+
+}
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon .eachCitedNum {
+    font-size: .18rem;
+    color: #949499;
+    line-height: .4rem;
+}
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .wordsCon .authorItem {
+    font-size: .22rem;
+    color: #949499;
+    line-height: .4rem;
+    margin-bottom: 0.1rem;
+}
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns {
+    height: .6rem;
+    background: #fff;
+    border-top: 1px solid #ddd;
+}
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li {
+    width: 18.7%;
+    float: left;
+    font-size: .25rem;
+    line-height: .6rem;
+    padding: 0 3%;
+    border-right: 1px solid #ddd;
+}
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li.active {
+    color: #36d7b6;
+}
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li:nth-of-type(4) {
+    border-right: none;
+}
+
+#scholarDetail .tabBox .tabContent .contentMain .contentItem .userBtns li span {
+    float: left;
+    font-size: .4rem;
+}
+
 /*bookResult part*/
-#bookResult .searchTop{
-  width: 100%;
-  background: #36d7b6;
-  height: 1.03rem;
-  position: fixed;
-  top:0;
-  padding: .22rem .29rem;
-  box-sizing: border-box;
-  z-index: 5;
+#bookResult .searchTop {
+    width: 100%;
+    background: #36d7b6;
+    height: 1.03rem;
+    position: fixed;
+    top: 0;
+    padding: .22rem .29rem;
+    box-sizing: border-box;
+    z-index: 5;
 }
-#bookResult .searchTop input{
-  width:100%;
-  height: 100%;
-  border: none;
-  border-radius:0.06rem;
-  text-indent: 0.15rem;
+
+#bookResult .searchTop input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0.06rem;
+    text-indent: 0.15rem;
 }
-#bookResult .searchTop .selectBtn{
-  float: right;
-  background: #fff;
-  height: .56rem;
-  width: .56rem;
-  border-radius: 0.06rem;
+
+#bookResult .searchTop .selectBtn {
+    float: right;
+    background: #fff;
+    height: .56rem;
+    width: .56rem;
+    border-radius: 0.06rem;
 }
-#bookResult .searchTop .selectBtn span{
-   text-align: center;
-   line-height: .56rem;
-   display: block;
-   width: .56rem;
-   font-size: .35rem;
+
+#bookResult .searchTop .selectBtn span {
+    text-align: center;
+    line-height: .56rem;
+    display: block;
+    width: .56rem;
+    font-size: .35rem;
 }
-#bookResult .searchTop .icon-searchBtn{
-  color: #36d7b6;
-  position: absolute;
-  top:30%;
-  right: .42rem;
-  font-size: .4rem;
+
+#bookResult .searchTop .icon-searchBtn {
+    color: #36d7b6;
+    position: absolute;
+    top: 30%;
+    right: .42rem;
+    font-size: .4rem;
 }
-#bookResult .searchTop .icon-select{
-  color: #36d7b6;
+
+#bookResult .searchTop .icon-select {
+    color: #36d7b6;
 }
-#bookResult .findTip{
-  padding: .19rem .29rem;
-  width: 100%;
-  background: #f5f5f9;
-  box-sizing: border-box;
-  border-bottom: 1px solid #e8e8ea;
-  position: fixed;
-  top: 1rem;
+
+#bookResult .findTip {
+    padding: .19rem .29rem;
+    width: 100%;
+    background: #f5f5f9;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e8e8ea;
+    position: fixed;
+    top: 1rem;
 }
-#bookResult .findTip .findLogo{
-  width: .82rem;
-  height: .82rem;
-  background: #bbb;
-  border-radius: 50%;
-  float: left;
-  margin-right: 0.2rem;
+
+#bookResult .findTip .findLogo {
+    width: .82rem;
+    height: .82rem;
+    background: #bbb;
+    border-radius: 50%;
+    float: left;
+    margin-right: 0.2rem;
 }
-#bookResult .findTip p{
-  float: left;
-margin-right: .4rem;
-  font-size: .24rem;
-  line-height: .58rem;
-  margin-top: .12rem;
+
+#bookResult .findTip p {
+    float: left;
+    margin-right: .4rem;
+    font-size: .24rem;
+    line-height: .58rem;
+    margin-top: .12rem;
 }
-#bookResult .findTip span{
-  color: #fff;
-  font-size: .7rem;
-  text-align: center;
-  display: block;
-  line-height: .82rem;
+
+#bookResult .findTip span {
+    color: #fff;
+    font-size: .7rem;
+    text-align: center;
+    display: block;
+    line-height: .82rem;
 }
-#bookResult .findTip .choose{
-  color:#ffb656;
-  width: .82rem;
-  float: right;
-  font-size: .26rem;
+
+#bookResult .findTip .choose {
+    color: #ffb656;
+    width: .82rem;
+    float: right;
+    font-size: .26rem;
 
 }
-#bookResult .findTip .choose span{
-  color:#ffb656;
-  font-size: .22rem;
-  display: block;
-  float: left;
-  }
-#bookResult .chooseBox{
-  position: absolute;
-  top:2.15rem;
-  width: 100%;
-  /*padding: .15rem .5rem  0.2rem .29rem;*/
-  box-sizing: border-box;
+
+#bookResult .findTip .choose span {
+    color: #ffb656;
+    font-size: .22rem;
+    display: block;
+    float: left;
 }
-  #bookResult .chooseBox .selectBox span{
-   font-size: .26rem;
-   color: #000;
-   width: 2.2rem;
-   display: block;
-   line-height: .58rem;
-   float: left;
+
+#bookResult .chooseBox {
+    position: absolute;
+    top: 2.15rem;
+    width: 100%;
+    /*padding: .15rem .5rem  0.2rem .29rem;*/
+    box-sizing: border-box;
 }
-#bookResult .chooseBox .sortBox span{
-  font-size: .26rem;
-  color: #000;
-  margin-right: 0.38rem;
-  line-height: .58rem;
-  float: left;
+
+#bookResult .chooseBox .selectBox span {
+    font-size: .26rem;
+    color: #000;
+    width: 2.2rem;
+    display: block;
+    line-height: .58rem;
+    float: left;
 }
-#bookResult .chooseBox .selectBox,#bookResult .chooseBox .sortBox{
-background: #fff;
-padding: .15rem .5rem  0.2rem .29rem;}
-#bookResult .chooseBox .selectBox span.active,#bookResult .chooseBox .sortBox span.active{
-  color: #ffc320;
+
+#bookResult .chooseBox .sortBox span {
+    font-size: .26rem;
+    color: #000;
+    margin-right: 0.38rem;
+    line-height: .58rem;
+    float: left;
 }
-#bookResult .chooseBox .selectBox{
-  border-bottom: 1px solid #e8e8ea;
+
+#bookResult .chooseBox .selectBox, #bookResult .chooseBox .sortBox {
+    background: #fff;
+    padding: .15rem .5rem 0.2rem .29rem;
 }
-#bookResult .chooseBox .sortBox{
-padding-top: 0.1rem;
+
+#bookResult .chooseBox .selectBox span.active, #bookResult .chooseBox .sortBox span.active {
+    color: #ffc320;
 }
-#bookResult .chooseBox .sortBox p,#bookResult .chooseBox .selectBox p{
-  line-height: .58rem;
- height: 1.2rem;
-   float: left;
-   font-size: .26rem;
-   margin-right: .42rem;
+
+#bookResult .chooseBox .selectBox {
+    border-bottom: 1px solid #e8e8ea;
 }
-#bookResult .chooseBox .sortBox p{
- height: .58rem;
+
+#bookResult .chooseBox .sortBox {
+    padding-top: 0.1rem;
 }
-#bookResult .bookList{
-  margin-bottom: 0.9rem;
-  margin-top: 2rem;
+
+#bookResult .chooseBox .sortBox p, #bookResult .chooseBox .selectBox p {
+    line-height: .58rem;
+    height: 1.2rem;
+    float: left;
+    font-size: .26rem;
+    margin-right: .42rem;
 }
-#bookResult .bookList ul{
-  width: 100%;
+
+#bookResult .chooseBox .sortBox p {
+    height: .58rem;
 }
-#bookResult .bookList ul .bookListItem{
-  width: 100%;
-  padding: .36rem 0 0 0;
-  box-sizing: border-box;
-  background: #fff;
-  border-bottom: 1px solid #e2e2e3;
+
+#bookResult .bookList {
+    margin-bottom: 0.9rem;
+    margin-top: 2rem;
+}
+
+#bookResult .bookList ul {
+    width: 100%;
+}
+
+#bookResult .bookList ul .bookListItem {
+    width: 100%;
+    padding: .36rem 0 0 0;
+    box-sizing: border-box;
+    background: #fff;
+    border-bottom: 1px solid #e2e2e3;
     margin-bottom: .35rem;
 }
 
@@ -669,529 +763,619 @@ padding-top: 0.1rem;
     padding-right: .29rem;
 }
 
-#bookResult .bookList ul .bookListItem .bookTitle{
-  font-size: .28rem;
-  color: #000;
-  font-family: "微软雅黑";
-}
-#bookResult .bookList ul .bookListItem .bookBrief{
- height: .49rem;
- line-height: .49rem;
- font-size: .22rem;
- text-overflow:ellipsis;
-  white-space:nowrap;
-   overflow:hidden;
-
-}
-#bookResult .bookList ul .bookListItem .bookBrief span{
-color: #a4a4a4;
-}
-#bookResult .bookList ul .bookListItem .bookBrief .author{
-color: #ffb656;
-}
-#bookResult .bookList ul .bookListItem .abstract{
-  line-height: .38rem;
- font-size: .18rem;
- color: #323232;
-}
-#bookResult .bookList ul .bookListItem .userBtns{
-  height: .76rem;
-  border-top: 1px solid #e2e2e3;
-  margin-top: 0.08rem;
-}
-#bookResult .bookList ul .bookListItem .userBtns li{
-  float: left;
-  width: 24.6%;
-  line-height: .73rem;
-  font-size:.25rem;
-  text-align: center;
-  color: #9c9c9c;
-  margin-bottom: 0.01rem;
-  border-right:0.01rem solid #e2e2e2;
-  box-sizing: border-box;
-  padding-left: 0.3rem;
+#bookResult .bookList ul .bookListItem .bookTitle {
+    font-size: .28rem;
+    color: #000;
+    font-family: "微软雅黑";
 }
 
-#bookResult .bookList ul .bookListItem .userBtns li .iconfont{
-  font-size: .38rem;
-  display: block;
-  float: left;
-}
-#bookResult .bookList ul .bookListItem .userBtns li .word{
-  font-size: .22rem;
-  line-height: .73rem;
-  display: block;
-  float: left;
+#bookResult .bookList ul .bookListItem .bookBrief {
+    height: .49rem;
+    line-height: .49rem;
+    font-size: .22rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 
 }
-#bookResult .bookList ul .bookListItem .userBtns li:nth-of-type(4){
-  border: none;
+
+#bookResult .bookList ul .bookListItem .bookBrief span {
+    color: #a4a4a4;
 }
-#bookResult .bookList ul .bookListItem .userBtns li.active{
-  color: #36d7b6;
+
+#bookResult .bookList ul .bookListItem .bookBrief .author {
+    color: #ffb656;
 }
+
+#bookResult .bookList ul .bookListItem .abstract {
+    line-height: .38rem;
+    font-size: .18rem;
+    color: #323232;
+}
+
+#bookResult .bookList ul .bookListItem .userBtns {
+    height: .76rem;
+    border-top: 1px solid #e2e2e3;
+    margin-top: 0.08rem;
+}
+
+#bookResult .bookList ul .bookListItem .userBtns li {
+    float: left;
+    width: 24.6%;
+    line-height: .73rem;
+    font-size: .25rem;
+    text-align: center;
+    color: #9c9c9c;
+    margin-bottom: 0.01rem;
+    border-right: 0.01rem solid #e2e2e2;
+    box-sizing: border-box;
+    padding-left: 0.3rem;
+}
+
+#bookResult .bookList ul .bookListItem .userBtns li .iconfont {
+    font-size: .38rem;
+    display: block;
+    float: left;
+}
+
+#bookResult .bookList ul .bookListItem .userBtns li .word {
+    font-size: .22rem;
+    line-height: .73rem;
+    display: block;
+    float: left;
+
+}
+
+#bookResult .bookList ul .bookListItem .userBtns li:nth-of-type(4) {
+    border: none;
+}
+
+#bookResult .bookList ul .bookListItem .userBtns li.active {
+    color: #36d7b6;
+}
+
 /*bookDetail part*/
-#bookDetail{
-  margin-bottom: 0.91rem;
-  background: #f5f5f9 !important;
-}
-#bookDetail .bookContent{
-  width: 100%;
-  padding: .38rem .29rem 0.15rem;
-  box-sizing: border-box;
-  background: #fff;
-}
-#bookDetail .bookContent .bookTitle{
-font-size: .3rem;
-color: #000;
-font-family: "微软雅黑";
-}
-#bookDetail .bookContent .bookOrigin{
-  color: #ffb656;
-  font-size: .18rem;
-  line-height: .4rem;
-  margin-top: 0.06rem;
-}
-#bookDetail .bookContent .bookOrigin span:nth-of-type(3){
-  color: #9c9c9c;
-}
-#bookDetail .bookContent .bookBrief{
-  color: #b1b1b1;
-  line-height: .4rem;
-  font-size: .18rem;
-}
-#bookDetail .bookContent .abstract{
-  margin-top: .1rem;
-  color: #000;
-  font-size: .22rem;
-  line-height: .39rem;
+#bookDetail {
+    margin-bottom: 0.91rem;
+    background: #f5f5f9 !important;
 }
 
-#bookDetail .bookContent .publicOrg,#bookDetail .bookContent .keyword,#bookDetail .bookContent .cited{
-  color: #000;
-  font-size: .22rem;
-  line-height: .42rem;
+#bookDetail .bookContent {
+    width: 100%;
+    padding: .38rem .29rem 0.15rem;
+    box-sizing: border-box;
+    background: #fff;
 }
-#bookDetail .bookContent .cited span:nth-of-type(2){
-  color: #f7b55e;
+
+#bookDetail .bookContent .bookTitle {
+    font-size: .3rem;
+    color: #000;
+    font-family: "微软雅黑";
 }
-#bookDetail .bookContent .publicOrg span:nth-of-type(1),#bookDetail .bookContent .keyword span:nth-of-type(1),#bookDetail .bookContent span:nth-of-type(1){
-  font-weight: bold;
-  margin-right: 0.2rem;
+
+#bookDetail .bookContent .bookOrigin {
+    color: #ffb656;
+    font-size: .18rem;
+    line-height: .4rem;
+    margin-top: 0.06rem;
 }
-#bookDetail .userBtns{
-  height: .73rem;
-  background: #fff;
-  border-top: 0.01rem solid #ebebeb;
-  border-bottom: 0.01rem solid #ebebeb;
+
+#bookDetail .bookContent .bookOrigin span:nth-of-type(3) {
+    color: #9c9c9c;
 }
-#bookDetail .userBtns li{
-  width: 24.5%;
-  float: left;
-  font-size: .26rem;
-  text-align: center;
-  border-right: 0.01rem solid #ebebeb;
-  line-height: .73rem;
-  padding-left: 0.3rem;
-  box-sizing: border-box;
+
+#bookDetail .bookContent .bookBrief {
+    color: #b1b1b1;
+    line-height: .4rem;
+    font-size: .18rem;
 }
-#bookDetail .userBtns li.active{
-  color: #36d7b6;
+
+#bookDetail .bookContent .abstract {
+    margin-top: .1rem;
+    color: #000;
+    font-size: .22rem;
+    line-height: .39rem;
 }
-#bookDetail .userBtns li span:nth-of-type(1){
-  font-size: 0.4rem;
-  float: left;
+
+#bookDetail .bookContent .publicOrg, #bookDetail .bookContent .keyword, #bookDetail .bookContent .cited {
+    color: #000;
+    font-size: .22rem;
+    line-height: .42rem;
 }
-#bookDetail .userBtns li span:nth-of-type(2){
-  font-size: 0.22rem;
-  float: left;
+
+#bookDetail .bookContent .cited span:nth-of-type(2) {
+    color: #f7b55e;
 }
-#bookDetail .userBtns li:nth-of-type(4){
-  border: none;
+
+#bookDetail .bookContent .publicOrg span:nth-of-type(1), #bookDetail .bookContent .keyword span:nth-of-type(1), #bookDetail .bookContent span:nth-of-type(1) {
+    font-weight: bold;
+    margin-right: 0.2rem;
 }
-#bookDetail .commitArea{
-  height: 1.98rem;
-  padding: .33rem .29rem 0;
-  box-sizing: border-box;
- background: #fff;
-  margin-top: .34rem;
-  border-bottom: 1px solid #cacaca;
+
+#bookDetail .userBtns {
+    height: .73rem;
+    background: #fff;
+    border-top: 0.01rem solid #ebebeb;
+    border-bottom: 0.01rem solid #ebebeb;
 }
-#bookDetail .commitArea .writeArea{
-width: 100%;
-height: .81rem;
-border: 1px solid #ffb656;
-border-radius: .1rem;
-resize: none;
-font-size: .21rem;
-color: #9c9c9c;
-text-indent: .1rem;
-line-height: .39rem;
+
+#bookDetail .userBtns li {
+    width: 24.5%;
+    float: left;
+    font-size: .26rem;
+    text-align: center;
+    border-right: 0.01rem solid #ebebeb;
+    line-height: .73rem;
+    padding-left: 0.3rem;
+    box-sizing: border-box;
 }
-#bookDetail .commitArea .pubulishBtn{
-width: .75rem;
-height: .42rem;
-background: #36d7b6;
-color: #fff;
-line-height: .42rem;
-float: right;
-border: none;
-border-radius: 0.08rem;
-font-size: .22rem;
-text-align: center;
-margin-top: .13rem;
+
+#bookDetail .userBtns li.active {
+    color: #36d7b6;
 }
+
+#bookDetail .userBtns li span:nth-of-type(1) {
+    font-size: 0.4rem;
+    float: left;
+}
+
+#bookDetail .userBtns li span:nth-of-type(2) {
+    font-size: 0.22rem;
+    float: left;
+}
+
+#bookDetail .userBtns li:nth-of-type(4) {
+    border: none;
+}
+
+#bookDetail .commitArea {
+    height: 1.98rem;
+    padding: .33rem .29rem 0;
+    box-sizing: border-box;
+    background: #fff;
+    margin-top: .34rem;
+    border-bottom: 1px solid #cacaca;
+}
+
+#bookDetail .commitArea .writeArea {
+    width: 100%;
+    height: .81rem;
+    border: 1px solid #ffb656;
+    border-radius: .1rem;
+    resize: none;
+    font-size: .21rem;
+    color: #9c9c9c;
+    text-indent: .1rem;
+    line-height: .39rem;
+}
+
+#bookDetail .commitArea .pubulishBtn {
+    width: .75rem;
+    height: .42rem;
+    background: #36d7b6;
+    color: #fff;
+    line-height: .42rem;
+    float: right;
+    border: none;
+    border-radius: 0.08rem;
+    font-size: .22rem;
+    text-align: center;
+    margin-top: .13rem;
+}
+
 #bookDetail .commitContent .commitItems .commitItem {
- padding: .17rem .29rem .26rem .29rem;
- box-sizing: border-box;
- border-bottom: 1px solid #d6d6d6;
- background: #fff;
+    padding: .17rem .29rem .26rem .29rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid #d6d6d6;
+    background: #fff;
 }
-#bookDetail .commitContent .commitItems .commitItem .top{
-  height: .92rem;
- }
- #bookDetail .commitContent .commitItems .commitItem .top .left{
-   width: .84rem;
-   height: .84rem;
-   float: left;
-   border-radius: 50%;
-   margin-right: .27rem;
+
+#bookDetail .commitContent .commitItems .commitItem .top {
+    height: .92rem;
 }
-#bookDetail .commitContent .commitItems .commitItem .top .right{
-  float: left;
-  margin-top: .08rem;
+
+#bookDetail .commitContent .commitItems .commitItem .top .left {
+    width: .84rem;
+    height: .84rem;
+    float: left;
+    border-radius: 50%;
+    margin-right: .27rem;
 }
-#bookDetail .commitContent .commitItems .commitItem .top .right .name{
-   font-size: .25rem;
-   color: #000;
-   line-height: .36rem;
+
+#bookDetail .commitContent .commitItems .commitItem .top .right {
+    float: left;
+    margin-top: .08rem;
 }
-#bookDetail .commitContent .commitItems .commitItem .top .right .time{
-  font-size: .22rem;
-  color: #9C9C9C;
-  line-height: .38rem;
+
+#bookDetail .commitContent .commitItems .commitItem .top .right .name {
+    font-size: .25rem;
+    color: #000;
+    line-height: .36rem;
 }
-#bookDetail .commitContent .commitItems .commitItem .mainContent{
+
+#bookDetail .commitContent .commitItems .commitItem .top .right .time {
+    font-size: .22rem;
+    color: #9C9C9C;
+    line-height: .38rem;
+}
+
+#bookDetail .commitContent .commitItems .commitItem .mainContent {
     font-size: .22rem;
     color: #000;
     line-height: .36rem;
     margin-top: 0.06rem;
 }
-#bookDetail .commitContent .commitItems .commitItem .top .left img{
-width: 100%;
-border-radius: 50%;
+
+#bookDetail .commitContent .commitItems .commitItem .top .left img {
+    width: 100%;
+    border-radius: 50%;
 }
-#bookDetail .commitContent .loadMore{
-font-weight: normal;
-width: 100%;
-height: .5rem;
-color: #ffb656;
-background: #fff;
-line-height: .5rem;
-font-size: .22rem;
-text-align: center;
+
+#bookDetail .commitContent .loadMore {
+    font-weight: normal;
+    width: 100%;
+    height: .5rem;
+    color: #ffb656;
+    background: #fff;
+    line-height: .5rem;
+    font-size: .22rem;
+    text-align: center;
 }
-#bookDetail .originBox{
-  padding: 0 .25rem 0.1rem;
-  box-sizing: border-box;
-  background: #fff;
-  margin-top: .34rem;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+
+#bookDetail .originBox {
+    padding: 0 .25rem 0.1rem;
+    box-sizing: border-box;
+    background: #fff;
+    margin-top: .34rem;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 }
-#bookDetail .originBox h3{
-  font-size: .28rem;
-  font-weight: normal;
-  color: #000;
-  line-height: .65rem;
+
+#bookDetail .originBox h3 {
+    font-size: .28rem;
+    font-weight: normal;
+    color: #000;
+    line-height: .65rem;
 }
-#bookDetail .originBox ul li{
-  font-size: .18rem;
-  color: #000;
-  line-height: .48rem;
+
+#bookDetail .originBox ul li {
+    font-size: .18rem;
+    color: #000;
+    line-height: .48rem;
 }
-#bookDetail .originBox ul li span:nth-of-type(1){
-  color: #ffb656;
-  margin-right:0.1rem;
-  display: block;
-  float: left;
+
+#bookDetail .originBox ul li span:nth-of-type(1) {
+    color: #ffb656;
+    margin-right: 0.1rem;
+    display: block;
+    float: left;
 }
-#bookDetail .originBox ul li span:nth-of-type(2){
- line-height: 0.48rem;
- display: block;
- float: left;
+
+#bookDetail .originBox ul li span:nth-of-type(2) {
+    line-height: 0.48rem;
+    display: block;
+    float: left;
 }
-#bookDetail .literature{
-  width: 100%;
-  padding: .2rem .28rem;
-  box-sizing: border-box;
-  margin-top: .35rem;
-  background: #fff;
-  border-top: 1px solid #d8d8d8;
+
+#bookDetail .literature {
+    width: 100%;
+    padding: .2rem .28rem;
+    box-sizing: border-box;
+    margin-top: .35rem;
+    background: #fff;
+    border-top: 1px solid #d8d8d8;
 }
-#bookDetail .literature .tabBox{
-  height: .48rem;
+
+#bookDetail .literature .tabBox {
+    height: .48rem;
 
 }
-#bookDetail .literature .tabBox p{
-  height: .48rem;
-  width: 33%;
-  background: #bdbdbd;
-  float: left;
-  text-align: center;
-  color: #fff;
-  line-height: .48rem;
+
+#bookDetail .literature .tabBox p {
+    height: .48rem;
+    width: 33%;
+    background: #bdbdbd;
+    float: left;
+    text-align: center;
+    color: #fff;
+    line-height: .48rem;
 }
-#bookDetail .literature .tabBox p.active{
- background:#36d7b6;
+
+#bookDetail .literature .tabBox p.active {
+    background: #36d7b6;
 }
-#bookDetail .literature .tabBox p:nth-of-type(1){
- border-radius: 0.1rem 0 0 0.1rem;
+
+#bookDetail .literature .tabBox p:nth-of-type(1) {
+    border-radius: 0.1rem 0 0 0.1rem;
 }
-#bookDetail .literature .tabBox p:nth-of-type(2){
-  border-left:  0.01rem solid #cdcdcd;
-  border-right:  0.01rem solid #cdcdcd;
+
+#bookDetail .literature .tabBox p:nth-of-type(2) {
+    border-left: 0.01rem solid #cdcdcd;
+    border-right: 0.01rem solid #cdcdcd;
 }
-#bookDetail .literature .tabBox p:nth-of-type(3){
- border-radius:0 0.1rem  0.1rem 0;
+
+#bookDetail .literature .tabBox p:nth-of-type(3) {
+    border-radius: 0 0.1rem 0.1rem 0;
 }
+
 /*loginReg part&codeInput part*/
-#mockLogin h1,#codeInput h1{
-  width: 100%;
-  height: .78rem;
-  background: #424951;
-  font-size: .26rem;
-  color: #fff;
-  text-align: center;
-  line-height: .78rem;
-  font-family: "宋体";
+#mockLogin h1, #codeInput h1 {
+    width: 100%;
+    height: .78rem;
+    background: #424951;
+    font-size: .26rem;
+    color: #fff;
+    text-align: center;
+    line-height: .78rem;
+    font-family: "宋体";
 }
-#mockLogin .regBox,#codeInput .regBox{
-  padding: .68rem .29rem 0 ;
-  box-sizing: border-box;
+
+#mockLogin .regBox, #codeInput .regBox {
+    padding: .68rem .29rem 0;
+    box-sizing: border-box;
 }
-#mockLogin .regBox input,#codeInput .regBox input{
-  width: 100%;
+
+#mockLogin .regBox input, #codeInput .regBox input {
+    width: 100%;
 }
-#mockLogin .regBox p,#codeInput .regBox p{
-  height: .87rem;
-  position: relative;
+
+#mockLogin .regBox p, #codeInput .regBox p {
+    height: .87rem;
+    position: relative;
 }
-#mockLogin .regBox p span,#codeInput .regBox p span{
-  position: absolute;
-  display: block;
-  height: .87rem;
-  line-height: .87rem;
-  text-align: center;
-  color: #000;
-  margin-left: .28rem;
-  font-size: .26rem;
-  margin-top: 0.03rem;
+
+#mockLogin .regBox p span, #codeInput .regBox p span {
+    position: absolute;
+    display: block;
+    height: .87rem;
+    line-height: .87rem;
+    text-align: center;
+    color: #000;
+    margin-left: .28rem;
+    font-size: .26rem;
+    margin-top: 0.03rem;
 }
-#mockLogin .regBox p input,#codeInput .regBox p input{
-  height: .87rem;
-  text-indent: 1.33rem;
-  color: #bbbbbb;
-  border: 1px solid #e7e7e7;
+
+#mockLogin .regBox p input, #codeInput .regBox p input {
+    height: .87rem;
+    text-indent: 1.33rem;
+    color: #bbbbbb;
+    border: 1px solid #e7e7e7;
 }
-#mockLogin .regBox p .userTel{
-  border-radius: 0.1rem 0.1rem 0 0 ;
+
+#mockLogin .regBox p .userTel {
+    border-radius: 0.1rem 0.1rem 0 0;
 }
-#mockLogin .regBox p .userPsw{
-  border-radius:0  0  0.1rem 0.1rem;
+
+#mockLogin .regBox p .userPsw {
+    border-radius: 0 0 0.1rem 0.1rem;
 }
-#codeInput .regBox p .putCode{
-  border-radius: 0.1rem ;
+
+#codeInput .regBox p .putCode {
+    border-radius: 0.1rem;
 }
-#mockLogin .regBox .regTip,#codeInput .regBox .regTip{
-  font-size: .24rem;
-  color: #b8b8b8;
-  margin: 1.11rem 0 .35rem 0;
-  float: right;
-  display: block;
+
+#mockLogin .regBox .regTip, #codeInput .regBox .regTip {
+    font-size: .24rem;
+    color: #b8b8b8;
+    margin: 1.11rem 0 .35rem 0;
+    float: right;
+    display: block;
 }
-#codeInput .regBox .regTip{
-  margin: 0.5rem 0 .35rem 0;
+
+#codeInput .regBox .regTip {
+    margin: 0.5rem 0 .35rem 0;
 }
-#mockLogin .regBox .next,#codeInput .regBox .next{
-  height: .9rem;
-  background: #36d7b6;
-  color: #fff;
-  line-height: .9rem;
-  border: none;
-  border-radius: 0.1rem;
-  margin-top: .4rem;
+
+#mockLogin .regBox .next, #codeInput .regBox .next {
+    height: .9rem;
+    background: #36d7b6;
+    color: #fff;
+    line-height: .9rem;
+    border: none;
+    border-radius: 0.1rem;
+    margin-top: .4rem;
 }
+
 /*myCenter part*/
 /*scholarCircle part*/
-#scholarCircle .circleContent,#myApply .applyContent,#editMyself .editContent{
-  margin-top: .75rem;
+#scholarCircle .circleContent, #myApply .applyContent, #editMyself .editContent {
+    margin-top: .75rem;
 }
-#scholarCircle .circleContent .circleLists{
-  width: 100%;
-  border-top: 1px solid #f5f5f5;
-  padding:0  .29rem 0;
-  box-sizing: border-box;
-  margin-bottom: .92rem;
+
+#scholarCircle .circleContent .circleLists {
+    width: 100%;
+    border-top: 1px solid #f5f5f5;
+    padding: 0 .29rem 0;
+    box-sizing: border-box;
+    margin-bottom: .92rem;
 }
-#scholarCircle .circleContent .circleLists .circleList{
-  border-bottom: 1px solid #ddd;
+
+#scholarCircle .circleContent .circleLists .circleList {
+    border-bottom: 1px solid #ddd;
 }
-#scholarCircle .circleContent .circleLists li .circleTop img{
-  width: .83rem;
-  height: .83rem;
-  float: left;
-  margin-right:.34rem;
+
+#scholarCircle .circleContent .circleLists li .circleTop img {
+    width: .83rem;
+    height: .83rem;
+    float: left;
+    margin-right: .34rem;
 }
-#scholarCircle .circleContent .circleLists li .circleTop{
-  position: relative;
-  margin-top: .3rem;
+
+#scholarCircle .circleContent .circleLists li .circleTop {
+    position: relative;
+    margin-top: .3rem;
 }
-#scholarCircle .circleContent .circleLists li .circleTop .name{
-  font-size: .27rem;
-  color: #000;
-  line-height: .41rem;
+
+#scholarCircle .circleContent .circleLists li .circleTop .name {
+    font-size: .27rem;
+    color: #000;
+    line-height: .41rem;
 }
-#scholarCircle .circleContent .circleLists li .circleTop .publicTime{
-  font-size: .18rem;
-  color: #9c9c9c;
-  line-height: .4rem;
+
+#scholarCircle .circleContent .circleLists li .circleTop .publicTime {
+    font-size: .18rem;
+    color: #9c9c9c;
+    line-height: .4rem;
 }
-#scholarCircle .circleContent .circleLists li .circleTop .icon-beliked,#scholarCircle .circleContent .circleLists li .circleTop .belikedNum{
-  position: absolute;
-  right: 0.58rem;
-  top: 0.1rem;
-  color: #fe7b7b;
+
+#scholarCircle .circleContent .circleLists li .circleTop .icon-beliked, #scholarCircle .circleContent .circleLists li .circleTop .belikedNum {
+    position: absolute;
+    right: 0.58rem;
+    top: 0.1rem;
+    color: #fe7b7b;
 }
-#scholarCircle .circleContent .circleLists li .circleTop .belikedNum{
-  right: 0.08rem;
-  color: #000;
+
+#scholarCircle .circleContent .circleLists li .circleTop .belikedNum {
+    right: 0.08rem;
+    color: #000;
 }
-#scholarCircle .circleContent .circleLists li .essayBegin{
-  height: .87rem;
-  background: #eee;
-  padding: .07rem 0.09rem;
-  box-sizing: border-box;
-  margin-top: .11rem;
+
+#scholarCircle .circleContent .circleLists li .essayBegin {
+    height: .87rem;
+    background: #eee;
+    padding: .07rem 0.09rem;
+    box-sizing: border-box;
+    margin-top: .11rem;
 }
-#scholarCircle .circleContent .circleLists li .essayBegin img{
-  width: .73rem;
-  float: left;
-  margin-right: .14rem;
+
+#scholarCircle .circleContent .circleLists li .essayBegin img {
+    width: .73rem;
+    float: left;
+    margin-right: .14rem;
 }
-#scholarCircle .circleContent .circleLists .circleList .essayBegin .essayFirst{
-float: left;
-font-size: .24rem;
-color: #000;
-line-height: .73rem;
-overflow: hidden;
-width: 4.75rem;
-height: .73rem;
+
+#scholarCircle .circleContent .circleLists .circleList .essayBegin .essayFirst {
+    float: left;
+    font-size: .24rem;
+    color: #000;
+    line-height: .73rem;
+    overflow: hidden;
+    width: 4.75rem;
+    height: .73rem;
 }
-#scholarCircle .circleContent .circleLists .circleList .commitTitle .commitNum{
-  font-size: .18rem;
-  color: #c4c4c4;
+
+#scholarCircle .circleContent .circleLists .circleList .commitTitle .commitNum {
+    font-size: .18rem;
+    color: #c4c4c4;
 }
-#scholarCircle .circleContent .circleLists .circleList .commitTitle .icon-recommendBtn{
-  font-size: .4rem;
-  color: #c4c4c4;
-  float: right;
-  margin-right: 0.2rem;
+
+#scholarCircle .circleContent .circleLists .circleList .commitTitle .icon-recommendBtn {
+    font-size: .4rem;
+    color: #c4c4c4;
+    float: right;
+    margin-right: 0.2rem;
 }
-#scholarCircle .circleContent .circleLists .circleList .commitTitle{
-  height: .64rem;
-  line-height: .64rem;
+
+#scholarCircle .circleContent .circleLists .circleList .commitTitle {
+    height: .64rem;
+    line-height: .64rem;
 }
-#scholarCircle .circleContent .circleLists .circleList .commitBox ul li .observerName{
-  height: .6rem;
-  line-height: .6rem;
-  color: #ffb656;
-  font-size: .2rem;
+
+#scholarCircle .circleContent .circleLists .circleList .commitBox ul li .observerName {
+    height: .6rem;
+    line-height: .6rem;
+    color: #ffb656;
+    font-size: .2rem;
 }
-#scholarCircle .circleContent .circleLists .circleList .commitBox ul li .observerContent{
-  line-height: .35rem;
-  color: #323232;
-  font-size: .2rem;
+
+#scholarCircle .circleContent .circleLists .circleList .commitBox ul li .observerContent {
+    line-height: .35rem;
+    color: #323232;
+    font-size: .2rem;
 }
-#scholarCircle .circleContent .circleLists .circleList .commitBox .remark{
-  height: .48rem;
-  width: 100%;
-  border: 1px solid #ecebeb;
-  border-radius: 0.1rem;
-  color: #a4a4a4;
-  margin-top: .25rem;
-  text-indent: 0.2rem;
+
+#scholarCircle .circleContent .circleLists .circleList .commitBox .remark {
+    height: .48rem;
+    width: 100%;
+    border: 1px solid #ecebeb;
+    border-radius: 0.1rem;
+    color: #a4a4a4;
+    margin-top: .25rem;
+    text-indent: 0.2rem;
 }
-#scholarCircle .circleContent .circleLists .circleList .commitBox .commitInput{
- position: relative;
- margin-bottom: 0.36rem;
+
+#scholarCircle .circleContent .circleLists .circleList .commitBox .commitInput {
+    position: relative;
+    margin-bottom: 0.36rem;
 
 }
-#scholarCircle .circleContent .circleLists .circleList .commitBox .commitInput span{
- position: absolute;
- right: 0.1rem;
- top: 0.36rem;
- color: #ffb656;
- font-size: .26rem;
+
+#scholarCircle .circleContent .circleLists .circleList .commitBox .commitInput span {
+    position: absolute;
+    right: 0.1rem;
+    top: 0.36rem;
+    color: #ffb656;
+    font-size: .26rem;
 }
+
 /*myInfo part*/
 
 /*footer and header part*/
-footer,header{
-	width: 100%;
-	height: 0.93rem;
-	position: fixed;
-	bottom: 0;
-	background: #f7f7f7;
-  z-index: 2;
+header,footer {
+    width: 100%;
+    height: 0.93rem;
+    position: fixed;
+    bottom: 0;
+    background: #f7f7f7;
+    z-index: 2;
 }
-header{
-  height: .75rem;
-  top: 0;
-  background: #fff;
+header {
+    height: .75rem;
+    top: 0;
+    background: #fff;
 }
-footer li,header li{
-	  width: 25%;
-    float:left;
+
+footer li, header li {
+    width: 25%;
+    float: left;
     margin-top: 0.09rem;
     text-align: center;
 }
-header li{
-  width: 24.5%;
-  margin-top: 0;
-  line-height: .44rem;
-  height: .44rem;
-  margin-top: .15rem;
-  border-right: 1px solid #ebebeb;
-}
-header li p{
-  width:100%;
-background: #36d7b6;
-border-top: 1px solid #36d7b6;
-  height: 0.02rem;
+
+header li {
+    width: 24.5%;
+    margin-top: 0;
+    line-height: .44rem;
+    height: .44rem;
+    margin-top: .15rem;
+    border-right: 1px solid #ebebeb;
 }
 
-header li:nth-of-type(4){
-  border: none;
+header li p {
+    width: 100%;
+    background: #36d7b6;
+    border-top: 1px solid #36d7b6;
+    height: 0.02rem;
 }
-footer li .iconfont{
-	font-size: 0.38rem;
+
+header li:nth-of-type(4) {
+    border: none;
 }
-header li span{
-  font-size: .3rem;
-  display: block;
-  height: 0.58rem;
-  color: #9c9c9c;
+
+footer li .iconfont {
+    font-size: 0.38rem;
 }
-footer li span{
-	color: #989898;
+
+header li span {
+    font-size: .3rem;
+    display: block;
+    height: 0.58rem;
+    color: #9c9c9c;
 }
-footer li.active span{
-	color: #36d7b6;
+
+footer li span {
+    color: #989898;
 }
-footer li span.active,header li span.active{
+
+footer li.active span {
+    color: #36d7b6;
 }
-footer li .nav-title,header li .nav-title{
-	display: block;
-	font-size: .25rem;
+
+footer li span.active, header li span.active {
+}
+
+footer li .nav-title, header li .nav-title {
+    display: block;
+    font-size: .25rem;
 }

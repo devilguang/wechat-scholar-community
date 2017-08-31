@@ -15,9 +15,9 @@ var putCode = document.getElementsByClassName('putCode')
 export default {
   data () {
     return {
-      timer: 60,       // 默认倒数30秒
-      stop: false,   // 默认是停止的，但界面加载之后会变成false
-      Interval: null  // setInterval的对象
+      timer: 60,        // 默认倒数30秒
+      stop: false,      // 默认是停止的，但界面加载之后会变成false
+      Interval: null    // setInterval的对象
     }
   },
   methods: {

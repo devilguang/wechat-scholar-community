@@ -14,7 +14,7 @@
        <!-- <li @click="changeColor(subjectItem)" v-for="subjectItem in subjectItems" v-bind:class="{active:subjectItem.isChecked}">{{subjectItem.subjectName}}</li> -->
      </ul>
      <div class="afterChoose">
-       <p class="tip">可选择<span>5</span>个领域,你已选择<span>{{this.choosedNum}}</span>个</p>
+       <p class="tip">可选择<span>5</span>个领域,你已选择<span>{{choosedNum}}</span>个</p>
         <button @click="next">下一步</button>
       </div>
   </div>
@@ -23,7 +23,7 @@
 import Vue from 'vue'
 var choosedNum = 0
 export default {
-  data: function () {
+  data () {
     return {
       subjectItems: [{
         subjectName: '哲学',
@@ -145,11 +145,13 @@ export default {
           eachName: '7农业资源与环境'
         }]
       }],
-      choosedNum: '0'
+      choosedNum:'0',
+      fileArr:[],
+      checked:true
     }
   },
   methods: {
-    changeStyle: function (item, subindex, index) {
+    changeStyle (item, subindex, index) {
       if ((typeof item.chooseActive) === 'undefined') {
         Vue.set(this.subjectItems[index].subNames[subindex], 'chooseActive', true)
         if (choosedNum < 5) {
@@ -170,14 +172,19 @@ export default {
         window.alert('最多选择5个')
       }
       this.choosedNum = choosedNum
-      console.log(this.choosedNum)
     },
     next: function () {
+        this.choosedNum = '0'
+        choosedNum = 0
       this.$router.push({
         path: '/recommendDetail'
       })
     }
-  }
+  },
+    mounted(){
+        this.choosedNum = '0'
+        choosedNum = 0
+    }
 }
 </script>
 <style media="screen">
