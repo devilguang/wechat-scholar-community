@@ -4,7 +4,7 @@
         <indicator-bar v-if="barFlag" style="margin-top: 4rem;"></indicator-bar>
         <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
             class="scholarList">
-            <li class="scholarItem clrfix" v-for="item in items" @click="toDetail(item.scholar_unique)">
+            <li class="scholarItem clrfix" v-for="item in items" @click="toDetail(item)">
                 <!-- <router-link :to="{ path: 'scholarResult/scholarDetail', query: { ID: item.userID }}"> -->
                 <!-- <router-link :to="{ name: 'detail', params: { link: item.link }}"> -->
                 <div class="scholarHead">
@@ -54,10 +54,11 @@
         },
         methods: {
             //  点击进学者详情页
-            toDetail: function (scholar_unique) {
+            toDetail: function (item) {
                 let scholarInfo = {
-                    scholarUnique: scholar_unique,
-                    type: this.type
+                    scholarUnique: item.scholar_unique,
+                    type: this.type,
+                    link: item.link
                 }
                 this.$store.dispatch('saveScholarInfo', scholarInfo)
                 this.$router.push({
@@ -93,6 +94,15 @@
                     AREA: 'subject',
                     ACH_ALL_NUM: 'ach_all_num'
                 }
+
+                let keymap4BD = {
+                    SCHOLAR_UNIQUE: 'scholar_unique',
+                    scholarName: 'scholar_name',
+                    organName: 'org_name',
+                    achCount: 'ach_all_num',
+                    research: 'subject',
+                    link: 'link'
+                }
                 if (this.type == 'wd') {
                     var q = '';
                     if (this.queryScholar.scholarName != '') {
@@ -109,6 +119,48 @@
                             var count = result.data.response.numFound
                             if (count == 0) {
                                 this.type = 'server'
+                                if (this.items.length > 0) {
+                                    return
+                                }
+
+                                // 如果武大查询不到，那么查询BD
+
+                                // 查询BD数据接口
+                                let queryParams = {
+                                    scholar: "",
+                                    organ: ""
+                                }
+                                if (this.queryScholar.scholarName != '') {
+                                    queryParams.scholar = this.queryScholar.scholarName
+                                }
+                                if (this.queryScholar.insName != '') {
+                                    queryParams.organ = this.queryScholar.insName
+                                }
+                                // console.log("qs", qs.stringify(queryParams))
+                                this.$http.post('/bdSchoalrServer/query/gatherScholarItem', qs.stringify(queryParams))
+                                    .then((result) => {
+                                            // debugger
+                                            var wechatSolrCount = result.data.length
+                                            var server_docs = []
+                                            if (wechatSolrCount > 0) {
+                                            _(result.data).forEach(function (doc) {
+                                                doc['research'] = doc.research.split('/')
+                                                server_docs.push(_.mapKeys(doc, function (value, key) {
+                                                    return keymap4BD[key] && keymap4BD[key] != '' ? keymap4BD[key].trim() : keymap4BD[key]
+                                                }))
+                                            })
+                                        }
+
+                                        this.items.push(...server_docs)
+                                        this.pageNum++
+                                        this.busy = false
+                                        if (this.items.length <= 0) {
+                                            this.showFlag = true
+                                        }
+                                    })
+
+
+                                /*this.type = 'server'
                                 q = ''
                                 if (this.queryScholar.scholarName != '') {
                                     q += 'SCHOLAR_NAME:"' + this.queryScholar.scholarName + '"'
@@ -136,7 +188,7 @@
                                         if (this.items.length <= 0) {
                                             this.showFlag = true
                                         }
-                                    })
+                                    })*/
                             } else {
                                 _(result.data.response.docs).forEach(function (doc) {
                                     doc.org_name = '武汉大学' + doc.org_name
@@ -147,7 +199,39 @@
                             }
                         })
                 } else {
-                    q = ''
+                    // 查询BD数据接口
+                    let queryParams = {
+                        scholar: "",
+                        organ: ""
+                    }
+                    if (this.queryScholar.scholarName != '') {
+                        queryParams.scholar = this.queryScholar.scholarName
+                    }
+                    if (this.queryScholar.insName != '') {
+                        queryParams.organ = this.queryScholar.insName
+                    }
+
+                    this.$http.post('http://www.subject.net.cn:86/query/gatherScholarItem', qs.stringify(queryParams))
+                        .then((result) => {
+                            var wechatSolrCount = result.length
+                            var server_docs = []
+                            if (wechatSolrCount > 0) {
+                                    _(result).forEach(function (doc) {
+                                    server_docs.push(_.mapKeys(doc, function (value, key) {
+                                        return keymap[key]
+                                    }))
+                                })
+                            }
+                            this.items.push(...server_docs)
+                            this.pageNum++
+                            this.busy = false
+                            if (this.items.length <= 0) {
+                                this.showFlag = true
+                            }
+                        })
+
+                    // 查询Metadata数据接口
+                    /*q = ''
                     if (this.queryScholar.scholarName != '') {
                         q += 'SCHOLAR_NAME:"' + this.queryScholar.scholarName + '"'
                     }
@@ -175,7 +259,7 @@
                             if (this.items.length <= 0) {
                                 this.showFlag = true
                             }
-                        })
+                        })*/
                 }
             }
         },

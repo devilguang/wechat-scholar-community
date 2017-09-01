@@ -6,7 +6,7 @@
             <!--p class="citedNum"><span>{{infos.cite ? '被引次数：' + infos.cite : ''}}</span></p-->
         <!-- /div -->
         <indicator-bar v-if="barFlag" style="margin-top: 30px"></indicator-bar>
-        <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
+        <ul v-if="type == 'wd'" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
             class="contentMain">
             <li class="contentItem" v-for="(detailItem,index) in detailItems" >
                 <div class="wordsCon" @click="showDetails(detailItem,index)">
@@ -22,6 +22,26 @@
                     </li>
                     <li style="font-size:0.23rem"><span class="iconfont icon-share" style="font-size: 0.35rem"></span>分享</li>
                     <li style="font-size:0.23rem" @click="collect(detailItem,index)" :class="{active:detailItem.isFavorite?detailItem.isFavorite:false}">
+                        <span class="iconfont icon-collect" style="font-size: 0.35rem"></span>{{detailItem.isFavorite? '已收藏':'收藏'}}
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul v-if="type == 'server'" class="contentMain">
+            <li class="contentItem" v-for="(detailItem,index) in docItems" >
+                <div class="wordsCon">
+                    <p class="coreCon">{{detailItem.title}}</p>
+                    <p class="authorItem">{{detailItem.docAuthors}}</p>
+                    <p class="authorItem">{{detailItem.source}} {{detailItem.ym}}</p>
+                    <p class="eachCitedNum">被引次数：{{detailItem.cites}}</p>
+                </div>
+                <ul class="userBtns clrfix">
+                    <li style="font-size:0.23rem" ><span class="iconfont icon-remark" style="font-size: 0.35rem"></span>评论</li>
+                    <li style="font-size:0.23rem" @click="recommend(detailItem,index)" :class="{active:detailItem.isLike?detailItem.isLike:false}">
+                        <span class="iconfont icon-recommendBtn" style="font-size: 0.35rem"></span>推荐
+                    </li>
+                    <li style="font-size:0.23rem"><span class="iconfont icon-share" style="font-size: 0.35rem"></span>分享</li>
+                    <li style="font-size:0.23rem" :class="{active:detailItem.isFavorite?detailItem.isFavorite:false}">
                         <span class="iconfont icon-collect" style="font-size: 0.35rem"></span>{{detailItem.isFavorite? '已收藏':'收藏'}}
                     </li>
                 </ul>
@@ -56,9 +76,13 @@
                 meassage:'收藏',
                 ach_unique:'',
                 index:'',
-                barFlag:true
+                barFlag: true,
+                type: 'server'
             }
         },
+        props: [
+            'docItems'
+        ],
         components:{
             indicatorBar
         },
@@ -276,6 +300,10 @@
             }
         },
         mounted() {
+            this.type = this.$store.state.scholarInfo.type;
+            if (this.type == 'server') {
+                this.barFlag = false
+            }
         }
     }
 </script>
