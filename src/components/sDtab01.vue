@@ -260,15 +260,13 @@
             //进入文献详情
             showDetails(item,index){
                 localStorage.setItem('index',index)
-//                localStorage.setItem('typeof','找人')
                 this.$store.commit('SET_SCHOLARLIST',this.detailItems)
                 this.$store.commit('SET_ACHUNIQUE',item.ach_unique)
                 this.$router.push({
                     path:'/findBook/bookResult/bookDetail'
                 })
             },
-            discuss(index){
-//                localStorage.setItem('typeof','找人')
+            discuss(item,index){
                 this.$store.commit('SET_SCHOLARLIST',this.detailItems)
                 this.$store.commit('SET_ACHUNIQUE',item.ach_unique)
                 this.$store.commit('SET_REVIEW',true)

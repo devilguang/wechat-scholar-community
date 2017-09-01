@@ -28,10 +28,10 @@
            <!-- 详情数字部分 -->
            <div class="numBox" v-show="true">
              <ul class="clrfix" >
-               <li class="outcomN"><span>0</span><p>成果数</p></li>
-               <li class="citedN"><span>0</span><p>被引数</p></li>
-               <li class="followerN"><span>0</span><p>跟随着</p></li>
-               <li class="HN"><span>0</span><p>H指数</p></li>
+               <li class="outcomN"><span>-</span><p>成果数</p></li>
+               <li class="citedN"><span>-</span><p>被引数</p></li>
+               <li class="followerN"><span>-</span><p>跟随着</p></li>
+               <li class="HN"><span>-</span><p>H指数</p></li>
              </ul>
            </div>
         </article>
@@ -43,9 +43,8 @@
           <img :src="userImg">
         </div>
         <p class="getMorePower">完善资料后，将拥有更多权限</p>
-          <div class="toComplete" @click="toComplete">立即完善</div>
+          <div class="toComplete"   @click="toComplete">立即完善</div>
       </div>
-
          <section class="centerListBox">
            <ul class="centerLists">
              <li class="centerItem" @click="toMyFruit">
@@ -98,7 +97,7 @@
   </div>
 </template>
 <script>
-    import {mapGetters} from 'vuex'
+import {mapGetters} from 'vuex'
 export default{
   data () {
     return {
@@ -109,9 +108,9 @@ export default{
     }
   },
   computed:{
-//    ...mapGetters([
-//        'getUserInfo'
-//    ])
+    ...mapGetters([
+        'getUserInfo'
+    ])
   },
   methods: {
     toConfirm() {

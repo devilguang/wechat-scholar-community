@@ -2,7 +2,7 @@
     <div id="app">
         <footer>
             <ul class=" ">
-                <li  @click="navTab(nav01Text)" :class="{active: activeName == nav01Text || activeFirst}">
+                <li @click="navTab(nav01Text)" :class="{active: activeName == nav01Text || activeFirst}">
                     <router-link to="/findScholar">
                         <span class="iconfont icon-findS "></span>
                         <span class="nav-title ">找人</span>
@@ -31,6 +31,7 @@
     </div>
 </template>
 <script>
+
     export default {
         name: 'App',
         data: function () {
@@ -60,9 +61,7 @@
                 ]
             }
         },
-        computed:{
-
-        },
+        computed: {},
         methods: {
             navTab: function (navText) {
                 this.currentView = navText
@@ -94,7 +93,7 @@
                 this.activeName = this.nav03Text
                 this.activeFirst = false
             }
-            if (this.nextPage === '/'||this.nextPage==='/findScholar') {
+            if (this.nextPage === '/' || this.nextPage === '/findScholar') {
                 this.activeName = this.nav01Text
                 this.activeFirst = false
             }
@@ -102,6 +101,7 @@
                 this.activeName = this.nav04Text
                 this.activeFirst = false
             }
+
         }
     }
 </script>

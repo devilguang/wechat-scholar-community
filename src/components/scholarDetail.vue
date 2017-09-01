@@ -78,8 +78,8 @@
                     <span class="tipWord">您确定要取消关注吗?</span>
                 </p>
                 <div class="operate">
-                    <span class="cancel"    @click="cancel">取消</span>
-                    <span class="confirm"   @click="confirm">确定</span>
+                    <span class="cancel"  @click="cancel">取消</span>
+                    <span class="confirm" @click="confirm">确定</span>
                 </div>
             </div>
         </section>
@@ -131,7 +131,6 @@
                     this.isAttention = res.data.data.isAttention
                 })
             },
-
             // 选项卡切换
             tabToggle: function (tabText) {
                 this.currentView = tabText
@@ -258,7 +257,6 @@
                     "rows": 10,
                     "start": 0
                 }
-
                 let keymapCoporgan = {
                     COOPER_ORG_NAME: 'organName',
                     COOPER_NUM: 'achCount'
@@ -287,7 +285,6 @@
             }
         }
     }
-
 </script>
 <style>
     #zxq {

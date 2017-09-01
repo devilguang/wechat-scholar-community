@@ -64,7 +64,6 @@
                     this.pageNum++
                 })
             }
-
         },
         mounted(){
 

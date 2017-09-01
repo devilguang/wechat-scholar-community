@@ -9,7 +9,6 @@
           <p><span class="sb1">莫言</span><span class="sb2">关注了我</span></p>
           <h3 class="time">1天前</h3>
           <button class="attentionHe" @click="attention"><span class="iconfont icon-attentionBtn"></span><span id="attentionBtn">关注他</span></button>
-
         </div>
       </li>
       <li class="clrfix">
@@ -47,8 +46,8 @@
               <span class="tipWord">您确定要取消关注吗?</span>
             </p>
             <div class="operate">
-              <span class="cancel" @click="cancel">取消</span>
-              <span class="confirm"@click="confirm">确定</span>
+              <span class="cancel"  @click="cancel">取消</span>
+              <span class="confirm" @click="confirm">确定</span>
             </div>
          </div>
     </section>

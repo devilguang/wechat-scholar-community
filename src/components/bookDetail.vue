@@ -302,7 +302,6 @@
             if (this.getDatatype.type == "wd") {
                 this.index = localStorage.getItem('index')
                 let scholarList = this.$store.state.scholarsList[this.index]
-                console.log(scholarList)
                 this.infosList.title = scholarList.title || scholarList.achTitle
                 this.infosList.ach_type = scholarList.ach_type || scholarList.achType
                 this.infosList.author = scholarList.author.join(';')
@@ -314,9 +313,7 @@
                 this.getContent()
                 this.collectionList()
             } else {
-//                let ach_unique = this.getAchunique
-                let ach_unique = this.getDatatype.scholarUnique
-                console.log(ach_unique,1010)
+                let ach_unique = this.$store.state.ach_unique?this.$store.state.ach_unique:this.getDatatype.scholarUnique
                 let solrQuery1 = {
                     "q": "ach_unique:"+ach_unique ,
                     "wt": "json",
@@ -363,11 +360,8 @@
                 })
             }
             if (this.$store.state.review) {
-
                 this.commentsFlag = true
-
             } else {
-
                 this.commentsFlag = false
             }
         }
