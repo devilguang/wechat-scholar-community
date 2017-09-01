@@ -15,7 +15,7 @@
                 <span class="moreBtn iconfont icon-more"></span>
             </li>
         </ul>
-        <div  style="text-align: center;margin-top: 40%" v-show="showFlag">您还没添加任何关注哦</div>
+        <div  style="text-align: center;margin-top: 40%" v-show="attentionList.length == 0">您还没添加任何关注哦</div>
     </div>
 </template>
 <script>
@@ -53,7 +53,7 @@
                     pageSize:10
                 }}).then((res)=>{
                     let attentionList = res.data.data
-                    if(attentionList.length > 0){
+                    if(res.data.data.length > 0){
                         attentionList.forEach((item,index)=> {
                             this.attentionList.push(item)
                         })

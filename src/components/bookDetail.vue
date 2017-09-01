@@ -4,13 +4,13 @@
             <!--//{{$route.params.bookID}}-->
             <p class="bookTitle">{{infosList.title}}</p>
             <p class="bookOrigin"><span
-                    class="iconfont icon-link"></span><span>来源 — — </span><span>{{infosList.PUB_NAME_CH?infosList.PUB_NAME_CH:infosList.pub_name}}</span></p>
+                    class="iconfont icon-link"></span><span>来源 — — </span><span> {{infosList.author}} </span></p>
             <p class="bookBrief">
                 <span>{{infosList.ach_type}}</span><span>— — 《期刊名》 — —</span><span>(刊号)</span></p>
             <p class="abstract">
-                <span>摘要</span><span>{{infosList.ab.length > 200 ? infosList.ab.substr(0, 200) + '...' : infosList.ab}}</span>
+                <span>摘要</span><span>{{infosList.ab.length>300?infosList.ab.substring(0,300):infosList.ab}}</span>
             </p>
-            <p class="publicOrg"><span> 出版源</span><span>{{infosList.punishOrg}}</span></p>
+            <p class="publicOrg"><span> 出版源</span><span>{{infosList.punishOrg}} </span></p>
             <p class="keyword"><span>关键词</span><span>{{infosList.keywords_q}}</span></p>
             <p class="cited"><span>被引量</span><span>{{infosList.cite_count}}</span></p>
         </article>
@@ -92,15 +92,14 @@
         data () {
             return {
                 infosList: {
-                    title: '',
-                    author: '',
-                    ab: '',
-                    punishOrg: '',
-                    keywords_q: '',
-                    cite_count: '',
-                    ach_type: '',
-                    ach_unique: '',
-                    pub_name:''
+                    title:'',
+                    ach_type:'',
+                    author:'',
+                    ab:'',
+                    punishOrg:'',
+                    keywords_q:'',
+                    cite_count:'',
+                    ach_unique:'',
                 },
                 infos: [],
                 remActive: false,
@@ -246,6 +245,7 @@
             },
             //查看是否有收藏 和点赞
             collectionList(){
+                console.log(this.infosList)
                 let achUniques = []
                 achUniques.push(this.infosList.ach_unique)
                 this.$axios({
@@ -298,20 +298,35 @@
                 })
             },
         },
+//
         mounted () {
             if (this.getDatatype.type == "wd") {
                 this.index = localStorage.getItem('index')
                 let scholarList = this.$store.state.scholarsList[this.index]
-                this.infosList.title = scholarList.title || scholarList.achTitle
-                this.infosList.ach_type = scholarList.ach_type || scholarList.achType
-                this.infosList.author = scholarList.author.join(';')
-                this.infosList.ab = scholarList.ab
-                this.infosList.punishOrg = scholarList.punishOrg
-                this.infosList.keywords_q = scholarList.keywords_q
-                this.infosList.cite_count = scholarList.cite_count.join(" ")
-                this.infosList.ach_unique = scholarList.ach_unique
-                this.getContent()
-                this.collectionList()
+                if(scholarList.author){
+                    this.infosList = scholarList
+                    this.infosList.title = scholarList.title || scholarList.achTitle
+                    this.infosList.ach_type = scholarList.ach_type || scholarList.achType
+                    this.infosList.author = scholarList.author.join(';')
+                    this.infosList.ab = scholarList.ab
+                    this.infosList.punishOrg = scholarList.punishOrg
+                    this.infosList.keywords_q = scholarList.keywords_q
+                    this.infosList.cite_count = scholarList.cite_count.join(" ")
+                    this.infosList.ach_unique = scholarList.ach_unique
+                }else{
+                    this.$axios.get('/v1/weChat/achievement/'+scholarList.achUnique).then((res)=>{
+                        let scholarLists = res.data.data
+                        this.infosList = scholarLists
+                        this.infosList.title = scholarLists.TITLE || scholarLists.achTitle
+                        this.infosList.ach_type = scholarLists.ACH_TYPE || scholarLists.achType
+                        this.infosList.author = scholarLists.AUTHORS.join(';')
+                        this.infosList.ab = scholarLists.AB_EN
+                        this.infosList.punishOrg = scholarLists.punishOrg
+                        this.infosList.keywords_q = scholarLists.KEYWORD_EN.join(",")
+                        this.infosList.cite_count = scholarLists.CITE_COUNT.join(" ")
+                        this.infosList.ach_unique = scholarLists.ACH_UNIQUE
+                    })
+                }
             } else {
                 let ach_unique = this.$store.state.ach_unique?this.$store.state.ach_unique:this.getDatatype.scholarUnique
                 let solrQuery1 = {
@@ -364,6 +379,8 @@
             } else {
                 this.commentsFlag = false
             }
+            this.getContent()
+            this.collectionList()
         }
     }
 </script>

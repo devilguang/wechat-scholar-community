@@ -78,7 +78,7 @@
                     <span class="tipWord">您确定要取消关注吗?</span>
                 </p>
                 <div class="operate">
-                    <span class="cancel"  @click="cancel">取消</span>
+                    <span class="cancel"  @click="metFlag = false">取消</span>
                     <span class="confirm" @click="confirm">确定</span>
                 </div>
             </div>
@@ -126,11 +126,11 @@
         methods: {
             //查询学者是否被关注
             userToScholarUnique(){
-                // let scholarUnique = this.infos.scholar_unique?this.infos.scholar_unique:this.infos.scholarUnique
+                 let scholarUnique = this.infos.scholar_unique?this.infos.scholar_unique:this.infos.scholarUnique
                 // 需要解决
-                /*this.$axios.get('/v1/weChat/userToScholarUnique/' + scholarUnique).then((res) => {
+                this.$axios.get('/v1/weChat/userToScholarUnique/' + scholarUnique).then((res) => {
                     this.isAttention = res.data.data.isAttention
-                })*/
+                })
             },
             // 选项卡切换
             tabToggle: function (tabText) {
@@ -159,11 +159,6 @@
                 this.$router.push({
                     path: '../../../myCenter/Iwillconfirm'
                 })
-            },
-            cancel () {
-                let attentionBtn = document.getElementById('attentionBtn')
-                attentionBtn.innerHTML = '已关注'
-                document.getElementById('cancelAttentionBox').style.display = 'none'
             },
             confirm (){ //取消关注
                 let scholarUnique = this.infos.scholarUnique?this.infos.scholarUnique:this.infos.scholar_unique
@@ -200,9 +195,14 @@
                     cite: 'allCitedNum',
                     h: 'h'
                 }
-                let scholar_unique = this.$store.state.scholarInfo.link.substring(this.$store.state.scholarInfo.link.lastIndexOf('/') + 1, this.$store.state.scholarInfo.link.length)
-                this.$http.post('/bdSchoalrServer/query/gatherScholarDetail', qs.stringify({link: this.$store.state.scholarInfo.link}))
+                console.log(this.$store.state.scholarInfo)
+                let scholar_unique = this.$store.state.scholarInfo.link?this.$store.state.scholarInfo.link.substring(this.$store.state.scholarInfo.link.lastIndexOf('/') + 1, this.$store.state.scholarInfo.link.length):
+                   this.$store.state.scholarInfo.scholarUnique
+//                 'http://xueshu.baidu.com/homepage/u/'
+                console.log(scholar_unique)
+                this.$http.post('/bdSchoalrServer/query/gatherScholarDetail', qs.stringify({link: 'http://xueshu.baidu.com/homepage/u/'+scholar_unique}))
                     .then((response) => {
+                    console.log(response)
                         response.data['scholar_unique'] = scholar_unique
                         this.infos = _.mapKeys(response.data, function (value, key) {
                             return keymap[key]
@@ -216,6 +216,7 @@
                         }
                         this.instituteItems = response.data.cnkiOrgansList
                         this.detailItems = response.data.cnkiDetailLists
+
                     })
             },
             pullScholarFromServer() {

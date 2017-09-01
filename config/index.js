@@ -51,7 +51,7 @@ module.exports = {
                 }
             },
             '/indexPaperServer': {
-                target: 'http://114.55.24.210:8983/',
+                target: 'http://116.62.232.176:8983/',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/indexPaperServer': '/solr'

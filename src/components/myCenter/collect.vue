@@ -37,6 +37,7 @@
                 </li>
             </ul>
         </section>
+        <div  style="text-align: center;margin-top: 40%" v-show="collectItems.length == 0">您还没添加任何收藏哦</div>
     </div>
 </template>
 <script>
@@ -163,7 +164,6 @@
                     this.pageNum++;
                 })
             },
-
             gotoDetails(item, index){ //跳转详情页
                 let q = {
                     type: item.dataType,

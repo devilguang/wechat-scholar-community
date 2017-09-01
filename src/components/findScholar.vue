@@ -51,8 +51,6 @@
                     this.dataFlag = true
                     return
                 }
-                // defType=edismax&indent=on&mm=75%&q=scholar_name:"乐江"%20and%20org_name:"基础医学院"&wt=json
-
                 let queryScholar = this
                 this.$store.dispatch('saveQueryScholar', queryScholar);
                 this.$router.push({
@@ -84,7 +82,7 @@
                 return
             }
             // 微信拦截
-           /* if (code) {
+           if (code) {
                 this.$axios.get('/v1/weChat/userInfo/' + code).then((res) => {
                     let openId = res.data.data.openId
                     this.local('openId', openId)
@@ -94,7 +92,7 @@
             }
             else {
                 window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8115bea15b8d7d1a&redirect_uri=http://mobile.subject.net.cn&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
-            }*/
+            }
         }
     }
 </script>

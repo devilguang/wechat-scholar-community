@@ -1,12 +1,7 @@
 <template lang="html">
     <section class="tabContent" id="sDtab01">
-        <!--div class="contentTop"-->
-            <!-- 复选下拉框没写 占位 -->
-            <!--div class="allFruits">全部成果</div -->
-            <!--p class="citedNum"><span>{{infos.cite ? '被引次数：' + infos.cite : ''}}</span></p-->
-        <!-- /div -->
         <indicator-bar v-if="barFlag" style="margin-top: 30px"></indicator-bar>
-        <ul v-if="type == 'wd'" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
+        <ul  v-if="type =='wd'?true:false" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10"
             class="contentMain">
             <li class="contentItem" v-for="(detailItem,index) in detailItems" >
                 <div class="wordsCon" @click="showDetails(detailItem,index)">
@@ -27,7 +22,7 @@
                 </ul>
             </li>
         </ul>
-        <ul v-if="type == 'server'" class="contentMain">
+        <ul v-if="type == 'server'?true:false" class="contentMain">
             <li class="contentItem" v-for="(detailItem,index) in docItems" >
                 <div class="wordsCon">
                     <p class="coreCon">{{detailItem.title}}</p>
@@ -77,7 +72,7 @@
                 ach_unique:'',
                 index:'',
                 barFlag: true,
-                type: 'server'
+                type: ''
             }
         },
         props: [
@@ -150,8 +145,9 @@
                     this.$set(this.detailItems[this.index],'isFavorite',false)
                 })
             },
+
             loadMore () {
-                if (this.$store.state.scholarInfo.type == 'wd') {
+                if (this.type == 'wd') {
                     this.busy = true;
                     var solrQuery = {
                         "q": "*:*",
@@ -162,12 +158,15 @@
                         "start": 0,
                     }
                     solrQuery.start = (this.pageNum - 1) * 10;
+                    console.log(this.$store.state.scholarInfo.scholarUnique)
                     solrQuery.q = 'claims:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                     this.$http.post('/indexWD/achievement/select', qs.stringify(solrQuery))
                         .then((response) => {
+
                             this.barFlag = false
                             this.detailItems.push(...response.data.response.docs)
                             this.pageNum++
+                            this.$store.commit('SET_SCHOLARLIST',this.detailItems)
                             this.busy = false
                             let arr = []
 //                            this.$store.
@@ -284,20 +283,22 @@
             //进入文献详情
             showDetails(item,index){
                 localStorage.setItem('index',index)
-                this.$store.commit('SET_SCHOLARLIST',this.detailItems)
+//                this.$store.commit('SET_SCHOLARLIST',this.detailItems)
                 this.$store.commit('SET_ACHUNIQUE',item.ach_unique)
                 this.$router.push({
                     path:'/findBook/bookResult/bookDetail'
                 })
             },
             discuss(item,index){
-                this.$store.commit('SET_SCHOLARLIST',this.detailItems)
                 this.$store.commit('SET_ACHUNIQUE',item.ach_unique)
                 this.$store.commit('SET_REVIEW',true)
                 this.$router.push({
                     path:'/findBook/bookResult/bookDetail'
                 })
             }
+        },
+        created(){
+            this.type = this.$store.state.scholarInfo.type;
         },
         mounted() {
             this.type = this.$store.state.scholarInfo.type;
