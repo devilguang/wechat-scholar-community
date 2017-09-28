@@ -195,14 +195,10 @@
                     cite: 'allCitedNum',
                     h: 'h'
                 }
-                console.log(this.$store.state.scholarInfo)
                 let scholar_unique = this.$store.state.scholarInfo.link?this.$store.state.scholarInfo.link.substring(this.$store.state.scholarInfo.link.lastIndexOf('/') + 1, this.$store.state.scholarInfo.link.length):
                    this.$store.state.scholarInfo.scholarUnique
-//                 'http://xueshu.baidu.com/homepage/u/'
-                console.log(scholar_unique)
                 this.$http.post('/bdSchoalrServer/query/gatherScholarDetail', qs.stringify({link: 'http://xueshu.baidu.com/homepage/u/'+scholar_unique}))
                     .then((response) => {
-                    console.log(response)
                         response.data['scholar_unique'] = scholar_unique
                         this.infos = _.mapKeys(response.data, function (value, key) {
                             return keymap[key]

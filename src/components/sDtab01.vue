@@ -158,7 +158,6 @@
                         "start": 0,
                     }
                     solrQuery.start = (this.pageNum - 1) * 10;
-                    console.log(this.$store.state.scholarInfo.scholarUnique)
                     solrQuery.q = 'claims:"' + this.$store.state.scholarInfo.scholarUnique + '"';
                     this.$http.post('/indexWD/achievement/select', qs.stringify(solrQuery))
                         .then((response) => {

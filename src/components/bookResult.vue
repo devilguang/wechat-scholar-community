@@ -166,8 +166,12 @@
             },
             // 进入文献详情
             showMinute(ach_unique, index) {
-                localStorage.setItem('typeof','文献')
                 this.$store.commit('SET_ACHUNIQUE',ach_unique)
+                let q = {
+                    type: 'server',
+                    scholarUnique: ach_unique
+                }
+                this.$store.dispatch('saveScholarInfo',q)
                 localStorage.setItem('index', index)
                 if (localStorage.getItem('openId')) {
                     this.$store.commit('SET_SCHOLARLIST', this.bookList)

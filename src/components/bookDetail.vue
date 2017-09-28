@@ -245,7 +245,7 @@
             },
             //查看是否有收藏 和点赞
             collectionList(){
-                console.log(this.infosList)
+
                 let achUniques = []
                 achUniques.push(this.infosList.ach_unique)
                 this.$axios({
@@ -298,7 +298,6 @@
                 })
             },
         },
-//
         mounted () {
             if (this.getDatatype.type == "wd") {
                 this.index = localStorage.getItem('index')
@@ -313,6 +312,8 @@
                     this.infosList.keywords_q = scholarList.keywords_q
                     this.infosList.cite_count = scholarList.cite_count.join(" ")
                     this.infosList.ach_unique = scholarList.ach_unique
+                    this.getContent()
+                    this.collectionList()
                 }else{
                     this.$axios.get('/v1/weChat/achievement/'+scholarList.achUnique).then((res)=>{
                         let scholarLists = res.data.data
@@ -325,6 +326,8 @@
                         this.infosList.keywords_q = scholarLists.KEYWORD_EN.join(",")
                         this.infosList.cite_count = scholarLists.CITE_COUNT.join(" ")
                         this.infosList.ach_unique = scholarLists.ACH_UNIQUE
+                        this.getContent()
+                        this.collectionList()
                     })
                 }
             } else {
@@ -350,10 +353,10 @@
                 this.$http.post('/indexPaperServer/achievement/select', qs.stringify(solrQuery1)).then((res) => {
                     if (res.data.response.docs.length > 0) {
                         this.infos = res.data.response.docs[0]
-                        let {title, author, ab, punishOrg, keywords_q, cite_count, ach_type} = this.infos;
+                        let {title, author, ab, punishOrg, keywords_q, cite_count, ach_type,ach_unique} = this.infos;
                         author = author.join(',')
                         cite_count = cite_count.join(" ")
-                        Object.assign(this.infosList, {title, author, ab, punishOrg, keywords_q, cite_count, ach_type})
+                        Object.assign(this.infosList, {title, author, ab, punishOrg, keywords_q, cite_count, ach_type,ach_unique})
                         this.getContent()
                         this.collectionList()
                     } else {
@@ -379,8 +382,7 @@
             } else {
                 this.commentsFlag = false
             }
-            this.getContent()
-            this.collectionList()
+
         }
     }
 </script>
